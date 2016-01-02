@@ -1,0 +1,73 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+env/
+build/
+develop-eggs/
+dist/
+eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+*.rdb
+# PyInstaller
+#  Usually these files are written by a python script from a template 
+#  before PyInstaller builds the exe, so as to inject date/other infos into it.
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.coverage
+.cache
+apks/
+nosetests.xml
+coverage.xml
+
+# Translations
+*.mo
+*.pot
+
+# Django stuff:
+*.log
+*.log.*
+
+# Sphinx documentation
+docs/_build/
+
+# PyBuilder
+target/
+
+.idea
+local_settings.py
+atlassian-ide-plugin.xml
+#devices/malware/tests/acceptance/support/node/node_modules
+# Mac OS
+.DS_Store
+*.tmp
+common/testing/acceptance/migrations.json
+# Tests logs
+devices/malware/fixtures/malwaredatabase.json
+devices/malware/tests/functional/.coverage.gw0
+devices/malware/tests/functional/.coverage.gw1
+devices/malware/tests/functional/customer_mdm_credentials.json
+erl_crash.dump
+
+# Migrations
+customers/users/audit/migrations/dump_audit.json
