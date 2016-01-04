@@ -46,6 +46,9 @@ cdef class JSONEncoder(object):
     def __dealloc__(self):
         del self.writer
 
+    def default(self, o):
+        raise TypeError(repr(o) + " is not JSON serializable")
+
     cpdef encode(self, obj):
         self.encode_inner(obj, self.doc)
 
@@ -83,6 +86,9 @@ cdef class JSONEncoder(object):
                 self.encode_inner(v, value)
 
                 doc.AddMember(key, value, dereference(self.allocator))
+        else:
+            obj = self.default(obj)
+            self.encode_inner(obj, doc)
 
 
 cpdef dump(obj, fp, skipkeys=False, ensure_ascii=True, check_circular=True,
