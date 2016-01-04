@@ -1,7 +1,7 @@
 # distutils: language = c++
 cimport libcpp
 from libcpp.string cimport string
-from cython.operator cimport dereference
+from cython.operator cimport dereference, preincrement
 from document cimport Document, Value
 from stringbuffer cimport StringBuffer
 from writer cimport StringWriter
@@ -92,32 +92,41 @@ cdef class JSONEncoder(object):
             obj = self.default_(obj)
             self.encode_inner(obj, doc)
 
-
 cdef class JSONDecoder(object):
     cdef Document doc
 
-    cpdef decode(self, s):
-        cdef const char *c = s
+    cpdef decode(self, const char *s):
+        self.doc.Parse(s)
 
-        self.doc.Parse(c)
+        return self.decode_inner(self.doc)
 
-        if self.doc.IsNull():
+    cdef decode_inner(self, const Value &doc):
+        cdef const Value* it
+
+        if doc.IsNull():
             return None
-        elif self.doc.IsBool():
-            return self.doc.GetBool()
-        elif self.doc.IsString():
-            return self.doc.GetString()
-        elif self.doc.IsNumber():
-            if self.doc.IsInt():
-                return self.doc.GetInt()
-            elif self.doc.IsUint():
-                return self.doc.GetUint()
-            elif self.doc.IsInt64():
-                return self.doc.GetInt64()
-            elif self.doc.IsUint64():
-                return self.doc.GetUint64()
-            elif self.doc.IsDouble():
-                return self.doc.GetDouble()
+        elif doc.IsBool():
+            return doc.GetBool()
+        elif doc.IsString():
+            return doc.GetString()
+        elif doc.IsNumber():
+            if doc.IsInt():
+                return doc.GetInt()
+            elif doc.IsUint():
+                return doc.GetUint()
+            elif doc.IsInt64():
+                return doc.GetInt64()
+            elif doc.IsUint64():
+                return doc.GetUint64()
+            elif doc.IsDouble():
+                return doc.GetDouble()
+        elif doc.IsArray():
+            it = doc.Begin()
+            l = []
+            while it != doc.End():
+                l.append(self.decode_inner(dereference(it)))
+                preincrement(it)
+            return l
 
 cdef JSONEncoder _default_encoder = JSONEncoder()
 cdef JSONDecoder _default_decoder = JSONDecoder()

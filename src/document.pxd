@@ -6,6 +6,9 @@ from libc.stdint cimport int64_t, uint64_t
 
 cdef extern from "document.h" namespace "rapidjson":
     cdef cppclass GenericValue[Encoding, Allocator]:
+        const GenericValue* Begin() const
+        const GenericValue* End() const
+
         GenericValue& SetString(const string& s, Allocator& allocator)
         GenericValue& SetBool(bool)
         GenericValue& SetNull()
@@ -47,8 +50,6 @@ cdef extern from "document.h" namespace "rapidjson":
         Allocator& GetAllocator()
 
         GenericDocument& Parse(const char* str)
-
-
 
     ctypedef GenericValue[UTF8[char], MemoryPoolAllocator[CrtAllocator]] Value
     ctypedef GenericDocument[UTF8[char], MemoryPoolAllocator[CrtAllocator], CrtAllocator] Document
