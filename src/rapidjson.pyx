@@ -18,8 +18,21 @@ cdef class JSONEncoder(object):
         self.allocator = &self.doc.GetAllocator()
         self.writer = new StringWriter(self.buffer)
 
-    def __init__(self):
-        pass
+    def __init__(self, skipkeys=False, ensure_ascii=True,
+                 check_circular=True, allow_nan=True, sort_keys=False,
+                 indent=None, separators=None, default=None):
+        self.skipkeys = skipkeys
+        self.ensure_ascii = ensure_ascii
+        self.check_circular = check_circular
+        self.allow_nan = allow_nan
+        self.sort_keys = sort_keys
+        self.indent = indent
+        if separators is not None:
+            self.item_separator, self.key_separator = separators
+        elif indent is not None:
+            self.item_separator = ','
+        if default is not None:
+            self.default = default
 
     def __dealloc__(self):
         del self.writer
