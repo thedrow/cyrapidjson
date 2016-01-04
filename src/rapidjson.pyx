@@ -14,6 +14,15 @@ cdef class JSONEncoder(object):
     cdef StringBuffer buffer
     cdef StringWriter *writer
 
+    cpdef libcpp.bool skipkeys
+    cpdef libcpp.bool ensure_ascii
+    cpdef libcpp.bool check_circular
+    cpdef libcpp.bool allow_nan
+    cpdef libcpp.bool sort_keys
+    cpdef object indent
+    cpdef object separators
+    cpdef object default
+
     def __cinit__(self):
         self.allocator = &self.doc.GetAllocator()
         self.writer = new StringWriter(self.buffer)
