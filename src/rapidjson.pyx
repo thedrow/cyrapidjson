@@ -69,7 +69,7 @@ cdef class JSONEncoder(object):
             doc.SetNull()
         elif isinstance(obj, float):
             doc.SetDouble(<double> obj)
-        elif isinstance(obj, int):
+        elif isinstance(obj, (int, long)):
             doc.SetInt64(<int64_t> obj)
         elif isinstance(obj, (str, unicode, bytes)):
             doc.SetString(<string> obj, dereference(self.allocator))
