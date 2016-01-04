@@ -9,26 +9,28 @@ from allocators cimport MemoryPoolAllocator, CrtAllocator
 from libc.stdint cimport int64_t
 
 cdef class JSONEncoder(object):
+    cpdef public libcpp.bool skipkeys
+    cpdef public libcpp.bool ensure_ascii
+    cpdef public libcpp.bool check_circular
+    cpdef public libcpp.bool allow_nan
+    cpdef public libcpp.bool sort_keys
+    cpdef public object indent
+    cpdef public object separators
+    cdef object default_
+
+    cdef StringWriter *writer
     cdef Document doc
     cdef MemoryPoolAllocator[CrtAllocator] *allocator
     cdef StringBuffer buffer
-    cdef StringWriter *writer
-
-    cpdef libcpp.bool skipkeys
-    cpdef libcpp.bool ensure_ascii
-    cpdef libcpp.bool check_circular
-    cpdef libcpp.bool allow_nan
-    cpdef libcpp.bool sort_keys
-    cpdef object indent
-    cpdef object separators
-    cpdef object default
 
     def __cinit__(self):
         self.allocator = &self.doc.GetAllocator()
         self.writer = new StringWriter(self.buffer)
 
-    def __init__(self, skipkeys=False, ensure_ascii=True,
-                 check_circular=True, allow_nan=True, sort_keys=False,
+        self.default_ = self.default
+
+    def __init__(self, libcpp.bool skipkeys=False, libcpp.bool ensure_ascii=True,
+                 libcpp.bool check_circular=True, libcpp.bool allow_nan=True, libcpp.bool sort_keys=False,
                  indent=None, separators=None, default=None):
         self.skipkeys = skipkeys
         self.ensure_ascii = ensure_ascii
@@ -41,7 +43,7 @@ cdef class JSONEncoder(object):
         elif indent is not None:
             self.item_separator = ','
         if default is not None:
-            self.default = default
+            self.default_ = default
 
     def __dealloc__(self):
         del self.writer
@@ -87,7 +89,7 @@ cdef class JSONEncoder(object):
 
                 doc.AddMember(key, value, dereference(self.allocator))
         else:
-            obj = self.default(obj)
+            obj = self.default_(obj)
             self.encode_inner(obj, doc)
 
 
@@ -100,7 +102,9 @@ cpdef dumps(obj, skipkeys=False, ensure_ascii=True, check_circular=True,
             allow_nan=True, cls=None, indent=None, separators=None,
             default=None, sort_keys=False):
 
-    return JSONEncoder().encode(obj)
+    return JSONEncoder(skipkeys=skipkeys, ensure_ascii=ensure_ascii,
+                       check_circular=check_circular, allow_nan=allow_nan, indent=indent,
+                       separators=separators, default=default, sort_keys=sort_keys).encode(obj)
 
 cpdef load(fp, cls=None, object_hook=None, parse_float=None,
            parse_int=None, parse_constant=None, object_pairs_hook=None):

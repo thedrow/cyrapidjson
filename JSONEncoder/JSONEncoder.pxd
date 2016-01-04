@@ -10,14 +10,14 @@ cdef class JSONEncoder(object):
     cdef StringBuffer buffer
     cdef StringWriter *writer
 
-    cpdef bool skipkeys
-    cpdef bool ensure_ascii
-    cpdef bool check_circular
-    cpdef bool allow_nan
-    cpdef bool sort_keys
-    cpdef object indent
-    cpdef object separators
-    cpdef object default
+    cpdef public bool skipkeys
+    cpdef public bool ensure_ascii
+    cpdef public bool check_circular
+    cpdef public bool allow_nan
+    cpdef public bool sort_keys
+    cpdef public object indent
+    cpdef public object separators
+    cdef object default_
 
     cpdef encode(self, obj)
 
