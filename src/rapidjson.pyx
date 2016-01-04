@@ -92,6 +92,7 @@ cdef class JSONEncoder(object):
             obj = self.default_(obj)
             self.encode_inner(obj, doc)
 
+cdef JSONEncoder _default_encoder = JSONEncoder()
 
 cpdef dump(obj, fp, skipkeys=False, ensure_ascii=True, check_circular=True,
            allow_nan=True, cls=None, indent=None, separators=None,
@@ -101,10 +102,16 @@ cpdef dump(obj, fp, skipkeys=False, ensure_ascii=True, check_circular=True,
 cpdef dumps(obj, skipkeys=False, ensure_ascii=True, check_circular=True,
             allow_nan=True, cls=None, indent=None, separators=None,
             default=None, sort_keys=False):
-
-    return JSONEncoder(skipkeys=skipkeys, ensure_ascii=ensure_ascii,
-                       check_circular=check_circular, allow_nan=allow_nan, indent=indent,
-                       separators=separators, default=default, sort_keys=sort_keys).encode(obj)
+    if (not skipkeys and ensure_ascii and
+            check_circular and allow_nan and
+            cls is None and indent is None and separators is None and
+            default is None and not sort_keys):
+        return _default_encoder.encode(obj)
+    if cls is None:
+        return JSONEncoder(
+            skipkeys=skipkeys, ensure_ascii=ensure_ascii,
+            check_circular=check_circular, allow_nan=allow_nan, indent=indent,
+            separators=separators, default=default, sort_keys=sort_keys).encode(obj)
 
 cpdef load(fp, cls=None, object_hook=None, parse_float=None,
            parse_int=None, parse_constant=None, object_pairs_hook=None):
