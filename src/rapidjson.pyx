@@ -92,7 +92,35 @@ cdef class JSONEncoder(object):
             obj = self.default_(obj)
             self.encode_inner(obj, doc)
 
+
+cdef class JSONDecoder(object):
+    cdef Document doc
+
+    cpdef decode(self, s):
+        cdef const char *c = s
+
+        self.doc.Parse(c)
+
+        if self.doc.IsNull():
+            return None
+        elif self.doc.IsBool():
+            return self.doc.GetBool()
+        elif self.doc.IsString():
+            return self.doc.GetString()
+        elif self.doc.IsNumber():
+            if self.doc.IsInt():
+                return self.doc.GetInt()
+            elif self.doc.IsUint():
+                return self.doc.GetUint()
+            elif self.doc.IsInt64():
+                return self.doc.GetInt64()
+            elif self.doc.IsUint64():
+                return self.doc.GetUint64()
+            elif self.doc.IsDouble():
+                return self.doc.GetDouble()
+
 cdef JSONEncoder _default_encoder = JSONEncoder()
+cdef JSONDecoder _default_decoder = JSONDecoder()
 
 cpdef dump(obj, fp, skipkeys=False, ensure_ascii=True, check_circular=True,
            allow_nan=True, cls=None, indent=None, separators=None,
@@ -119,6 +147,6 @@ cpdef load(fp, cls=None, object_hook=None, parse_float=None,
 
 cpdef loads(s, encoding=None, cls=None, object_hook=None, parse_float=None,
             parse_int=None, parse_constant=None, object_pairs_hook=None):
-    pass
+    return _default_decoder.decode(s)
 
 __all__ = ['dump', 'dumps', 'load', 'loads', 'JSONEncoder']
