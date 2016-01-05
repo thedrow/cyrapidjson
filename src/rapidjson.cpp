@@ -1138,7 +1138,7 @@ static int __pyx_pf_3src_9rapidjson_11JSONEncoder_6indent_4__del__(struct __pyx_
 static PyObject *__pyx_pf_3src_9rapidjson_11JSONEncoder_10separators___get__(struct __pyx_obj_3src_9rapidjson_JSONEncoder *__pyx_v_self); /* proto */
 static int __pyx_pf_3src_9rapidjson_11JSONEncoder_10separators_2__set__(struct __pyx_obj_3src_9rapidjson_JSONEncoder *__pyx_v_self, PyObject *__pyx_v_value); /* proto */
 static int __pyx_pf_3src_9rapidjson_11JSONEncoder_10separators_4__del__(struct __pyx_obj_3src_9rapidjson_JSONEncoder *__pyx_v_self); /* proto */
-static int __pyx_pf_3src_9rapidjson_11JSONDecoder___init__(struct __pyx_obj_3src_9rapidjson_JSONDecoder *__pyx_v_self, PyObject *__pyx_v_object_hook, PyObject *__pyx_v_parse_float, PyObject *__pyx_v_parse_int, PyObject *__pyx_v_parse_constant, PyObject *__pyx_v_strict, PyObject *__pyx_v_object_pairs_hook); /* proto */
+static int __pyx_pf_3src_9rapidjson_11JSONDecoder___init__(struct __pyx_obj_3src_9rapidjson_JSONDecoder *__pyx_v_self, PyObject *__pyx_v_object_hook, PyObject *__pyx_v_parse_float, PyObject *__pyx_v_parse_int, PyObject *__pyx_v_parse_constant, bool __pyx_v_strict, PyObject *__pyx_v_object_pairs_hook); /* proto */
 static PyObject *__pyx_pf_3src_9rapidjson_11JSONDecoder_2decode(struct __pyx_obj_3src_9rapidjson_JSONDecoder *__pyx_v_self, char const *__pyx_v_s); /* proto */
 static PyObject *__pyx_pf_3src_9rapidjson_11JSONDecoder_11object_hook___get__(struct __pyx_obj_3src_9rapidjson_JSONDecoder *__pyx_v_self); /* proto */
 static int __pyx_pf_3src_9rapidjson_11JSONDecoder_11object_hook_2__set__(struct __pyx_obj_3src_9rapidjson_JSONDecoder *__pyx_v_self, PyObject *__pyx_v_value); /* proto */
@@ -3575,7 +3575,7 @@ static int __pyx_pf_3src_9rapidjson_11JSONEncoder_10separators_4__del__(struct _
  *     cdef public object object_pairs_hook
  * 
  *     def __init__(self, object_hook=None, parse_float=None,             # <<<<<<<<<<<<<<
- *                 parse_int=None, parse_constant=None, strict=True,
+ *                 parse_int=None, parse_constant=None, libcpp.bool strict=True,
  *                 object_pairs_hook=None):
  */
 
@@ -3586,7 +3586,7 @@ static int __pyx_pw_3src_9rapidjson_11JSONDecoder_1__init__(PyObject *__pyx_v_se
   PyObject *__pyx_v_parse_float = 0;
   PyObject *__pyx_v_parse_int = 0;
   PyObject *__pyx_v_parse_constant = 0;
-  PyObject *__pyx_v_strict = 0;
+  bool __pyx_v_strict;
   PyObject *__pyx_v_object_pairs_hook = 0;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
@@ -3603,17 +3603,16 @@ static int __pyx_pw_3src_9rapidjson_11JSONDecoder_1__init__(PyObject *__pyx_v_se
     /* "src/rapidjson.pyx":126
  * 
  *     def __init__(self, object_hook=None, parse_float=None,
- *                 parse_int=None, parse_constant=None, strict=True,             # <<<<<<<<<<<<<<
+ *                 parse_int=None, parse_constant=None, libcpp.bool strict=True,             # <<<<<<<<<<<<<<
  *                 object_pairs_hook=None):
  *         self.object_hook = object_hook
  */
     values[2] = ((PyObject *)Py_None);
     values[3] = ((PyObject *)Py_None);
-    values[4] = ((PyObject *)Py_True);
 
     /* "src/rapidjson.pyx":127
  *     def __init__(self, object_hook=None, parse_float=None,
- *                 parse_int=None, parse_constant=None, strict=True,
+ *                 parse_int=None, parse_constant=None, libcpp.bool strict=True,
  *                 object_pairs_hook=None):             # <<<<<<<<<<<<<<
  *         self.object_hook = object_hook
  *         self.parse_float = parse_float
@@ -3684,7 +3683,19 @@ static int __pyx_pw_3src_9rapidjson_11JSONDecoder_1__init__(PyObject *__pyx_v_se
     __pyx_v_parse_float = values[1];
     __pyx_v_parse_int = values[2];
     __pyx_v_parse_constant = values[3];
-    __pyx_v_strict = values[4];
+    if (values[4]) {
+      __pyx_v_strict = __Pyx_PyObject_IsTrue(values[4]); if (unlikely((__pyx_v_strict == (bool)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 126; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+    } else {
+
+      /* "src/rapidjson.pyx":126
+ * 
+ *     def __init__(self, object_hook=None, parse_float=None,
+ *                 parse_int=None, parse_constant=None, libcpp.bool strict=True,             # <<<<<<<<<<<<<<
+ *                 object_pairs_hook=None):
+ *         self.object_hook = object_hook
+ */
+      __pyx_v_strict = ((bool)1);
+    }
     __pyx_v_object_pairs_hook = values[5];
   }
   goto __pyx_L4_argument_unpacking_done;
@@ -3701,7 +3712,7 @@ static int __pyx_pw_3src_9rapidjson_11JSONDecoder_1__init__(PyObject *__pyx_v_se
  *     cdef public object object_pairs_hook
  * 
  *     def __init__(self, object_hook=None, parse_float=None,             # <<<<<<<<<<<<<<
- *                 parse_int=None, parse_constant=None, strict=True,
+ *                 parse_int=None, parse_constant=None, libcpp.bool strict=True,
  *                 object_pairs_hook=None):
  */
 
@@ -3710,17 +3721,13 @@ static int __pyx_pw_3src_9rapidjson_11JSONDecoder_1__init__(PyObject *__pyx_v_se
   return __pyx_r;
 }
 
-static int __pyx_pf_3src_9rapidjson_11JSONDecoder___init__(struct __pyx_obj_3src_9rapidjson_JSONDecoder *__pyx_v_self, PyObject *__pyx_v_object_hook, PyObject *__pyx_v_parse_float, PyObject *__pyx_v_parse_int, PyObject *__pyx_v_parse_constant, PyObject *__pyx_v_strict, PyObject *__pyx_v_object_pairs_hook) {
+static int __pyx_pf_3src_9rapidjson_11JSONDecoder___init__(struct __pyx_obj_3src_9rapidjson_JSONDecoder *__pyx_v_self, PyObject *__pyx_v_object_hook, PyObject *__pyx_v_parse_float, PyObject *__pyx_v_parse_int, PyObject *__pyx_v_parse_constant, bool __pyx_v_strict, PyObject *__pyx_v_object_pairs_hook) {
   int __pyx_r;
   __Pyx_RefNannyDeclarations
-  bool __pyx_t_1;
-  int __pyx_lineno = 0;
-  const char *__pyx_filename = NULL;
-  int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__init__", 0);
 
   /* "src/rapidjson.pyx":128
- *                 parse_int=None, parse_constant=None, strict=True,
+ *                 parse_int=None, parse_constant=None, libcpp.bool strict=True,
  *                 object_pairs_hook=None):
  *         self.object_hook = object_hook             # <<<<<<<<<<<<<<
  *         self.parse_float = parse_float
@@ -3778,8 +3785,7 @@ static int __pyx_pf_3src_9rapidjson_11JSONDecoder___init__(struct __pyx_obj_3src
  *         self.object_pairs_hook = object_pairs_hook
  * 
  */
-  __pyx_t_1 = __Pyx_PyObject_IsTrue(__pyx_v_strict); if (unlikely((__pyx_t_1 == (bool)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 132; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __pyx_v_self->strict = __pyx_t_1;
+  __pyx_v_self->strict = __pyx_v_strict;
 
   /* "src/rapidjson.pyx":133
  *         self.parse_constant = parse_constant
@@ -3798,17 +3804,12 @@ static int __pyx_pf_3src_9rapidjson_11JSONDecoder___init__(struct __pyx_obj_3src
  *     cdef public object object_pairs_hook
  * 
  *     def __init__(self, object_hook=None, parse_float=None,             # <<<<<<<<<<<<<<
- *                 parse_int=None, parse_constant=None, strict=True,
+ *                 parse_int=None, parse_constant=None, libcpp.bool strict=True,
  *                 object_pairs_hook=None):
  */
 
   /* function exit code */
   __pyx_r = 0;
-  goto __pyx_L0;
-  __pyx_L1_error:;
-  __Pyx_AddTraceback("src.rapidjson.JSONDecoder.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
-  __pyx_r = -1;
-  __pyx_L0:;
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }

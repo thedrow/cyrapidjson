@@ -123,7 +123,7 @@ cdef class JSONDecoder(object):
     cdef public object object_pairs_hook
 
     def __init__(self, object_hook=None, parse_float=None,
-                parse_int=None, parse_constant=None, strict=True,
+                parse_int=None, parse_constant=None, libcpp.bool strict=True,
                 object_pairs_hook=None):
         self.object_hook = object_hook
         self.parse_float = parse_float
