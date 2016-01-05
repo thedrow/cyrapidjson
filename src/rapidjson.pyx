@@ -7,7 +7,27 @@ from stringbuffer cimport StringBuffer
 from writer cimport StringWriter
 from encodings cimport UTF8
 from allocators cimport MemoryPoolAllocator, CrtAllocator
-from libc.stdint cimport int64_t
+from error cimport GetParseError_En
+from libc.stdint cimport int64_t, uint64_t
+
+try:
+    # Starting from Python 3.5 we can expose the same error as the one thrown by the json module
+    from json.decoder import JSONDecodeError
+except ImportError:
+    class JSONDecodeError(ValueError):
+        def __init__(self, msg, doc, pos):
+            lineno = doc.count('\n', 0, pos) + 1
+            colno = pos - doc.rfind('\n', 0, pos)
+            errmsg = '%s: line %d column %d (char %d)' % (msg, lineno, colno, pos)
+            ValueError.__init__(self, errmsg)
+            self.msg = msg
+            self.doc = doc
+            self.pos = pos
+            self.lineno = lineno
+            self.colno = colno
+
+        def __reduce__(self):
+            return self.__class__, (self.msg, self.doc, self.pos)
 
 cdef class JSONEncoder(object):
     cpdef public libcpp.bool skipkeys
@@ -98,6 +118,9 @@ cdef class JSONDecoder(object):
 
     cpdef decode(self, const char *s):
         self.doc.Parse(s)
+
+        if self.doc.HasParseError():
+            raise JSONDecodeError(GetParseError_En(self.doc.GetParseError()), s, self.doc.GetErrorOffset())
 
         return self.decode_inner(self.doc)
 

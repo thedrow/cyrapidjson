@@ -2,6 +2,7 @@ from libcpp cimport bool
 from libcpp.string cimport string
 from allocators cimport CrtAllocator, MemoryPoolAllocator
 from encodings cimport UTF8
+from error cimport ParseErrorCode
 from libc.stdint cimport int64_t, uint64_t
 
 cdef extern from "document.h" namespace "rapidjson":
@@ -54,6 +55,9 @@ cdef extern from "document.h" namespace "rapidjson":
         Allocator& GetAllocator()
 
         GenericDocument& Parse(const char* str)
+        bool HasParseError() const
+        ParseErrorCode GetParseError() const
+        size_t GetErrorOffset() const
 
     cdef cppclass GenericMember[Encoding, Allocator]:
         GenericValue[Encoding, Allocator] name
