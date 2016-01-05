@@ -39,14 +39,11 @@ cdef class JSONEncoder(object):
     cpdef public object separators
     cdef object default_
 
-    cdef StringWriter *writer
     cdef Document doc
     cdef MemoryPoolAllocator[CrtAllocator] *allocator
-    cdef StringBuffer buffer
 
     def __cinit__(self):
         self.allocator = &self.doc.GetAllocator()
-        self.writer = new StringWriter(self.buffer)
 
         self.default_ = self.default
 
@@ -66,18 +63,20 @@ cdef class JSONEncoder(object):
         if default is not None:
             self.default_ = default
 
-    def __dealloc__(self):
-        del self.writer
-
     def default(self, o):
         raise TypeError(repr(o) + " is not JSON serializable")
 
     cpdef encode(self, obj):
+        cdef StringBuffer buffer
+        cdef StringWriter *writer = new StringWriter(buffer)
+
         self.encode_inner(obj, self.doc)
 
-        self.doc.Accept(dereference(self.writer))
+        self.doc.Accept(dereference(writer))
 
-        return <str>self.buffer.GetString().decode('UTF-8')
+        del writer
+
+        return <str>buffer.GetString().decode('UTF-8')
 
 
     cdef encode_inner(self, obj, Value &doc):
