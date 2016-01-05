@@ -196,8 +196,15 @@ cpdef dumps(obj, skipkeys=False, ensure_ascii=True, check_circular=True,
             cls is None and indent is None and separators is None and
             default is None and not sort_keys):
         return _default_encoder.encode(obj)
-    if cls is None:
+    elif cls is None:
         return JSONEncoder(
+            skipkeys=skipkeys, ensure_ascii=ensure_ascii,
+            check_circular=check_circular, allow_nan=allow_nan, indent=indent,
+            separators=separators, default=default, sort_keys=sort_keys).encode(obj)
+    elif not issubclass(cls, JSONEncoder):
+        raise TypeError("cls is not a subclass or an instance of rapidjson.JSONEncoder.\nUse the stdlib json module instead.")
+    else:
+        return cls(
             skipkeys=skipkeys, ensure_ascii=ensure_ascii,
             check_circular=check_circular, allow_nan=allow_nan, indent=indent,
             separators=separators, default=default, sort_keys=sort_keys).encode(obj)
@@ -213,8 +220,13 @@ cpdef loads(s, encoding=None, cls=None, object_hook=None, parse_float=None,
             parse_int is None and parse_float is None and
             parse_constant is None and object_pairs_hook is None):
         return _default_decoder.decode(s)
-    if cls is None:
+    elif cls is None:
         return JSONDecoder(object_hook=object_hook, parse_float=parse_float, parse_int=parse_int,
+                           parse_constant=parse_constant, object_pairs_hook=object_pairs_hook).decode(s)
+    elif not issubclass(cls, JSONDecoder):
+        raise TypeError("cls is not a subclass or an instance of rapidjson.JSONDecoder.\nUse the stdlib json module instead.")
+    else:
+        return cls(object_hook=object_hook, parse_float=parse_float, parse_int=parse_int,
                            parse_constant=parse_constant, object_pairs_hook=object_pairs_hook).decode(s)
 
 
