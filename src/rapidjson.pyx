@@ -191,4 +191,4 @@ cpdef loads(s, encoding=None, cls=None, object_hook=None, parse_float=None,
             parse_int=None, parse_constant=None, object_pairs_hook=None):
     return _default_decoder.decode(s)
 
-__all__ = ['dump', 'dumps', 'load', 'loads', 'JSONEncoder']
+__all__ = ['dump', 'dumps', 'load', 'loads', 'JSONEncoder', 'JSONDecoder', 'JSONDecodeError']
