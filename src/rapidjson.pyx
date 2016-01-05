@@ -116,6 +116,23 @@ cdef class JSONEncoder(object):
 cdef class JSONDecoder(object):
     cdef Document doc
 
+    cdef public object object_hook
+    cdef public object parse_float
+    cdef public object parse_int
+    cdef public object parse_constant
+    cdef public libcpp.bool strict
+    cdef public object object_pairs_hook
+
+    def __init__(self, object_hook=None, parse_float=None,
+                parse_int=None, parse_constant=None, strict=True,
+                object_pairs_hook=None):
+        self.object_hook = object_hook
+        self.parse_float = parse_float
+        self.parse_int = parse_int
+        self.parse_constant = parse_constant
+        self.strict = strict
+        self.object_pairs_hook = object_pairs_hook
+
     cpdef decode(self, const char *s):
         self.doc.Parse(s)
 
@@ -193,6 +210,13 @@ cpdef load(fp, cls=None, object_hook=None, parse_float=None,
 
 cpdef loads(s, encoding=None, cls=None, object_hook=None, parse_float=None,
             parse_int=None, parse_constant=None, object_pairs_hook=None):
-    return _default_decoder.decode(s)
+    if (cls is None and object_hook is None and
+            parse_int is None and parse_float is None and
+            parse_constant is None and object_pairs_hook is None):
+        return _default_decoder.decode(s)
+    if cls is None:
+        return JSONDecoder(object_hook=object_hook, parse_float=parse_float, parse_int=parse_int,
+                           parse_constant=parse_constant, object_pairs_hook=object_pairs_hook).decode(s)
+
 
 __all__ = ['dump', 'dumps', 'load', 'loads', 'JSONEncoder', 'JSONDecoder', 'JSONDecodeError']
