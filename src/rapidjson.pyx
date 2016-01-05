@@ -2,9 +2,10 @@
 cimport libcpp
 from libcpp.string cimport string
 from cython.operator cimport dereference, preincrement
-from document cimport Document, Value
+from document cimport Document, Value, GenericMember, GenericMemberIterator
 from stringbuffer cimport StringBuffer
 from writer cimport StringWriter
+from encodings cimport UTF8
 from allocators cimport MemoryPoolAllocator, CrtAllocator
 from libc.stdint cimport int64_t
 
@@ -102,6 +103,7 @@ cdef class JSONDecoder(object):
 
     cdef decode_inner(self, const Value &doc):
         cdef const Value* it
+        cdef GenericMemberIterator it2
 
         if doc.IsNull():
             return None
@@ -127,6 +129,14 @@ cdef class JSONDecoder(object):
                 l.append(self.decode_inner(dereference(it)))
                 preincrement(it)
             return l
+        elif doc.IsObject():
+            it2 = doc.MemberBegin()
+            d = {}
+            while it2 != doc.MemberEnd():
+                d[dereference(it2).name.GetString()] = self.decode_inner(dereference(it2).value)
+                preincrement(it2)
+            return d
+
 
 cdef JSONEncoder _default_encoder = JSONEncoder()
 cdef JSONDecoder _default_decoder = JSONDecoder()

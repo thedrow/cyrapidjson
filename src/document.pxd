@@ -9,6 +9,10 @@ cdef extern from "document.h" namespace "rapidjson":
         const GenericValue* Begin() const
         const GenericValue* End() const
 
+        const GenericMemberIterator MemberBegin() const
+        const GenericMemberIterator MemberEnd() const
+
+
         GenericValue& SetString(const string& s, Allocator& allocator)
         GenericValue& SetBool(bool)
         GenericValue& SetNull()
@@ -50,6 +54,16 @@ cdef extern from "document.h" namespace "rapidjson":
         Allocator& GetAllocator()
 
         GenericDocument& Parse(const char* str)
+
+    cdef cppclass GenericMember[Encoding, Allocator]:
+        GenericValue[Encoding, Allocator] name
+        GenericValue[Encoding, Allocator] value
+
+    cdef cppclass GenericMemberIterator "rapidjson::GenericMemberIterator<true, rapidjson::UTF8<char>, rapidjson::MemoryPoolAllocator<rapidjson::CrtAllocator> >":
+        const GenericMember[UTF8[char], MemoryPoolAllocator[CrtAllocator]]& operator*() const
+        GenericMemberIterator& operator++()
+        GenericMemberIterator& operator--()
+        bool operator!=(GenericMemberIterator)
 
     ctypedef GenericValue[UTF8[char], MemoryPoolAllocator[CrtAllocator]] Value
     ctypedef GenericDocument[UTF8[char], MemoryPoolAllocator[CrtAllocator], CrtAllocator] Document
