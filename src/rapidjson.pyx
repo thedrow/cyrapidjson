@@ -133,7 +133,7 @@ cdef class JSONDecoder(object):
             it2 = doc.MemberBegin()
             d = {}
             while it2 != doc.MemberEnd():
-                d[dereference(it2).name.GetString()] = self.decode_inner(dereference(it2).value)
+                d[dereference(it2).name.GetString().decode('UTF-8')] = self.decode_inner(dereference(it2).value)
                 preincrement(it2)
             return d
 

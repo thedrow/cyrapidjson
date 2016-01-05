@@ -3180,7 +3180,8 @@ static PyObject *__pyx_f_3src_9rapidjson_11JSONDecoder_decode_inner(struct __pyx
   int __pyx_t_1;
   PyObject *__pyx_t_2 = NULL;
   int __pyx_t_3;
-  PyObject *__pyx_t_4 = NULL;
+  char const *__pyx_t_4;
+  PyObject *__pyx_t_5 = NULL;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
@@ -3577,7 +3578,7 @@ static PyObject *__pyx_f_3src_9rapidjson_11JSONDecoder_decode_inner(struct __pyx
  *             it2 = doc.MemberBegin()
  *             d = {}             # <<<<<<<<<<<<<<
  *             while it2 != doc.MemberEnd():
- *                 d[dereference(it2).name.GetString()] = self.decode_inner(dereference(it2).value)
+ *                 d[dereference(it2).name.GetString().decode('UTF-8')] = self.decode_inner(dereference(it2).value)
  */
     __pyx_t_2 = PyDict_New(); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 134; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_2);
@@ -3588,7 +3589,7 @@ static PyObject *__pyx_f_3src_9rapidjson_11JSONDecoder_decode_inner(struct __pyx
  *             it2 = doc.MemberBegin()
  *             d = {}
  *             while it2 != doc.MemberEnd():             # <<<<<<<<<<<<<<
- *                 d[dereference(it2).name.GetString()] = self.decode_inner(dereference(it2).value)
+ *                 d[dereference(it2).name.GetString().decode('UTF-8')] = self.decode_inner(dereference(it2).value)
  *                 preincrement(it2)
  */
     while (1) {
@@ -3598,21 +3599,22 @@ static PyObject *__pyx_f_3src_9rapidjson_11JSONDecoder_decode_inner(struct __pyx
       /* "src/rapidjson.pyx":136
  *             d = {}
  *             while it2 != doc.MemberEnd():
- *                 d[dereference(it2).name.GetString()] = self.decode_inner(dereference(it2).value)             # <<<<<<<<<<<<<<
+ *                 d[dereference(it2).name.GetString().decode('UTF-8')] = self.decode_inner(dereference(it2).value)             # <<<<<<<<<<<<<<
  *                 preincrement(it2)
  *             return d
  */
       __pyx_t_2 = ((struct __pyx_vtabstruct_3src_9rapidjson_JSONDecoder *)__pyx_v_self->__pyx_vtab)->decode_inner(__pyx_v_self, (*__pyx_v_it2).value); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 136; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_2);
-      __pyx_t_4 = __Pyx_PyBytes_FromString((*__pyx_v_it2).name.GetString()); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 136; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-      __Pyx_GOTREF(__pyx_t_4);
-      if (unlikely(PyDict_SetItem(__pyx_v_d, __pyx_t_4, __pyx_t_2) < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 136; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-      __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+      __pyx_t_4 = (*__pyx_v_it2).name.GetString();
+      __pyx_t_5 = __Pyx_decode_c_string(__pyx_t_4, 0, strlen(__pyx_t_4), NULL, NULL, PyUnicode_DecodeUTF8); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 136; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __Pyx_GOTREF(__pyx_t_5);
+      if (unlikely(PyDict_SetItem(__pyx_v_d, __pyx_t_5, __pyx_t_2) < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 136; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
       /* "src/rapidjson.pyx":137
  *             while it2 != doc.MemberEnd():
- *                 d[dereference(it2).name.GetString()] = self.decode_inner(dereference(it2).value)
+ *                 d[dereference(it2).name.GetString().decode('UTF-8')] = self.decode_inner(dereference(it2).value)
  *                 preincrement(it2)             # <<<<<<<<<<<<<<
  *             return d
  * 
@@ -3621,7 +3623,7 @@ static PyObject *__pyx_f_3src_9rapidjson_11JSONDecoder_decode_inner(struct __pyx
     }
 
     /* "src/rapidjson.pyx":138
- *                 d[dereference(it2).name.GetString()] = self.decode_inner(dereference(it2).value)
+ *                 d[dereference(it2).name.GetString().decode('UTF-8')] = self.decode_inner(dereference(it2).value)
  *                 preincrement(it2)
  *             return d             # <<<<<<<<<<<<<<
  * 
@@ -3655,7 +3657,7 @@ static PyObject *__pyx_f_3src_9rapidjson_11JSONDecoder_decode_inner(struct __pyx
   goto __pyx_L0;
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_2);
-  __Pyx_XDECREF(__pyx_t_4);
+  __Pyx_XDECREF(__pyx_t_5);
   __Pyx_AddTraceback("src.rapidjson.JSONDecoder.decode_inner", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = 0;
   __pyx_L0:;
