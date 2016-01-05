@@ -110,7 +110,7 @@ cdef class JSONDecoder(object):
         elif doc.IsBool():
             return doc.GetBool()
         elif doc.IsString():
-            return doc.GetString()
+            return doc.GetString().decode('UTF-8')
         elif doc.IsNumber():
             if doc.IsInt():
                 return doc.GetInt()
