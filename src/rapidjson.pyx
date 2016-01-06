@@ -41,12 +41,7 @@ cdef class JSONEncoder(object):
     cpdef public char* key_separator
     cdef object default_
 
-    cdef Document doc
-    cdef MemoryPoolAllocator[CrtAllocator] *allocator
-
     def __cinit__(self):
-        self.allocator = &self.doc.GetAllocator()
-
         self.default_ = self.default
 
     def __init__(self, libcpp.bool skipkeys=False, libcpp.bool ensure_ascii=True,
@@ -71,17 +66,18 @@ cdef class JSONEncoder(object):
     cpdef encode(self, obj):
         cdef StringBuffer buffer
         cdef StringWriter *writer = new StringWriter(buffer)
+        cdef Document doc
 
-        self.encode_inner(obj, self.doc)
+        self.encode_inner(obj, doc, doc.GetAllocator())
 
-        self.doc.Accept(dereference(writer))
+        doc.Accept(dereference(writer))
 
         del writer
 
         return <str>buffer.GetString().decode('UTF-8')
 
 
-    cdef encode_inner(self, obj, Value &doc):
+    cdef encode_inner(self, obj, Value &doc, MemoryPoolAllocator[CrtAllocator] &allocator):
         cdef Value key
         cdef Value value
 
@@ -94,29 +90,27 @@ cdef class JSONEncoder(object):
         elif isinstance(obj, (int, long)):
             doc.SetInt64(<int64_t> obj)
         elif isinstance(obj, (str, unicode, bytes)):
-            doc.SetString(<string> obj, dereference(self.allocator))
+            doc.SetString(<string> obj, allocator)
         elif isinstance(obj, (list, tuple)):
             doc.SetArray()
 
             for item in obj:
-                self.encode_inner(item, value)
+                self.encode_inner(item, value, allocator)
 
-                doc.PushBack(value, dereference(self.allocator))
+                doc.PushBack(value, allocator)
         elif isinstance(obj, dict):
             doc.SetObject()
 
             for k, v in obj.items():
-                key.SetString(<string> unicode(k), dereference(self.allocator))
-                self.encode_inner(v, value)
+                key.SetString(<string> unicode(k), allocator)
+                self.encode_inner(v, value, allocator)
 
-                doc.AddMember(key, value, dereference(self.allocator))
+                doc.AddMember(key, value, allocator)
         else:
             obj = self.default_(obj)
-            self.encode_inner(obj, doc)
+            self.encode_inner(obj, doc, allocator)
 
 cdef class JSONDecoder(object):
-    cdef Document doc
-
     cdef public object object_hook
     cdef public object parse_float
     cdef public object parse_int
@@ -135,12 +129,14 @@ cdef class JSONDecoder(object):
         self.object_pairs_hook = object_pairs_hook
 
     cpdef decode(self, const char *s):
-        self.doc.Parse(s)
+        cdef Document doc
 
-        if self.doc.HasParseError():
-            raise JSONDecodeError(GetParseError_En(self.doc.GetParseError()), s, self.doc.GetErrorOffset())
+        doc.Parse(s)
 
-        return self.decode_inner(self.doc)
+        if doc.HasParseError():
+            raise JSONDecodeError(GetParseError_En(doc.GetParseError()), s, doc.GetErrorOffset())
+
+        return self.decode_inner(doc)
 
     cdef decode_inner(self, const Value &doc):
         cdef const Value* it
