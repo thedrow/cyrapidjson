@@ -90,7 +90,7 @@ cdef class JSONEncoder(object):
         elif isinstance(obj, (int, long)):
             doc.SetInt64(<int64_t> obj)
         elif isinstance(obj, (str, unicode, bytes)):
-            doc.SetString(<string> obj, allocator)
+            doc.SetString(<const char *>obj, len(obj))
         elif isinstance(obj, (list, tuple)):
             doc.SetArray()
 
@@ -102,7 +102,8 @@ cdef class JSONEncoder(object):
             doc.SetObject()
 
             for k, v in obj.items():
-                key.SetString(<string> unicode(k), allocator)
+                k = bytes(k)
+                key.SetString(<const char *>k, len(k))
                 self.encode_inner(v, value, allocator)
 
                 doc.AddMember(key, value, allocator)
