@@ -1,11 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import pytest
-import time
-import sys
 import random
-from functools import partial
+import sys
+import time
+
+import pytest
 
 try:
     import yajl
@@ -90,26 +90,13 @@ if json:
 
 if rapidjson:
     contenders.append(
-            ('rapidjson', rapidjson.dumps,
-             partial(rapidjson.loads))
+            ('rapidjson', rapidjson.dumps, rapidjson.loads)
     )
 
 if ujson:
     contenders.append(
-            ('ujson', ujson.dumps, partial(ujson.loads))
+            ('ujson', ujson.dumps, ujson.loads)
     )
-
-unprecise_rapid = (
-    'rapidjson (not precise)',
-    rapidjson.dumps,
-    partial(rapidjson.loads)
-)
-
-unprecise_ujson = (
-    'ujson (not precise)',
-    ujson.dumps,
-    partial(ujson.loads)
-)
 
 doubles = []
 unicode_strings = []
@@ -149,32 +136,14 @@ def test_json_serialization(name, serialize, deserialize, benchmark):
     print(msg)
 
 
-@pytest.mark.parametrize(
-        'name,serialize,deserialize',
-        contenders + [unprecise_ujson, unprecise_rapid]
-)
-def test_json_doubles(name, serialize, deserialize, benchmark):
-    print("\nArray with 256 doubles:")
-    benchmark(run_client_test,
-              name, serialize, deserialize,
-              data=doubles,
-              iterations=50000,
-              )
-    # msg = "%-11s serialize: %0.3f  deserialize: %0.3f  total: %0.3f" % (
-    #     name, ser_data, des_data, ser_data + des_data
-    # )
-    #
-    # print(msg)
-
-
 @pytest.mark.parametrize('name,serialize,deserialize', contenders)
 def test_json_unicode_strings(name, serialize, deserialize, benchmark):
     print("\nArray with 256 unicode strings:")
     ser_data, des_data = benchmark(run_client_test,
-                                  name, serialize, deserialize,
-                                  data=unicode_strings,
-                                  iterations=5000,
-                                  )
+                                   name, serialize, deserialize,
+                                   data=unicode_strings,
+                                   iterations=5000,
+                                   )
     msg = "%-11s serialize: %0.3f  deserialize: %0.3f  total: %0.3f" % (
         name, ser_data, des_data, ser_data + des_data
     )
@@ -200,9 +169,9 @@ def test_json_scii_strings(name, serialize, deserialize, benchmark):
 def test_json_booleans(name, serialize, deserialize, benchmark):
     print("\nArray with 256 True's:")
     ser_data, des_data = benchmark(run_client_test,
-            name, serialize, deserialize,
-            data=booleans,
-    )
+                                   name, serialize, deserialize,
+                                   data=booleans,
+                                   )
     msg = "%-11s serialize: %0.3f  deserialize: %0.3f  total: %0.3f" % (
         name, ser_data, des_data, ser_data + des_data
     )
@@ -214,10 +183,10 @@ def test_json_booleans(name, serialize, deserialize, benchmark):
 def test_json_list_of_dictionaries(name, serialize, deserialize, benchmark):
     print("\nArray of 100 dictionaries:")
     ser_data, des_data = benchmark(run_client_test,
-            name, serialize, deserialize,
-            data=list_dicts,
-            iterations=5,
-    )
+                                   name, serialize, deserialize,
+                                   data=list_dicts,
+                                   iterations=5,
+                                   )
     msg = "%-11s serialize: %0.3f  deserialize: %0.3f  total: %0.3f" % (
         name, ser_data, des_data, ser_data + des_data
     )
@@ -229,10 +198,10 @@ def test_json_list_of_dictionaries(name, serialize, deserialize, benchmark):
 def test_json_dictionary_of_lists(name, serialize, deserialize, benchmark):
     print("\nDictionary of 100 Arrays:")
     ser_data, des_data = benchmark(run_client_test,
-            name, serialize, deserialize,
-            data=dict_lists,
-            iterations=5,
-    )
+                                   name, serialize, deserialize,
+                                   data=dict_lists,
+                                   iterations=5,
+                                   )
     msg = "%-11s serialize: %0.3f  deserialize: %0.3f  total: %0.3f" % (
         name, ser_data, des_data, ser_data + des_data
     )
@@ -244,10 +213,10 @@ def test_json_dictionary_of_lists(name, serialize, deserialize, benchmark):
 def test_json_medium_complex_objects(name, serialize, deserialize, benchmark):
     print("\n256 Medium Complex objects:")
     ser_data, des_data = benchmark(run_client_test,
-            name, serialize, deserialize,
-            data=medium_complex,
-            iterations=50000,
-    )
+                                   name, serialize, deserialize,
+                                   data=medium_complex,
+                                   iterations=50000,
+                                   )
     msg = "%-11s serialize: %0.3f  deserialize: %0.3f  total: %0.3f" % (
         name, ser_data, des_data, ser_data + des_data
     )
@@ -256,34 +225,18 @@ def test_json_medium_complex_objects(name, serialize, deserialize, benchmark):
 
 
 def test_double_performance_float_precision(benchmark):
-    from functools import partial
-
     print("\nArray with 256 doubles:")
     name = 'rapidjson (precise)'
     serialize = rapidjson.dumps
     deserialize = rapidjson.loads
 
     ser_data, des_data = benchmark(run_client_test,
-            name, serialize, deserialize,
-            data=doubles,
-            iterations=50000,
-    )
+                                   name, serialize, deserialize,
+                                   data=doubles,
+                                   iterations=50000,
+                                   )
     msg = "%-11s serialize: %0.3f  deserialize: %0.3f  total: %0.3f" % (
         name, ser_data, des_data, ser_data + des_data
     )
 
-    print(msg)
-
-    name = 'rapidjson (not precise)'
-    serialize = rapidjson.dumps
-    deserialize = partial(rapidjson.loads)
-
-    ser_data, des_data = benchmark(run_client_test,
-            name, serialize, deserialize,
-            data=doubles,
-            iterations=50000,
-    )
-    msg = "%-11s serialize: %0.3f  deserialize: %0.3f  total: %0.3f" % (
-        name, ser_data, des_data, ser_data + des_data
-    )
     print(msg)
