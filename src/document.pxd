@@ -22,7 +22,10 @@ cdef extern from "document.h" namespace "rapidjson":
         GenericValue& SetInt64(int64_t)
 
         GenericValue& SetArray()
+        size_t Size() const
+
         GenericValue& SetObject()
+        size_t MemberCount() const
 
         GenericValue& PushBack(GenericValue& value, Allocator& allocator)
         GenericValue& AddMember(GenericValue& name, GenericValue& value, Allocator& allocator)

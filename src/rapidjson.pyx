@@ -1,4 +1,5 @@
 # distutils: language = c++
+from cpython cimport PyList_New
 cimport libcpp
 from libcpp.string cimport string
 from cython.operator cimport dereference, preincrement
@@ -162,7 +163,7 @@ cdef class JSONDecoder(object):
                 return doc.GetDouble()
         elif doc.IsArray():
             it = doc.Begin()
-            l = []
+            l = PyList_New(doc.Size())
             while it != doc.End():
                 l.append(self.decode_inner(dereference(it)))
                 preincrement(it)
