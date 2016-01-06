@@ -63,7 +63,7 @@ cdef class JSONEncoder(object):
     def default(self, o):
         raise TypeError(repr(o) + " is not JSON serializable")
 
-    cpdef encode(self, obj):
+    cpdef str encode(self, obj):
         cdef StringBuffer buffer
         cdef StringWriter *writer = new StringWriter(buffer)
         cdef Document doc
@@ -77,7 +77,7 @@ cdef class JSONEncoder(object):
         return <str>buffer.GetString().decode('UTF-8')
 
 
-    cdef encode_inner(self, obj, Value &doc, MemoryPoolAllocator[CrtAllocator] &allocator):
+    cdef void encode_inner(self, obj, Value &doc, MemoryPoolAllocator[CrtAllocator] &allocator):
         cdef Value key
         cdef Value value
 
@@ -179,15 +179,15 @@ cdef class JSONDecoder(object):
 cdef JSONEncoder _default_encoder = JSONEncoder()
 cdef JSONDecoder _default_decoder = JSONDecoder()
 
-cpdef dump(obj, fp, libcpp.bool skipkeys=False, libcpp.bool ensure_ascii=True, libcpp.bool check_circular=True,
+cpdef void dump(obj, fp, libcpp.bool skipkeys=False, libcpp.bool ensure_ascii=True, libcpp.bool check_circular=True,
            libcpp.bool allow_nan=True, cls=None, int64_t indent=-1, separators=None,
            default=None, libcpp.bool sort_keys=False):
-    json_string = dumps(obj, skipkeys=skipkeys, ensure_ascii=ensure_ascii,
-                        check_circular=check_circular, allow_nan=allow_nan, indent=indent,
-                        separators=separators, default=default, sort_keys=sort_keys)
+    cdef str json_string = dumps(obj, skipkeys=skipkeys, ensure_ascii=ensure_ascii,
+                                 check_circular=check_circular, allow_nan=allow_nan, indent=indent,
+                                 separators=separators, default=default, sort_keys=sort_keys)
     fp.write(json_string)
 
-cpdef dumps(obj, libcpp.bool skipkeys=False, libcpp.bool ensure_ascii=True, libcpp.bool check_circular=True,
+cpdef str dumps(obj, libcpp.bool skipkeys=False, libcpp.bool ensure_ascii=True, libcpp.bool check_circular=True,
             libcpp.bool allow_nan=True, cls=None, int64_t indent=-1, separators=None,
             default=None, libcpp.bool sort_keys=False):
     if (not skipkeys and ensure_ascii and
