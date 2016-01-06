@@ -2,7 +2,7 @@ from encodings cimport UTF8
 from allocators cimport CrtAllocator
 from stringbuffer cimport StringBuffer
 
-cdef extern from "writer.h" namespace "rapidjson":
+cdef extern from "writer.h" namespace "rapidjson" nogil:
     cdef cppclass Writer[OutputStream, SourceEncoding, TargetEncoding, StackAllocator]:
         Writer(OutputStream& os)
 

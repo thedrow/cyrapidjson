@@ -1,4 +1,4 @@
-cdef extern from "error.h" namespace "rapidjson":
+cdef extern from "error.h" namespace "rapidjson" nogil:
     cdef enum ParseErrorCode:
         kParseErrorNone = 0,
         kParseErrorDocumentEmpty,

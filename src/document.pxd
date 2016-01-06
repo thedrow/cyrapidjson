@@ -5,7 +5,7 @@ from encodings cimport UTF8
 from error cimport ParseErrorCode
 from libc.stdint cimport int64_t, uint64_t
 
-cdef extern from "document.h" namespace "rapidjson":
+cdef extern from "document.h" namespace "rapidjson" nogil:
     cdef cppclass GenericValue[Encoding, Allocator]:
         const GenericValue* Begin() const
         const GenericValue* End() const

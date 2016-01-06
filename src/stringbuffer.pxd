@@ -1,7 +1,7 @@
 from encodings cimport UTF8
 from allocators cimport CrtAllocator
 
-cdef extern from "stringbuffer.h" namespace "rapidjson":
+cdef extern from "stringbuffer.h" namespace "rapidjson" nogil:
     cdef cppclass GenericStringBuffer[Encoding, Allocator]:
         const char* GetString() const
 

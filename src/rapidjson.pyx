@@ -70,9 +70,10 @@ cdef class JSONEncoder(object):
 
         self.encode_inner(obj, doc, doc.GetAllocator())
 
-        doc.Accept(dereference(writer))
+        with nogil:
+            doc.Accept(dereference(writer))
 
-        del writer
+            del writer
 
         return <str>buffer.GetString().decode('UTF-8')
 
@@ -80,32 +81,49 @@ cdef class JSONEncoder(object):
     cdef encode_inner(self, obj, Value &doc, MemoryPoolAllocator[CrtAllocator] &allocator):
         cdef Value key
         cdef Value value
+        cdef string s
+        cdef libcpp.bool b
+        cdef double d
+        cdef int64_t i
 
         if isinstance(obj, bool):
-            doc.SetBool(<libcpp.bool> obj)
+            b = obj
+            with nogil:
+                doc.SetBool(b)
         elif obj is None:
-            doc.SetNull()
+            with nogil:
+                doc.SetNull()
         elif isinstance(obj, float):
-            doc.SetDouble(<double> obj)
+            d = obj
+            with nogil:
+                doc.SetDouble(d)
         elif isinstance(obj, (int, long)):
-            doc.SetInt64(<int64_t> obj)
+            i = obj
+            with nogil:
+                doc.SetInt64(i)
         elif isinstance(obj, (str, unicode, bytes)):
-            doc.SetString(<string> obj, allocator)
+            s = obj
+            with nogil:
+                doc.SetString(s, allocator)
         elif isinstance(obj, (list, tuple)):
-            doc.SetArray()
+            with nogil:
+                doc.SetArray()
 
             for item in obj:
                 self.encode_inner(item, value, allocator)
-
-                doc.PushBack(value, allocator)
+                with nogil:
+                    doc.PushBack(value, allocator)
         elif isinstance(obj, dict):
-            doc.SetObject()
+            with nogil:
+                doc.SetObject()
 
             for k, v in obj.items():
-                key.SetString(<string> unicode(k), allocator)
+                s = <string> unicode(k)
+                with nogil:
+                    key.SetString(s, allocator)
                 self.encode_inner(v, value, allocator)
-
-                doc.AddMember(key, value, allocator)
+                with nogil:
+                    doc.AddMember(key, value, allocator)
         else:
             obj = self.default_(obj)
             self.encode_inner(obj, doc, allocator)
@@ -130,11 +148,13 @@ cdef class JSONDecoder(object):
 
     cpdef decode(self, const char *s):
         cdef Document doc
+        cdef libcpp.bool has_error
+        with nogil:
+            doc.Parse(s)
+            has_error = doc.HasParseError()
 
-        doc.Parse(s)
-
-        if doc.HasParseError():
-            raise JSONDecodeError(GetParseError_En(doc.GetParseError()), s, doc.GetErrorOffset())
+        if has_error:
+            raise JSONDecodeError(GetParseError_En(doc.GetParseError()), s, self.doc.GetErrorOffset())
 
         return self.decode_inner(doc)
 
