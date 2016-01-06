@@ -63,7 +63,7 @@ cdef class JSONEncoder(object):
     def default(self, o):
         raise TypeError(repr(o) + " is not JSON serializable")
 
-    cpdef encode(self, obj):
+    cpdef str encode(self, obj):
         cdef StringBuffer buffer
         cdef StringWriter *writer
         cdef Document doc
@@ -82,28 +82,20 @@ cdef class JSONEncoder(object):
         return <str>json_string.decode('UTF-8')
 
 
-    cdef encode_inner(self, obj, Value &doc, MemoryPoolAllocator[CrtAllocator] &allocator):
+    cdef void encode_inner(self, obj, Value &doc, MemoryPoolAllocator[CrtAllocator] &allocator):
         cdef Value key
         cdef Value value
-        cdef string s
-        cdef libcpp.bool b
-        cdef double d
-        cdef int64_t i
 
         if isinstance(obj, bool):
-            b = obj
-            doc.SetBool(b)
+            doc.SetBool(<libcpp.bool> obj)
         elif obj is None:
             doc.SetNull()
         elif isinstance(obj, float):
-            d = obj
-            doc.SetDouble(d)
+            doc.SetDouble(<double> obj)
         elif isinstance(obj, (int, long)):
-            i = obj
-            doc.SetInt64(i)
+            doc.SetInt64(<int64_t> obj)
         elif isinstance(obj, (str, unicode, bytes)):
-            s = obj
-            doc.SetString(s, allocator)
+            doc.SetString(<const char *>obj, len(obj))
         elif isinstance(obj, (list, tuple)):
             doc.SetArray()
 
@@ -114,8 +106,8 @@ cdef class JSONEncoder(object):
             doc.SetObject()
 
             for k, v in obj.items():
-                s = <string> unicode(k)
-                key.SetString(s, allocator)
+                k = bytes(k)
+                key.SetString(<const char *>k, len(k))
                 self.encode_inner(v, value, allocator)
                 doc.AddMember(key, value, allocator)
         else:
@@ -192,15 +184,15 @@ cdef class JSONDecoder(object):
 cdef JSONEncoder _default_encoder = JSONEncoder()
 cdef JSONDecoder _default_decoder = JSONDecoder()
 
-cpdef dump(obj, fp, libcpp.bool skipkeys=False, libcpp.bool ensure_ascii=True, libcpp.bool check_circular=True,
+cpdef void dump(obj, fp, libcpp.bool skipkeys=False, libcpp.bool ensure_ascii=True, libcpp.bool check_circular=True,
            libcpp.bool allow_nan=True, cls=None, int64_t indent=-1, separators=None,
            default=None, libcpp.bool sort_keys=False):
-    json_string = dumps(obj, skipkeys=skipkeys, ensure_ascii=ensure_ascii,
-                        check_circular=check_circular, allow_nan=allow_nan, indent=indent,
-                        separators=separators, default=default, sort_keys=sort_keys)
+    cdef str json_string = dumps(obj, skipkeys=skipkeys, ensure_ascii=ensure_ascii,
+                                 check_circular=check_circular, allow_nan=allow_nan, indent=indent,
+                                 separators=separators, default=default, sort_keys=sort_keys)
     fp.write(json_string)
 
-cpdef dumps(obj, libcpp.bool skipkeys=False, libcpp.bool ensure_ascii=True, libcpp.bool check_circular=True,
+cpdef str dumps(obj, libcpp.bool skipkeys=False, libcpp.bool ensure_ascii=True, libcpp.bool check_circular=True,
             libcpp.bool allow_nan=True, cls=None, int64_t indent=-1, separators=None,
             default=None, libcpp.bool sort_keys=False):
     if (not skipkeys and ensure_ascii and

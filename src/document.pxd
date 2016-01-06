@@ -15,6 +15,7 @@ cdef extern from "document.h" namespace "rapidjson" nogil:
 
 
         GenericValue& SetString(const string& s, Allocator& allocator)
+        GenericValue& SetString(const char* s, size_t length)
         GenericValue& SetBool(bool)
         GenericValue& SetNull()
         GenericValue& SetDouble(double)
