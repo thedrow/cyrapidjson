@@ -511,7 +511,7 @@ struct __pyx_opt_args_3src_9rapidjson_dumps;
 struct __pyx_opt_args_3src_9rapidjson_load;
 struct __pyx_opt_args_3src_9rapidjson_loads;
 
-/* "src/rapidjson.pyx":183
+/* "src/rapidjson.pyx":184
  * cdef JSONDecoder _default_decoder = JSONDecoder()
  * 
  * cpdef dump(obj, fp, skipkeys=False, ensure_ascii=True, check_circular=True,             # <<<<<<<<<<<<<<
@@ -531,7 +531,7 @@ struct __pyx_opt_args_3src_9rapidjson_dump {
   PyObject *sort_keys;
 };
 
-/* "src/rapidjson.pyx":191
+/* "src/rapidjson.pyx":192
  *     fp.write(json_string)
  * 
  * cpdef dumps(obj, skipkeys=False, ensure_ascii=True, check_circular=True,             # <<<<<<<<<<<<<<
@@ -551,7 +551,7 @@ struct __pyx_opt_args_3src_9rapidjson_dumps {
   PyObject *sort_keys;
 };
 
-/* "src/rapidjson.pyx":212
+/* "src/rapidjson.pyx":213
  *             separators=separators, default=default, sort_keys=sort_keys).encode(obj)
  * 
  * cpdef load(fp, cls=None, object_hook=None, parse_float=None,             # <<<<<<<<<<<<<<
@@ -568,7 +568,7 @@ struct __pyx_opt_args_3src_9rapidjson_load {
   PyObject *object_pairs_hook;
 };
 
-/* "src/rapidjson.pyx":217
+/* "src/rapidjson.pyx":218
  *                  parse_constant=parse_constant, object_pairs_hook=object_pairs_hook)
  * 
  * cpdef loads(s, encoding=None, cls=None, object_hook=None, parse_float=None,             # <<<<<<<<<<<<<<
@@ -603,13 +603,14 @@ struct __pyx_obj_3src_9rapidjson_JSONEncoder {
   bool sort_keys;
   PyObject *indent;
   PyObject *separators;
+  PyObject *item_separator;
   PyObject *default_;
   rapidjson::Document doc;
   rapidjson::MemoryPoolAllocator<rapidjson::CrtAllocator>  *allocator;
 };
 
 
-/* "src/rapidjson.pyx":115
+/* "src/rapidjson.pyx":116
  *             self.encode_inner(obj, doc)
  * 
  * cdef class JSONDecoder(object):             # <<<<<<<<<<<<<<
@@ -645,7 +646,7 @@ struct __pyx_vtabstruct_3src_9rapidjson_JSONEncoder {
 static struct __pyx_vtabstruct_3src_9rapidjson_JSONEncoder *__pyx_vtabptr_3src_9rapidjson_JSONEncoder;
 
 
-/* "src/rapidjson.pyx":115
+/* "src/rapidjson.pyx":116
  *             self.encode_inner(obj, doc)
  * 
  * cdef class JSONDecoder(object):             # <<<<<<<<<<<<<<
@@ -1040,7 +1041,6 @@ static char __pyx_k_json_decoder[] = "json.decoder";
 static char __pyx_k_key_separator[] = "key_separator";
 static char __pyx_k_src_rapidjson[] = "src.rapidjson";
 static char __pyx_k_check_circular[] = "check_circular";
-static char __pyx_k_item_separator[] = "item_separator";
 static char __pyx_k_parse_constant[] = "parse_constant";
 static char __pyx_k_JSONDecodeError[] = "JSONDecodeError";
 static char __pyx_k_object_pairs_hook[] = "object_pairs_hook";
@@ -1086,7 +1086,6 @@ static PyObject *__pyx_n_s_import;
 static PyObject *__pyx_n_s_indent;
 static PyObject *__pyx_n_s_init;
 static PyObject *__pyx_kp_s_is_not_JSON_serializable;
-static PyObject *__pyx_n_s_item_separator;
 static PyObject *__pyx_n_s_items;
 static PyObject *__pyx_n_s_json_decoder;
 static PyObject *__pyx_n_s_key_separator;
@@ -1142,6 +1141,9 @@ static int __pyx_pf_3src_9rapidjson_11JSONEncoder_6indent_4__del__(struct __pyx_
 static PyObject *__pyx_pf_3src_9rapidjson_11JSONEncoder_10separators___get__(struct __pyx_obj_3src_9rapidjson_JSONEncoder *__pyx_v_self); /* proto */
 static int __pyx_pf_3src_9rapidjson_11JSONEncoder_10separators_2__set__(struct __pyx_obj_3src_9rapidjson_JSONEncoder *__pyx_v_self, PyObject *__pyx_v_value); /* proto */
 static int __pyx_pf_3src_9rapidjson_11JSONEncoder_10separators_4__del__(struct __pyx_obj_3src_9rapidjson_JSONEncoder *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_3src_9rapidjson_11JSONEncoder_14item_separator___get__(struct __pyx_obj_3src_9rapidjson_JSONEncoder *__pyx_v_self); /* proto */
+static int __pyx_pf_3src_9rapidjson_11JSONEncoder_14item_separator_2__set__(struct __pyx_obj_3src_9rapidjson_JSONEncoder *__pyx_v_self, PyObject *__pyx_v_value); /* proto */
+static int __pyx_pf_3src_9rapidjson_11JSONEncoder_14item_separator_4__del__(struct __pyx_obj_3src_9rapidjson_JSONEncoder *__pyx_v_self); /* proto */
 static int __pyx_pf_3src_9rapidjson_11JSONDecoder___init__(struct __pyx_obj_3src_9rapidjson_JSONDecoder *__pyx_v_self, PyObject *__pyx_v_object_hook, PyObject *__pyx_v_parse_float, PyObject *__pyx_v_parse_int, PyObject *__pyx_v_parse_constant, bool __pyx_v_strict, PyObject *__pyx_v_object_pairs_hook); /* proto */
 static PyObject *__pyx_pf_3src_9rapidjson_11JSONDecoder_2decode(struct __pyx_obj_3src_9rapidjson_JSONDecoder *__pyx_v_self, char const *__pyx_v_s); /* proto */
 static PyObject *__pyx_pf_3src_9rapidjson_11JSONDecoder_11object_hook___get__(struct __pyx_obj_3src_9rapidjson_JSONDecoder *__pyx_v_self); /* proto */
@@ -1604,7 +1606,7 @@ static PyObject *__pyx_pf_3src_9rapidjson_15JSONDecodeError_2__reduce__(CYTHON_U
   return __pyx_r;
 }
 
-/* "src/rapidjson.pyx":45
+/* "src/rapidjson.pyx":46
  *     cdef MemoryPoolAllocator[CrtAllocator] *allocator
  * 
  *     def __cinit__(self):             # <<<<<<<<<<<<<<
@@ -1637,7 +1639,7 @@ static int __pyx_pf_3src_9rapidjson_11JSONEncoder___cinit__(struct __pyx_obj_3sr
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__cinit__", 0);
 
-  /* "src/rapidjson.pyx":46
+  /* "src/rapidjson.pyx":47
  * 
  *     def __cinit__(self):
  *         self.allocator = &self.doc.GetAllocator()             # <<<<<<<<<<<<<<
@@ -1646,14 +1648,14 @@ static int __pyx_pf_3src_9rapidjson_11JSONEncoder___cinit__(struct __pyx_obj_3sr
  */
   __pyx_v_self->allocator = (&__pyx_v_self->doc.GetAllocator());
 
-  /* "src/rapidjson.pyx":48
+  /* "src/rapidjson.pyx":49
  *         self.allocator = &self.doc.GetAllocator()
  * 
  *         self.default_ = self.default             # <<<<<<<<<<<<<<
  * 
  *     def __init__(self, libcpp.bool skipkeys=False, libcpp.bool ensure_ascii=True,
  */
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_default); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 48; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_default); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 49; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_GIVEREF(__pyx_t_1);
   __Pyx_GOTREF(__pyx_v_self->default_);
@@ -1661,7 +1663,7 @@ static int __pyx_pf_3src_9rapidjson_11JSONEncoder___cinit__(struct __pyx_obj_3sr
   __pyx_v_self->default_ = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "src/rapidjson.pyx":45
+  /* "src/rapidjson.pyx":46
  *     cdef MemoryPoolAllocator[CrtAllocator] *allocator
  * 
  *     def __cinit__(self):             # <<<<<<<<<<<<<<
@@ -1681,7 +1683,7 @@ static int __pyx_pf_3src_9rapidjson_11JSONEncoder___cinit__(struct __pyx_obj_3sr
   return __pyx_r;
 }
 
-/* "src/rapidjson.pyx":50
+/* "src/rapidjson.pyx":51
  *         self.default_ = self.default
  * 
  *     def __init__(self, libcpp.bool skipkeys=False, libcpp.bool ensure_ascii=True,             # <<<<<<<<<<<<<<
@@ -1710,7 +1712,7 @@ static int __pyx_pw_3src_9rapidjson_11JSONEncoder_3__init__(PyObject *__pyx_v_se
     static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_skipkeys,&__pyx_n_s_ensure_ascii,&__pyx_n_s_check_circular,&__pyx_n_s_allow_nan,&__pyx_n_s_sort_keys,&__pyx_n_s_indent,&__pyx_n_s_separators,&__pyx_n_s_default,0};
     PyObject* values[8] = {0,0,0,0,0,0,0,0};
 
-    /* "src/rapidjson.pyx":52
+    /* "src/rapidjson.pyx":53
  *     def __init__(self, libcpp.bool skipkeys=False, libcpp.bool ensure_ascii=True,
  *                  libcpp.bool check_circular=True, libcpp.bool allow_nan=True, libcpp.bool sort_keys=False,
  *                  indent=None, separators=None, default=None):             # <<<<<<<<<<<<<<
@@ -1779,7 +1781,7 @@ static int __pyx_pw_3src_9rapidjson_11JSONEncoder_3__init__(PyObject *__pyx_v_se
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__init__") < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 50; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__init__") < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 51; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
       }
     } else {
       switch (PyTuple_GET_SIZE(__pyx_args)) {
@@ -1796,10 +1798,10 @@ static int __pyx_pw_3src_9rapidjson_11JSONEncoder_3__init__(PyObject *__pyx_v_se
       }
     }
     if (values[0]) {
-      __pyx_v_skipkeys = __Pyx_PyObject_IsTrue(values[0]); if (unlikely((__pyx_v_skipkeys == (bool)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 50; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+      __pyx_v_skipkeys = __Pyx_PyObject_IsTrue(values[0]); if (unlikely((__pyx_v_skipkeys == (bool)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 51; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
     } else {
 
-      /* "src/rapidjson.pyx":50
+      /* "src/rapidjson.pyx":51
  *         self.default_ = self.default
  * 
  *     def __init__(self, libcpp.bool skipkeys=False, libcpp.bool ensure_ascii=True,             # <<<<<<<<<<<<<<
@@ -1809,15 +1811,15 @@ static int __pyx_pw_3src_9rapidjson_11JSONEncoder_3__init__(PyObject *__pyx_v_se
       __pyx_v_skipkeys = ((bool)0);
     }
     if (values[1]) {
-      __pyx_v_ensure_ascii = __Pyx_PyObject_IsTrue(values[1]); if (unlikely((__pyx_v_ensure_ascii == (bool)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 50; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+      __pyx_v_ensure_ascii = __Pyx_PyObject_IsTrue(values[1]); if (unlikely((__pyx_v_ensure_ascii == (bool)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 51; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
     } else {
       __pyx_v_ensure_ascii = ((bool)1);
     }
     if (values[2]) {
-      __pyx_v_check_circular = __Pyx_PyObject_IsTrue(values[2]); if (unlikely((__pyx_v_check_circular == (bool)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 51; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+      __pyx_v_check_circular = __Pyx_PyObject_IsTrue(values[2]); if (unlikely((__pyx_v_check_circular == (bool)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 52; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
     } else {
 
-      /* "src/rapidjson.pyx":51
+      /* "src/rapidjson.pyx":52
  * 
  *     def __init__(self, libcpp.bool skipkeys=False, libcpp.bool ensure_ascii=True,
  *                  libcpp.bool check_circular=True, libcpp.bool allow_nan=True, libcpp.bool sort_keys=False,             # <<<<<<<<<<<<<<
@@ -1827,12 +1829,12 @@ static int __pyx_pw_3src_9rapidjson_11JSONEncoder_3__init__(PyObject *__pyx_v_se
       __pyx_v_check_circular = ((bool)1);
     }
     if (values[3]) {
-      __pyx_v_allow_nan = __Pyx_PyObject_IsTrue(values[3]); if (unlikely((__pyx_v_allow_nan == (bool)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 51; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+      __pyx_v_allow_nan = __Pyx_PyObject_IsTrue(values[3]); if (unlikely((__pyx_v_allow_nan == (bool)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 52; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
     } else {
       __pyx_v_allow_nan = ((bool)1);
     }
     if (values[4]) {
-      __pyx_v_sort_keys = __Pyx_PyObject_IsTrue(values[4]); if (unlikely((__pyx_v_sort_keys == (bool)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 51; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+      __pyx_v_sort_keys = __Pyx_PyObject_IsTrue(values[4]); if (unlikely((__pyx_v_sort_keys == (bool)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 52; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
     } else {
       __pyx_v_sort_keys = ((bool)0);
     }
@@ -1842,7 +1844,7 @@ static int __pyx_pw_3src_9rapidjson_11JSONEncoder_3__init__(PyObject *__pyx_v_se
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("__init__", 0, 0, 8, PyTuple_GET_SIZE(__pyx_args)); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 50; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+  __Pyx_RaiseArgtupleInvalid("__init__", 0, 0, 8, PyTuple_GET_SIZE(__pyx_args)); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 51; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
   __pyx_L3_error:;
   __Pyx_AddTraceback("src.rapidjson.JSONEncoder.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -1850,7 +1852,7 @@ static int __pyx_pw_3src_9rapidjson_11JSONEncoder_3__init__(PyObject *__pyx_v_se
   __pyx_L4_argument_unpacking_done:;
   __pyx_r = __pyx_pf_3src_9rapidjson_11JSONEncoder_2__init__(((struct __pyx_obj_3src_9rapidjson_JSONEncoder *)__pyx_v_self), __pyx_v_skipkeys, __pyx_v_ensure_ascii, __pyx_v_check_circular, __pyx_v_allow_nan, __pyx_v_sort_keys, __pyx_v_indent, __pyx_v_separators, __pyx_v_default);
 
-  /* "src/rapidjson.pyx":50
+  /* "src/rapidjson.pyx":51
  *         self.default_ = self.default
  * 
  *     def __init__(self, libcpp.bool skipkeys=False, libcpp.bool ensure_ascii=True,             # <<<<<<<<<<<<<<
@@ -1877,7 +1879,7 @@ static int __pyx_pf_3src_9rapidjson_11JSONEncoder_2__init__(struct __pyx_obj_3sr
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__init__", 0);
 
-  /* "src/rapidjson.pyx":53
+  /* "src/rapidjson.pyx":54
  *                  libcpp.bool check_circular=True, libcpp.bool allow_nan=True, libcpp.bool sort_keys=False,
  *                  indent=None, separators=None, default=None):
  *         self.skipkeys = skipkeys             # <<<<<<<<<<<<<<
@@ -1886,7 +1888,7 @@ static int __pyx_pf_3src_9rapidjson_11JSONEncoder_2__init__(struct __pyx_obj_3sr
  */
   __pyx_v_self->skipkeys = __pyx_v_skipkeys;
 
-  /* "src/rapidjson.pyx":54
+  /* "src/rapidjson.pyx":55
  *                  indent=None, separators=None, default=None):
  *         self.skipkeys = skipkeys
  *         self.ensure_ascii = ensure_ascii             # <<<<<<<<<<<<<<
@@ -1895,7 +1897,7 @@ static int __pyx_pf_3src_9rapidjson_11JSONEncoder_2__init__(struct __pyx_obj_3sr
  */
   __pyx_v_self->ensure_ascii = __pyx_v_ensure_ascii;
 
-  /* "src/rapidjson.pyx":55
+  /* "src/rapidjson.pyx":56
  *         self.skipkeys = skipkeys
  *         self.ensure_ascii = ensure_ascii
  *         self.check_circular = check_circular             # <<<<<<<<<<<<<<
@@ -1904,7 +1906,7 @@ static int __pyx_pf_3src_9rapidjson_11JSONEncoder_2__init__(struct __pyx_obj_3sr
  */
   __pyx_v_self->check_circular = __pyx_v_check_circular;
 
-  /* "src/rapidjson.pyx":56
+  /* "src/rapidjson.pyx":57
  *         self.ensure_ascii = ensure_ascii
  *         self.check_circular = check_circular
  *         self.allow_nan = allow_nan             # <<<<<<<<<<<<<<
@@ -1913,7 +1915,7 @@ static int __pyx_pf_3src_9rapidjson_11JSONEncoder_2__init__(struct __pyx_obj_3sr
  */
   __pyx_v_self->allow_nan = __pyx_v_allow_nan;
 
-  /* "src/rapidjson.pyx":57
+  /* "src/rapidjson.pyx":58
  *         self.check_circular = check_circular
  *         self.allow_nan = allow_nan
  *         self.sort_keys = sort_keys             # <<<<<<<<<<<<<<
@@ -1922,7 +1924,7 @@ static int __pyx_pf_3src_9rapidjson_11JSONEncoder_2__init__(struct __pyx_obj_3sr
  */
   __pyx_v_self->sort_keys = __pyx_v_sort_keys;
 
-  /* "src/rapidjson.pyx":58
+  /* "src/rapidjson.pyx":59
  *         self.allow_nan = allow_nan
  *         self.sort_keys = sort_keys
  *         self.indent = indent             # <<<<<<<<<<<<<<
@@ -1935,7 +1937,7 @@ static int __pyx_pf_3src_9rapidjson_11JSONEncoder_2__init__(struct __pyx_obj_3sr
   __Pyx_DECREF(__pyx_v_self->indent);
   __pyx_v_self->indent = __pyx_v_indent;
 
-  /* "src/rapidjson.pyx":59
+  /* "src/rapidjson.pyx":60
  *         self.sort_keys = sort_keys
  *         self.indent = indent
  *         if separators is not None:             # <<<<<<<<<<<<<<
@@ -1946,7 +1948,7 @@ static int __pyx_pf_3src_9rapidjson_11JSONEncoder_2__init__(struct __pyx_obj_3sr
   __pyx_t_2 = (__pyx_t_1 != 0);
   if (__pyx_t_2) {
 
-    /* "src/rapidjson.pyx":60
+    /* "src/rapidjson.pyx":61
  *         self.indent = indent
  *         if separators is not None:
  *             self.item_separator, self.key_separator = separators             # <<<<<<<<<<<<<<
@@ -1963,7 +1965,7 @@ static int __pyx_pf_3src_9rapidjson_11JSONEncoder_2__init__(struct __pyx_obj_3sr
       if (unlikely(size != 2)) {
         if (size > 2) __Pyx_RaiseTooManyValuesError(2);
         else if (size >= 0) __Pyx_RaiseNeedMoreValuesError(size);
-        {__pyx_filename = __pyx_f[0]; __pyx_lineno = 60; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        {__pyx_filename = __pyx_f[0]; __pyx_lineno = 61; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       }
       #if CYTHON_COMPILING_IN_CPYTHON
       if (likely(PyTuple_CheckExact(sequence))) {
@@ -1976,21 +1978,21 @@ static int __pyx_pf_3src_9rapidjson_11JSONEncoder_2__init__(struct __pyx_obj_3sr
       __Pyx_INCREF(__pyx_t_3);
       __Pyx_INCREF(__pyx_t_4);
       #else
-      __pyx_t_3 = PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 60; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_3 = PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 61; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_3);
-      __pyx_t_4 = PySequence_ITEM(sequence, 1); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 60; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_4 = PySequence_ITEM(sequence, 1); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 61; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_4);
       #endif
     } else {
       Py_ssize_t index = -1;
-      __pyx_t_5 = PyObject_GetIter(__pyx_v_separators); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 60; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_5 = PyObject_GetIter(__pyx_v_separators); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 61; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_5);
       __pyx_t_6 = Py_TYPE(__pyx_t_5)->tp_iternext;
       index = 0; __pyx_t_3 = __pyx_t_6(__pyx_t_5); if (unlikely(!__pyx_t_3)) goto __pyx_L4_unpacking_failed;
       __Pyx_GOTREF(__pyx_t_3);
       index = 1; __pyx_t_4 = __pyx_t_6(__pyx_t_5); if (unlikely(!__pyx_t_4)) goto __pyx_L4_unpacking_failed;
       __Pyx_GOTREF(__pyx_t_4);
-      if (__Pyx_IternextUnpackEndCheck(__pyx_t_6(__pyx_t_5), 2) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 60; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      if (__Pyx_IternextUnpackEndCheck(__pyx_t_6(__pyx_t_5), 2) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 61; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __pyx_t_6 = NULL;
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
       goto __pyx_L5_unpacking_done;
@@ -1998,15 +2000,18 @@ static int __pyx_pf_3src_9rapidjson_11JSONEncoder_2__init__(struct __pyx_obj_3sr
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
       __pyx_t_6 = NULL;
       if (__Pyx_IterFinish() == 0) __Pyx_RaiseNeedMoreValuesError(index);
-      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 60; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 61; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __pyx_L5_unpacking_done:;
     }
-    if (__Pyx_PyObject_SetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_item_separator, __pyx_t_3) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 60; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    if (__Pyx_PyObject_SetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_key_separator, __pyx_t_4) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 60; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __Pyx_GIVEREF(__pyx_t_3);
+    __Pyx_GOTREF(__pyx_v_self->item_separator);
+    __Pyx_DECREF(__pyx_v_self->item_separator);
+    __pyx_v_self->item_separator = __pyx_t_3;
+    __pyx_t_3 = 0;
+    if (__Pyx_PyObject_SetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_key_separator, __pyx_t_4) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 61; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-    /* "src/rapidjson.pyx":59
+    /* "src/rapidjson.pyx":60
  *         self.sort_keys = sort_keys
  *         self.indent = indent
  *         if separators is not None:             # <<<<<<<<<<<<<<
@@ -2016,7 +2021,7 @@ static int __pyx_pf_3src_9rapidjson_11JSONEncoder_2__init__(struct __pyx_obj_3sr
     goto __pyx_L3;
   }
 
-  /* "src/rapidjson.pyx":61
+  /* "src/rapidjson.pyx":62
  *         if separators is not None:
  *             self.item_separator, self.key_separator = separators
  *         elif indent is not None:             # <<<<<<<<<<<<<<
@@ -2027,16 +2032,20 @@ static int __pyx_pf_3src_9rapidjson_11JSONEncoder_2__init__(struct __pyx_obj_3sr
   __pyx_t_1 = (__pyx_t_2 != 0);
   if (__pyx_t_1) {
 
-    /* "src/rapidjson.pyx":62
+    /* "src/rapidjson.pyx":63
  *             self.item_separator, self.key_separator = separators
  *         elif indent is not None:
  *             self.item_separator = ','             # <<<<<<<<<<<<<<
  *         if default is not None:
  *             self.default_ = default
  */
-    if (__Pyx_PyObject_SetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_item_separator, __pyx_kp_s__2) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 62; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __Pyx_INCREF(__pyx_kp_s__2);
+    __Pyx_GIVEREF(__pyx_kp_s__2);
+    __Pyx_GOTREF(__pyx_v_self->item_separator);
+    __Pyx_DECREF(__pyx_v_self->item_separator);
+    __pyx_v_self->item_separator = __pyx_kp_s__2;
 
-    /* "src/rapidjson.pyx":61
+    /* "src/rapidjson.pyx":62
  *         if separators is not None:
  *             self.item_separator, self.key_separator = separators
  *         elif indent is not None:             # <<<<<<<<<<<<<<
@@ -2046,7 +2055,7 @@ static int __pyx_pf_3src_9rapidjson_11JSONEncoder_2__init__(struct __pyx_obj_3sr
   }
   __pyx_L3:;
 
-  /* "src/rapidjson.pyx":63
+  /* "src/rapidjson.pyx":64
  *         elif indent is not None:
  *             self.item_separator = ','
  *         if default is not None:             # <<<<<<<<<<<<<<
@@ -2057,7 +2066,7 @@ static int __pyx_pf_3src_9rapidjson_11JSONEncoder_2__init__(struct __pyx_obj_3sr
   __pyx_t_2 = (__pyx_t_1 != 0);
   if (__pyx_t_2) {
 
-    /* "src/rapidjson.pyx":64
+    /* "src/rapidjson.pyx":65
  *             self.item_separator = ','
  *         if default is not None:
  *             self.default_ = default             # <<<<<<<<<<<<<<
@@ -2070,7 +2079,7 @@ static int __pyx_pf_3src_9rapidjson_11JSONEncoder_2__init__(struct __pyx_obj_3sr
     __Pyx_DECREF(__pyx_v_self->default_);
     __pyx_v_self->default_ = __pyx_v_default;
 
-    /* "src/rapidjson.pyx":63
+    /* "src/rapidjson.pyx":64
  *         elif indent is not None:
  *             self.item_separator = ','
  *         if default is not None:             # <<<<<<<<<<<<<<
@@ -2079,7 +2088,7 @@ static int __pyx_pf_3src_9rapidjson_11JSONEncoder_2__init__(struct __pyx_obj_3sr
  */
   }
 
-  /* "src/rapidjson.pyx":50
+  /* "src/rapidjson.pyx":51
  *         self.default_ = self.default
  * 
  *     def __init__(self, libcpp.bool skipkeys=False, libcpp.bool ensure_ascii=True,             # <<<<<<<<<<<<<<
@@ -2101,7 +2110,7 @@ static int __pyx_pf_3src_9rapidjson_11JSONEncoder_2__init__(struct __pyx_obj_3sr
   return __pyx_r;
 }
 
-/* "src/rapidjson.pyx":66
+/* "src/rapidjson.pyx":67
  *             self.default_ = default
  * 
  *     def default(self, o):             # <<<<<<<<<<<<<<
@@ -2132,31 +2141,31 @@ static PyObject *__pyx_pf_3src_9rapidjson_11JSONEncoder_4default(CYTHON_UNUSED s
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("default", 0);
 
-  /* "src/rapidjson.pyx":67
+  /* "src/rapidjson.pyx":68
  * 
  *     def default(self, o):
  *         raise TypeError(repr(o) + " is not JSON serializable")             # <<<<<<<<<<<<<<
  * 
  *     cpdef encode(self, obj):
  */
-  __pyx_t_1 = PyObject_Repr(__pyx_v_o); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 67; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = PyObject_Repr(__pyx_v_o); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 68; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = PyNumber_Add(__pyx_t_1, __pyx_kp_s_is_not_JSON_serializable); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 67; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = PyNumber_Add(__pyx_t_1, __pyx_kp_s_is_not_JSON_serializable); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 68; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 67; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 68; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_GIVEREF(__pyx_t_2);
   PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_t_2);
   __pyx_t_2 = 0;
-  __pyx_t_2 = __Pyx_PyObject_Call(__pyx_builtin_TypeError, __pyx_t_1, NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 67; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = __Pyx_PyObject_Call(__pyx_builtin_TypeError, __pyx_t_1, NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 68; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_Raise(__pyx_t_2, 0, 0, 0);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  {__pyx_filename = __pyx_f[0]; __pyx_lineno = 67; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  {__pyx_filename = __pyx_f[0]; __pyx_lineno = 68; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-  /* "src/rapidjson.pyx":66
+  /* "src/rapidjson.pyx":67
  *             self.default_ = default
  * 
  *     def default(self, o):             # <<<<<<<<<<<<<<
@@ -2175,7 +2184,7 @@ static PyObject *__pyx_pf_3src_9rapidjson_11JSONEncoder_4default(CYTHON_UNUSED s
   return __pyx_r;
 }
 
-/* "src/rapidjson.pyx":69
+/* "src/rapidjson.pyx":70
  *         raise TypeError(repr(o) + " is not JSON serializable")
  * 
  *     cpdef encode(self, obj):             # <<<<<<<<<<<<<<
@@ -2203,7 +2212,7 @@ static PyObject *__pyx_f_3src_9rapidjson_11JSONEncoder_encode(struct __pyx_obj_3
   if (unlikely(__pyx_skip_dispatch)) ;
   /* Check if overridden in Python */
   else if (unlikely(Py_TYPE(((PyObject *)__pyx_v_self))->tp_dictoffset != 0)) {
-    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_encode); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 69; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_encode); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 70; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_1);
     if (!PyCFunction_Check(__pyx_t_1) || (PyCFunction_GET_FUNCTION(__pyx_t_1) != (PyCFunction)__pyx_pw_3src_9rapidjson_11JSONEncoder_7encode)) {
       __Pyx_XDECREF(__pyx_r);
@@ -2219,16 +2228,16 @@ static PyObject *__pyx_f_3src_9rapidjson_11JSONEncoder_encode(struct __pyx_obj_3
         }
       }
       if (!__pyx_t_4) {
-        __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_v_obj); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 69; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_v_obj); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 70; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __Pyx_GOTREF(__pyx_t_2);
       } else {
-        __pyx_t_5 = PyTuple_New(1+1); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 69; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_5 = PyTuple_New(1+1); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 70; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __Pyx_GOTREF(__pyx_t_5);
         __Pyx_GIVEREF(__pyx_t_4); PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_t_4); __pyx_t_4 = NULL;
         __Pyx_INCREF(__pyx_v_obj);
         __Pyx_GIVEREF(__pyx_v_obj);
         PyTuple_SET_ITEM(__pyx_t_5, 0+1, __pyx_v_obj);
-        __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_5, NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 69; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_5, NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 70; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __Pyx_GOTREF(__pyx_t_2);
         __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
       }
@@ -2241,7 +2250,7 @@ static PyObject *__pyx_f_3src_9rapidjson_11JSONEncoder_encode(struct __pyx_obj_3
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   }
 
-  /* "src/rapidjson.pyx":71
+  /* "src/rapidjson.pyx":72
  *     cpdef encode(self, obj):
  *         cdef StringBuffer buffer
  *         cdef StringWriter *writer = new StringWriter(buffer)             # <<<<<<<<<<<<<<
@@ -2250,18 +2259,18 @@ static PyObject *__pyx_f_3src_9rapidjson_11JSONEncoder_encode(struct __pyx_obj_3
  */
   __pyx_v_writer = new __pyx_t_3src_6writer_StringWriter(__pyx_v_buffer);
 
-  /* "src/rapidjson.pyx":73
+  /* "src/rapidjson.pyx":74
  *         cdef StringWriter *writer = new StringWriter(buffer)
  * 
  *         self.encode_inner(obj, self.doc)             # <<<<<<<<<<<<<<
  * 
  *         self.doc.Accept(dereference(writer))
  */
-  __pyx_t_1 = ((struct __pyx_vtabstruct_3src_9rapidjson_JSONEncoder *)__pyx_v_self->__pyx_vtab)->encode_inner(__pyx_v_self, __pyx_v_obj, __pyx_v_self->doc); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 73; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = ((struct __pyx_vtabstruct_3src_9rapidjson_JSONEncoder *)__pyx_v_self->__pyx_vtab)->encode_inner(__pyx_v_self, __pyx_v_obj, __pyx_v_self->doc); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 74; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "src/rapidjson.pyx":75
+  /* "src/rapidjson.pyx":76
  *         self.encode_inner(obj, self.doc)
  * 
  *         self.doc.Accept(dereference(writer))             # <<<<<<<<<<<<<<
@@ -2270,7 +2279,7 @@ static PyObject *__pyx_f_3src_9rapidjson_11JSONEncoder_encode(struct __pyx_obj_3
  */
   __pyx_v_self->doc.Accept((*__pyx_v_writer));
 
-  /* "src/rapidjson.pyx":77
+  /* "src/rapidjson.pyx":78
  *         self.doc.Accept(dereference(writer))
  * 
  *         del writer             # <<<<<<<<<<<<<<
@@ -2279,7 +2288,7 @@ static PyObject *__pyx_f_3src_9rapidjson_11JSONEncoder_encode(struct __pyx_obj_3
  */
   delete __pyx_v_writer;
 
-  /* "src/rapidjson.pyx":79
+  /* "src/rapidjson.pyx":80
  *         del writer
  * 
  *         return <str>buffer.GetString().decode('UTF-8')             # <<<<<<<<<<<<<<
@@ -2288,14 +2297,14 @@ static PyObject *__pyx_f_3src_9rapidjson_11JSONEncoder_encode(struct __pyx_obj_3
  */
   __Pyx_XDECREF(__pyx_r);
   __pyx_t_6 = __pyx_v_buffer.GetString();
-  __pyx_t_1 = __Pyx_decode_c_string(__pyx_t_6, 0, strlen(__pyx_t_6), NULL, NULL, PyUnicode_DecodeUTF8); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 79; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __Pyx_decode_c_string(__pyx_t_6, 0, strlen(__pyx_t_6), NULL, NULL, PyUnicode_DecodeUTF8); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 80; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_INCREF(((PyObject*)__pyx_t_1));
   __pyx_r = __pyx_t_1;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "src/rapidjson.pyx":69
+  /* "src/rapidjson.pyx":70
  *         raise TypeError(repr(o) + " is not JSON serializable")
  * 
  *     cpdef encode(self, obj):             # <<<<<<<<<<<<<<
@@ -2340,7 +2349,7 @@ static PyObject *__pyx_pf_3src_9rapidjson_11JSONEncoder_6encode(struct __pyx_obj
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("encode", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_f_3src_9rapidjson_11JSONEncoder_encode(__pyx_v_self, __pyx_v_obj, 1); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 69; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __pyx_f_3src_9rapidjson_11JSONEncoder_encode(__pyx_v_self, __pyx_v_obj, 1); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 70; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -2357,7 +2366,7 @@ static PyObject *__pyx_pf_3src_9rapidjson_11JSONEncoder_6encode(struct __pyx_obj
   return __pyx_r;
 }
 
-/* "src/rapidjson.pyx":82
+/* "src/rapidjson.pyx":83
  * 
  * 
  *     cdef encode_inner(self, obj, Value &doc):             # <<<<<<<<<<<<<<
@@ -2394,7 +2403,7 @@ static PyObject *__pyx_f_3src_9rapidjson_11JSONEncoder_encode_inner(struct __pyx
   __Pyx_RefNannySetupContext("encode_inner", 0);
   __Pyx_INCREF(__pyx_v_obj);
 
-  /* "src/rapidjson.pyx":86
+  /* "src/rapidjson.pyx":87
  *         cdef Value value
  * 
  *         if isinstance(obj, bool):             # <<<<<<<<<<<<<<
@@ -2403,22 +2412,22 @@ static PyObject *__pyx_f_3src_9rapidjson_11JSONEncoder_encode_inner(struct __pyx
  */
   __pyx_t_1 = ((PyObject*)&PyBool_Type);
   __Pyx_INCREF(__pyx_t_1);
-  __pyx_t_2 = PyObject_IsInstance(__pyx_v_obj, __pyx_t_1); if (unlikely(__pyx_t_2 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 86; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = PyObject_IsInstance(__pyx_v_obj, __pyx_t_1); if (unlikely(__pyx_t_2 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 87; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_t_3 = (__pyx_t_2 != 0);
   if (__pyx_t_3) {
 
-    /* "src/rapidjson.pyx":87
+    /* "src/rapidjson.pyx":88
  * 
  *         if isinstance(obj, bool):
  *             doc.SetBool(<libcpp.bool> obj)             # <<<<<<<<<<<<<<
  *         elif obj is None:
  *             doc.SetNull()
  */
-    __pyx_t_4 = __Pyx_PyObject_IsTrue(__pyx_v_obj); if (unlikely((__pyx_t_4 == (bool)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 87; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_4 = __Pyx_PyObject_IsTrue(__pyx_v_obj); if (unlikely((__pyx_t_4 == (bool)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 88; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __pyx_v_doc.SetBool(((bool)__pyx_t_4));
 
-    /* "src/rapidjson.pyx":86
+    /* "src/rapidjson.pyx":87
  *         cdef Value value
  * 
  *         if isinstance(obj, bool):             # <<<<<<<<<<<<<<
@@ -2428,7 +2437,7 @@ static PyObject *__pyx_f_3src_9rapidjson_11JSONEncoder_encode_inner(struct __pyx
     goto __pyx_L3;
   }
 
-  /* "src/rapidjson.pyx":88
+  /* "src/rapidjson.pyx":89
  *         if isinstance(obj, bool):
  *             doc.SetBool(<libcpp.bool> obj)
  *         elif obj is None:             # <<<<<<<<<<<<<<
@@ -2439,7 +2448,7 @@ static PyObject *__pyx_f_3src_9rapidjson_11JSONEncoder_encode_inner(struct __pyx
   __pyx_t_2 = (__pyx_t_3 != 0);
   if (__pyx_t_2) {
 
-    /* "src/rapidjson.pyx":89
+    /* "src/rapidjson.pyx":90
  *             doc.SetBool(<libcpp.bool> obj)
  *         elif obj is None:
  *             doc.SetNull()             # <<<<<<<<<<<<<<
@@ -2448,7 +2457,7 @@ static PyObject *__pyx_f_3src_9rapidjson_11JSONEncoder_encode_inner(struct __pyx
  */
     __pyx_v_doc.SetNull();
 
-    /* "src/rapidjson.pyx":88
+    /* "src/rapidjson.pyx":89
  *         if isinstance(obj, bool):
  *             doc.SetBool(<libcpp.bool> obj)
  *         elif obj is None:             # <<<<<<<<<<<<<<
@@ -2458,7 +2467,7 @@ static PyObject *__pyx_f_3src_9rapidjson_11JSONEncoder_encode_inner(struct __pyx
     goto __pyx_L3;
   }
 
-  /* "src/rapidjson.pyx":90
+  /* "src/rapidjson.pyx":91
  *         elif obj is None:
  *             doc.SetNull()
  *         elif isinstance(obj, float):             # <<<<<<<<<<<<<<
@@ -2469,17 +2478,17 @@ static PyObject *__pyx_f_3src_9rapidjson_11JSONEncoder_encode_inner(struct __pyx
   __pyx_t_3 = (__pyx_t_2 != 0);
   if (__pyx_t_3) {
 
-    /* "src/rapidjson.pyx":91
+    /* "src/rapidjson.pyx":92
  *             doc.SetNull()
  *         elif isinstance(obj, float):
  *             doc.SetDouble(<double> obj)             # <<<<<<<<<<<<<<
  *         elif isinstance(obj, (int, long)):
  *             doc.SetInt64(<int64_t> obj)
  */
-    __pyx_t_5 = __pyx_PyFloat_AsDouble(__pyx_v_obj); if (unlikely((__pyx_t_5 == (double)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 91; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_5 = __pyx_PyFloat_AsDouble(__pyx_v_obj); if (unlikely((__pyx_t_5 == (double)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 92; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __pyx_v_doc.SetDouble(((double)__pyx_t_5));
 
-    /* "src/rapidjson.pyx":90
+    /* "src/rapidjson.pyx":91
  *         elif obj is None:
  *             doc.SetNull()
  *         elif isinstance(obj, float):             # <<<<<<<<<<<<<<
@@ -2489,7 +2498,7 @@ static PyObject *__pyx_f_3src_9rapidjson_11JSONEncoder_encode_inner(struct __pyx
     goto __pyx_L3;
   }
 
-  /* "src/rapidjson.pyx":92
+  /* "src/rapidjson.pyx":93
  *         elif isinstance(obj, float):
  *             doc.SetDouble(<double> obj)
  *         elif isinstance(obj, (int, long)):             # <<<<<<<<<<<<<<
@@ -2510,17 +2519,17 @@ static PyObject *__pyx_f_3src_9rapidjson_11JSONEncoder_encode_inner(struct __pyx
   __pyx_t_2 = (__pyx_t_3 != 0);
   if (__pyx_t_2) {
 
-    /* "src/rapidjson.pyx":93
+    /* "src/rapidjson.pyx":94
  *             doc.SetDouble(<double> obj)
  *         elif isinstance(obj, (int, long)):
  *             doc.SetInt64(<int64_t> obj)             # <<<<<<<<<<<<<<
  *         elif isinstance(obj, (str, unicode, bytes)):
  *             doc.SetString(<string> obj, dereference(self.allocator))
  */
-    __pyx_t_7 = __Pyx_PyInt_As_int64_t(__pyx_v_obj); if (unlikely((__pyx_t_7 == (int64_t)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 93; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_7 = __Pyx_PyInt_As_int64_t(__pyx_v_obj); if (unlikely((__pyx_t_7 == (int64_t)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 94; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __pyx_v_doc.SetInt64(((int64_t)__pyx_t_7));
 
-    /* "src/rapidjson.pyx":92
+    /* "src/rapidjson.pyx":93
  *         elif isinstance(obj, float):
  *             doc.SetDouble(<double> obj)
  *         elif isinstance(obj, (int, long)):             # <<<<<<<<<<<<<<
@@ -2530,7 +2539,7 @@ static PyObject *__pyx_f_3src_9rapidjson_11JSONEncoder_encode_inner(struct __pyx
     goto __pyx_L3;
   }
 
-  /* "src/rapidjson.pyx":94
+  /* "src/rapidjson.pyx":95
  *         elif isinstance(obj, (int, long)):
  *             doc.SetInt64(<int64_t> obj)
  *         elif isinstance(obj, (str, unicode, bytes)):             # <<<<<<<<<<<<<<
@@ -2558,17 +2567,17 @@ static PyObject *__pyx_f_3src_9rapidjson_11JSONEncoder_encode_inner(struct __pyx
   __pyx_t_6 = (__pyx_t_2 != 0);
   if (__pyx_t_6) {
 
-    /* "src/rapidjson.pyx":95
+    /* "src/rapidjson.pyx":96
  *             doc.SetInt64(<int64_t> obj)
  *         elif isinstance(obj, (str, unicode, bytes)):
  *             doc.SetString(<string> obj, dereference(self.allocator))             # <<<<<<<<<<<<<<
  *         elif isinstance(obj, (list, tuple)):
  *             doc.SetArray()
  */
-    __pyx_t_8 = __pyx_convert_string_from_py_std__in_string(__pyx_v_obj); if (unlikely(PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 95; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_8 = __pyx_convert_string_from_py_std__in_string(__pyx_v_obj); if (unlikely(PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 96; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __pyx_v_doc.SetString(((std::string)__pyx_t_8), (*__pyx_v_self->allocator));
 
-    /* "src/rapidjson.pyx":94
+    /* "src/rapidjson.pyx":95
  *         elif isinstance(obj, (int, long)):
  *             doc.SetInt64(<int64_t> obj)
  *         elif isinstance(obj, (str, unicode, bytes)):             # <<<<<<<<<<<<<<
@@ -2578,7 +2587,7 @@ static PyObject *__pyx_f_3src_9rapidjson_11JSONEncoder_encode_inner(struct __pyx
     goto __pyx_L3;
   }
 
-  /* "src/rapidjson.pyx":96
+  /* "src/rapidjson.pyx":97
  *         elif isinstance(obj, (str, unicode, bytes)):
  *             doc.SetString(<string> obj, dereference(self.allocator))
  *         elif isinstance(obj, (list, tuple)):             # <<<<<<<<<<<<<<
@@ -2599,7 +2608,7 @@ static PyObject *__pyx_f_3src_9rapidjson_11JSONEncoder_encode_inner(struct __pyx
   __pyx_t_2 = (__pyx_t_6 != 0);
   if (__pyx_t_2) {
 
-    /* "src/rapidjson.pyx":97
+    /* "src/rapidjson.pyx":98
  *             doc.SetString(<string> obj, dereference(self.allocator))
  *         elif isinstance(obj, (list, tuple)):
  *             doc.SetArray()             # <<<<<<<<<<<<<<
@@ -2608,7 +2617,7 @@ static PyObject *__pyx_f_3src_9rapidjson_11JSONEncoder_encode_inner(struct __pyx
  */
     __pyx_v_doc.SetArray();
 
-    /* "src/rapidjson.pyx":99
+    /* "src/rapidjson.pyx":100
  *             doc.SetArray()
  * 
  *             for item in obj:             # <<<<<<<<<<<<<<
@@ -2619,26 +2628,26 @@ static PyObject *__pyx_f_3src_9rapidjson_11JSONEncoder_encode_inner(struct __pyx
       __pyx_t_1 = __pyx_v_obj; __Pyx_INCREF(__pyx_t_1); __pyx_t_9 = 0;
       __pyx_t_10 = NULL;
     } else {
-      __pyx_t_9 = -1; __pyx_t_1 = PyObject_GetIter(__pyx_v_obj); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 99; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_9 = -1; __pyx_t_1 = PyObject_GetIter(__pyx_v_obj); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 100; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_1);
-      __pyx_t_10 = Py_TYPE(__pyx_t_1)->tp_iternext; if (unlikely(!__pyx_t_10)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 99; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_10 = Py_TYPE(__pyx_t_1)->tp_iternext; if (unlikely(!__pyx_t_10)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 100; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     }
     for (;;) {
       if (likely(!__pyx_t_10)) {
         if (likely(PyList_CheckExact(__pyx_t_1))) {
           if (__pyx_t_9 >= PyList_GET_SIZE(__pyx_t_1)) break;
           #if CYTHON_COMPILING_IN_CPYTHON
-          __pyx_t_11 = PyList_GET_ITEM(__pyx_t_1, __pyx_t_9); __Pyx_INCREF(__pyx_t_11); __pyx_t_9++; if (unlikely(0 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 99; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          __pyx_t_11 = PyList_GET_ITEM(__pyx_t_1, __pyx_t_9); __Pyx_INCREF(__pyx_t_11); __pyx_t_9++; if (unlikely(0 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 100; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
           #else
-          __pyx_t_11 = PySequence_ITEM(__pyx_t_1, __pyx_t_9); __pyx_t_9++; if (unlikely(!__pyx_t_11)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 99; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          __pyx_t_11 = PySequence_ITEM(__pyx_t_1, __pyx_t_9); __pyx_t_9++; if (unlikely(!__pyx_t_11)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 100; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
           __Pyx_GOTREF(__pyx_t_11);
           #endif
         } else {
           if (__pyx_t_9 >= PyTuple_GET_SIZE(__pyx_t_1)) break;
           #if CYTHON_COMPILING_IN_CPYTHON
-          __pyx_t_11 = PyTuple_GET_ITEM(__pyx_t_1, __pyx_t_9); __Pyx_INCREF(__pyx_t_11); __pyx_t_9++; if (unlikely(0 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 99; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          __pyx_t_11 = PyTuple_GET_ITEM(__pyx_t_1, __pyx_t_9); __Pyx_INCREF(__pyx_t_11); __pyx_t_9++; if (unlikely(0 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 100; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
           #else
-          __pyx_t_11 = PySequence_ITEM(__pyx_t_1, __pyx_t_9); __pyx_t_9++; if (unlikely(!__pyx_t_11)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 99; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          __pyx_t_11 = PySequence_ITEM(__pyx_t_1, __pyx_t_9); __pyx_t_9++; if (unlikely(!__pyx_t_11)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 100; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
           __Pyx_GOTREF(__pyx_t_11);
           #endif
         }
@@ -2648,7 +2657,7 @@ static PyObject *__pyx_f_3src_9rapidjson_11JSONEncoder_encode_inner(struct __pyx
           PyObject* exc_type = PyErr_Occurred();
           if (exc_type) {
             if (likely(exc_type == PyExc_StopIteration || PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-            else {__pyx_filename = __pyx_f[0]; __pyx_lineno = 99; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+            else {__pyx_filename = __pyx_f[0]; __pyx_lineno = 100; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
           }
           break;
         }
@@ -2657,18 +2666,18 @@ static PyObject *__pyx_f_3src_9rapidjson_11JSONEncoder_encode_inner(struct __pyx
       __Pyx_XDECREF_SET(__pyx_v_item, __pyx_t_11);
       __pyx_t_11 = 0;
 
-      /* "src/rapidjson.pyx":100
+      /* "src/rapidjson.pyx":101
  * 
  *             for item in obj:
  *                 self.encode_inner(item, value)             # <<<<<<<<<<<<<<
  * 
  *                 doc.PushBack(value, dereference(self.allocator))
  */
-      __pyx_t_11 = ((struct __pyx_vtabstruct_3src_9rapidjson_JSONEncoder *)__pyx_v_self->__pyx_vtab)->encode_inner(__pyx_v_self, __pyx_v_item, __pyx_v_value); if (unlikely(!__pyx_t_11)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 100; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_11 = ((struct __pyx_vtabstruct_3src_9rapidjson_JSONEncoder *)__pyx_v_self->__pyx_vtab)->encode_inner(__pyx_v_self, __pyx_v_item, __pyx_v_value); if (unlikely(!__pyx_t_11)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 101; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_11);
       __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
 
-      /* "src/rapidjson.pyx":102
+      /* "src/rapidjson.pyx":103
  *                 self.encode_inner(item, value)
  * 
  *                 doc.PushBack(value, dereference(self.allocator))             # <<<<<<<<<<<<<<
@@ -2677,7 +2686,7 @@ static PyObject *__pyx_f_3src_9rapidjson_11JSONEncoder_encode_inner(struct __pyx
  */
       __pyx_v_doc.PushBack(__pyx_v_value, (*__pyx_v_self->allocator));
 
-      /* "src/rapidjson.pyx":99
+      /* "src/rapidjson.pyx":100
  *             doc.SetArray()
  * 
  *             for item in obj:             # <<<<<<<<<<<<<<
@@ -2687,7 +2696,7 @@ static PyObject *__pyx_f_3src_9rapidjson_11JSONEncoder_encode_inner(struct __pyx
     }
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-    /* "src/rapidjson.pyx":96
+    /* "src/rapidjson.pyx":97
  *         elif isinstance(obj, (str, unicode, bytes)):
  *             doc.SetString(<string> obj, dereference(self.allocator))
  *         elif isinstance(obj, (list, tuple)):             # <<<<<<<<<<<<<<
@@ -2697,7 +2706,7 @@ static PyObject *__pyx_f_3src_9rapidjson_11JSONEncoder_encode_inner(struct __pyx
     goto __pyx_L3;
   }
 
-  /* "src/rapidjson.pyx":103
+  /* "src/rapidjson.pyx":104
  * 
  *                 doc.PushBack(value, dereference(self.allocator))
  *         elif isinstance(obj, dict):             # <<<<<<<<<<<<<<
@@ -2708,7 +2717,7 @@ static PyObject *__pyx_f_3src_9rapidjson_11JSONEncoder_encode_inner(struct __pyx
   __pyx_t_6 = (__pyx_t_2 != 0);
   if (__pyx_t_6) {
 
-    /* "src/rapidjson.pyx":104
+    /* "src/rapidjson.pyx":105
  *                 doc.PushBack(value, dereference(self.allocator))
  *         elif isinstance(obj, dict):
  *             doc.SetObject()             # <<<<<<<<<<<<<<
@@ -2717,14 +2726,14 @@ static PyObject *__pyx_f_3src_9rapidjson_11JSONEncoder_encode_inner(struct __pyx
  */
     __pyx_v_doc.SetObject();
 
-    /* "src/rapidjson.pyx":106
+    /* "src/rapidjson.pyx":107
  *             doc.SetObject()
  * 
  *             for k, v in obj.items():             # <<<<<<<<<<<<<<
  *                 key.SetString(<string> unicode(k), dereference(self.allocator))
  *                 self.encode_inner(v, value)
  */
-    __pyx_t_11 = __Pyx_PyObject_GetAttrStr(__pyx_v_obj, __pyx_n_s_items); if (unlikely(!__pyx_t_11)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 106; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_11 = __Pyx_PyObject_GetAttrStr(__pyx_v_obj, __pyx_n_s_items); if (unlikely(!__pyx_t_11)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 107; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_11);
     __pyx_t_12 = NULL;
     if (CYTHON_COMPILING_IN_CPYTHON && likely(PyMethod_Check(__pyx_t_11))) {
@@ -2737,10 +2746,10 @@ static PyObject *__pyx_f_3src_9rapidjson_11JSONEncoder_encode_inner(struct __pyx
       }
     }
     if (__pyx_t_12) {
-      __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_11, __pyx_t_12); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 106; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_11, __pyx_t_12); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 107; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
     } else {
-      __pyx_t_1 = __Pyx_PyObject_CallNoArg(__pyx_t_11); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 106; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_1 = __Pyx_PyObject_CallNoArg(__pyx_t_11); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 107; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     }
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
@@ -2748,9 +2757,9 @@ static PyObject *__pyx_f_3src_9rapidjson_11JSONEncoder_encode_inner(struct __pyx
       __pyx_t_11 = __pyx_t_1; __Pyx_INCREF(__pyx_t_11); __pyx_t_9 = 0;
       __pyx_t_10 = NULL;
     } else {
-      __pyx_t_9 = -1; __pyx_t_11 = PyObject_GetIter(__pyx_t_1); if (unlikely(!__pyx_t_11)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 106; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_9 = -1; __pyx_t_11 = PyObject_GetIter(__pyx_t_1); if (unlikely(!__pyx_t_11)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 107; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_11);
-      __pyx_t_10 = Py_TYPE(__pyx_t_11)->tp_iternext; if (unlikely(!__pyx_t_10)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 106; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_10 = Py_TYPE(__pyx_t_11)->tp_iternext; if (unlikely(!__pyx_t_10)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 107; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     }
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     for (;;) {
@@ -2758,17 +2767,17 @@ static PyObject *__pyx_f_3src_9rapidjson_11JSONEncoder_encode_inner(struct __pyx
         if (likely(PyList_CheckExact(__pyx_t_11))) {
           if (__pyx_t_9 >= PyList_GET_SIZE(__pyx_t_11)) break;
           #if CYTHON_COMPILING_IN_CPYTHON
-          __pyx_t_1 = PyList_GET_ITEM(__pyx_t_11, __pyx_t_9); __Pyx_INCREF(__pyx_t_1); __pyx_t_9++; if (unlikely(0 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 106; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          __pyx_t_1 = PyList_GET_ITEM(__pyx_t_11, __pyx_t_9); __Pyx_INCREF(__pyx_t_1); __pyx_t_9++; if (unlikely(0 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 107; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
           #else
-          __pyx_t_1 = PySequence_ITEM(__pyx_t_11, __pyx_t_9); __pyx_t_9++; if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 106; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          __pyx_t_1 = PySequence_ITEM(__pyx_t_11, __pyx_t_9); __pyx_t_9++; if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 107; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
           __Pyx_GOTREF(__pyx_t_1);
           #endif
         } else {
           if (__pyx_t_9 >= PyTuple_GET_SIZE(__pyx_t_11)) break;
           #if CYTHON_COMPILING_IN_CPYTHON
-          __pyx_t_1 = PyTuple_GET_ITEM(__pyx_t_11, __pyx_t_9); __Pyx_INCREF(__pyx_t_1); __pyx_t_9++; if (unlikely(0 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 106; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          __pyx_t_1 = PyTuple_GET_ITEM(__pyx_t_11, __pyx_t_9); __Pyx_INCREF(__pyx_t_1); __pyx_t_9++; if (unlikely(0 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 107; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
           #else
-          __pyx_t_1 = PySequence_ITEM(__pyx_t_11, __pyx_t_9); __pyx_t_9++; if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 106; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          __pyx_t_1 = PySequence_ITEM(__pyx_t_11, __pyx_t_9); __pyx_t_9++; if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 107; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
           __Pyx_GOTREF(__pyx_t_1);
           #endif
         }
@@ -2778,7 +2787,7 @@ static PyObject *__pyx_f_3src_9rapidjson_11JSONEncoder_encode_inner(struct __pyx
           PyObject* exc_type = PyErr_Occurred();
           if (exc_type) {
             if (likely(exc_type == PyExc_StopIteration || PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-            else {__pyx_filename = __pyx_f[0]; __pyx_lineno = 106; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+            else {__pyx_filename = __pyx_f[0]; __pyx_lineno = 107; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
           }
           break;
         }
@@ -2794,7 +2803,7 @@ static PyObject *__pyx_f_3src_9rapidjson_11JSONEncoder_encode_inner(struct __pyx
         if (unlikely(size != 2)) {
           if (size > 2) __Pyx_RaiseTooManyValuesError(2);
           else if (size >= 0) __Pyx_RaiseNeedMoreValuesError(size);
-          {__pyx_filename = __pyx_f[0]; __pyx_lineno = 106; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          {__pyx_filename = __pyx_f[0]; __pyx_lineno = 107; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         }
         #if CYTHON_COMPILING_IN_CPYTHON
         if (likely(PyTuple_CheckExact(sequence))) {
@@ -2807,15 +2816,15 @@ static PyObject *__pyx_f_3src_9rapidjson_11JSONEncoder_encode_inner(struct __pyx
         __Pyx_INCREF(__pyx_t_12);
         __Pyx_INCREF(__pyx_t_13);
         #else
-        __pyx_t_12 = PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_12)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 106; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_12 = PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_12)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 107; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __Pyx_GOTREF(__pyx_t_12);
-        __pyx_t_13 = PySequence_ITEM(sequence, 1); if (unlikely(!__pyx_t_13)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 106; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_13 = PySequence_ITEM(sequence, 1); if (unlikely(!__pyx_t_13)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 107; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __Pyx_GOTREF(__pyx_t_13);
         #endif
         __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
       } else {
         Py_ssize_t index = -1;
-        __pyx_t_14 = PyObject_GetIter(__pyx_t_1); if (unlikely(!__pyx_t_14)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 106; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_14 = PyObject_GetIter(__pyx_t_1); if (unlikely(!__pyx_t_14)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 107; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __Pyx_GOTREF(__pyx_t_14);
         __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
         __pyx_t_15 = Py_TYPE(__pyx_t_14)->tp_iternext;
@@ -2823,7 +2832,7 @@ static PyObject *__pyx_f_3src_9rapidjson_11JSONEncoder_encode_inner(struct __pyx
         __Pyx_GOTREF(__pyx_t_12);
         index = 1; __pyx_t_13 = __pyx_t_15(__pyx_t_14); if (unlikely(!__pyx_t_13)) goto __pyx_L15_unpacking_failed;
         __Pyx_GOTREF(__pyx_t_13);
-        if (__Pyx_IternextUnpackEndCheck(__pyx_t_15(__pyx_t_14), 2) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 106; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        if (__Pyx_IternextUnpackEndCheck(__pyx_t_15(__pyx_t_14), 2) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 107; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __pyx_t_15 = NULL;
         __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
         goto __pyx_L16_unpacking_done;
@@ -2831,7 +2840,7 @@ static PyObject *__pyx_f_3src_9rapidjson_11JSONEncoder_encode_inner(struct __pyx
         __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
         __pyx_t_15 = NULL;
         if (__Pyx_IterFinish() == 0) __Pyx_RaiseNeedMoreValuesError(index);
-        {__pyx_filename = __pyx_f[0]; __pyx_lineno = 106; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        {__pyx_filename = __pyx_f[0]; __pyx_lineno = 107; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __pyx_L16_unpacking_done:;
       }
       __Pyx_XDECREF_SET(__pyx_v_k, __pyx_t_12);
@@ -2839,37 +2848,37 @@ static PyObject *__pyx_f_3src_9rapidjson_11JSONEncoder_encode_inner(struct __pyx
       __Pyx_XDECREF_SET(__pyx_v_v, __pyx_t_13);
       __pyx_t_13 = 0;
 
-      /* "src/rapidjson.pyx":107
+      /* "src/rapidjson.pyx":108
  * 
  *             for k, v in obj.items():
  *                 key.SetString(<string> unicode(k), dereference(self.allocator))             # <<<<<<<<<<<<<<
  *                 self.encode_inner(v, value)
  * 
  */
-      __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 107; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 108; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_1);
       __Pyx_INCREF(__pyx_v_k);
       __Pyx_GIVEREF(__pyx_v_k);
       PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_v_k);
-      __pyx_t_13 = __Pyx_PyObject_Call(((PyObject *)(&PyUnicode_Type)), __pyx_t_1, NULL); if (unlikely(!__pyx_t_13)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 107; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_13 = __Pyx_PyObject_Call(((PyObject *)(&PyUnicode_Type)), __pyx_t_1, NULL); if (unlikely(!__pyx_t_13)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 108; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_13);
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-      __pyx_t_8 = __pyx_convert_string_from_py_std__in_string(__pyx_t_13); if (unlikely(PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 107; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_8 = __pyx_convert_string_from_py_std__in_string(__pyx_t_13); if (unlikely(PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 108; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_DECREF(__pyx_t_13); __pyx_t_13 = 0;
       __pyx_v_key.SetString(((std::string)__pyx_t_8), (*__pyx_v_self->allocator));
 
-      /* "src/rapidjson.pyx":108
+      /* "src/rapidjson.pyx":109
  *             for k, v in obj.items():
  *                 key.SetString(<string> unicode(k), dereference(self.allocator))
  *                 self.encode_inner(v, value)             # <<<<<<<<<<<<<<
  * 
  *                 doc.AddMember(key, value, dereference(self.allocator))
  */
-      __pyx_t_13 = ((struct __pyx_vtabstruct_3src_9rapidjson_JSONEncoder *)__pyx_v_self->__pyx_vtab)->encode_inner(__pyx_v_self, __pyx_v_v, __pyx_v_value); if (unlikely(!__pyx_t_13)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 108; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_13 = ((struct __pyx_vtabstruct_3src_9rapidjson_JSONEncoder *)__pyx_v_self->__pyx_vtab)->encode_inner(__pyx_v_self, __pyx_v_v, __pyx_v_value); if (unlikely(!__pyx_t_13)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 109; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_13);
       __Pyx_DECREF(__pyx_t_13); __pyx_t_13 = 0;
 
-      /* "src/rapidjson.pyx":110
+      /* "src/rapidjson.pyx":111
  *                 self.encode_inner(v, value)
  * 
  *                 doc.AddMember(key, value, dereference(self.allocator))             # <<<<<<<<<<<<<<
@@ -2878,7 +2887,7 @@ static PyObject *__pyx_f_3src_9rapidjson_11JSONEncoder_encode_inner(struct __pyx
  */
       __pyx_v_doc.AddMember(__pyx_v_key, __pyx_v_value, (*__pyx_v_self->allocator));
 
-      /* "src/rapidjson.pyx":106
+      /* "src/rapidjson.pyx":107
  *             doc.SetObject()
  * 
  *             for k, v in obj.items():             # <<<<<<<<<<<<<<
@@ -2888,7 +2897,7 @@ static PyObject *__pyx_f_3src_9rapidjson_11JSONEncoder_encode_inner(struct __pyx
     }
     __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
 
-    /* "src/rapidjson.pyx":103
+    /* "src/rapidjson.pyx":104
  * 
  *                 doc.PushBack(value, dereference(self.allocator))
  *         elif isinstance(obj, dict):             # <<<<<<<<<<<<<<
@@ -2898,7 +2907,7 @@ static PyObject *__pyx_f_3src_9rapidjson_11JSONEncoder_encode_inner(struct __pyx
     goto __pyx_L3;
   }
 
-  /* "src/rapidjson.pyx":112
+  /* "src/rapidjson.pyx":113
  *                 doc.AddMember(key, value, dereference(self.allocator))
  *         else:
  *             obj = self.default_(obj)             # <<<<<<<<<<<<<<
@@ -2918,16 +2927,16 @@ static PyObject *__pyx_f_3src_9rapidjson_11JSONEncoder_encode_inner(struct __pyx
       }
     }
     if (!__pyx_t_1) {
-      __pyx_t_11 = __Pyx_PyObject_CallOneArg(__pyx_t_13, __pyx_v_obj); if (unlikely(!__pyx_t_11)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 112; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_11 = __Pyx_PyObject_CallOneArg(__pyx_t_13, __pyx_v_obj); if (unlikely(!__pyx_t_11)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 113; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_11);
     } else {
-      __pyx_t_12 = PyTuple_New(1+1); if (unlikely(!__pyx_t_12)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 112; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_12 = PyTuple_New(1+1); if (unlikely(!__pyx_t_12)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 113; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_12);
       __Pyx_GIVEREF(__pyx_t_1); PyTuple_SET_ITEM(__pyx_t_12, 0, __pyx_t_1); __pyx_t_1 = NULL;
       __Pyx_INCREF(__pyx_v_obj);
       __Pyx_GIVEREF(__pyx_v_obj);
       PyTuple_SET_ITEM(__pyx_t_12, 0+1, __pyx_v_obj);
-      __pyx_t_11 = __Pyx_PyObject_Call(__pyx_t_13, __pyx_t_12, NULL); if (unlikely(!__pyx_t_11)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 112; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_11 = __Pyx_PyObject_Call(__pyx_t_13, __pyx_t_12, NULL); if (unlikely(!__pyx_t_11)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 113; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_11);
       __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
     }
@@ -2935,20 +2944,20 @@ static PyObject *__pyx_f_3src_9rapidjson_11JSONEncoder_encode_inner(struct __pyx
     __Pyx_DECREF_SET(__pyx_v_obj, __pyx_t_11);
     __pyx_t_11 = 0;
 
-    /* "src/rapidjson.pyx":113
+    /* "src/rapidjson.pyx":114
  *         else:
  *             obj = self.default_(obj)
  *             self.encode_inner(obj, doc)             # <<<<<<<<<<<<<<
  * 
  * cdef class JSONDecoder(object):
  */
-    __pyx_t_11 = ((struct __pyx_vtabstruct_3src_9rapidjson_JSONEncoder *)__pyx_v_self->__pyx_vtab)->encode_inner(__pyx_v_self, __pyx_v_obj, __pyx_v_doc); if (unlikely(!__pyx_t_11)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 113; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_11 = ((struct __pyx_vtabstruct_3src_9rapidjson_JSONEncoder *)__pyx_v_self->__pyx_vtab)->encode_inner(__pyx_v_self, __pyx_v_obj, __pyx_v_doc); if (unlikely(!__pyx_t_11)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 114; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_11);
     __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
   }
   __pyx_L3:;
 
-  /* "src/rapidjson.pyx":82
+  /* "src/rapidjson.pyx":83
  * 
  * 
  *     cdef encode_inner(self, obj, Value &doc):             # <<<<<<<<<<<<<<
@@ -3392,7 +3401,7 @@ static int __pyx_pf_3src_9rapidjson_11JSONEncoder_9sort_keys_2__set__(struct __p
  *     cpdef public libcpp.bool sort_keys
  *     cpdef public object indent             # <<<<<<<<<<<<<<
  *     cpdef public object separators
- *     cdef object default_
+ *     cpdef public object item_separator
  */
 
 /* Python wrapper */
@@ -3486,8 +3495,8 @@ static int __pyx_pf_3src_9rapidjson_11JSONEncoder_6indent_4__del__(struct __pyx_
  *     cpdef public libcpp.bool sort_keys
  *     cpdef public object indent
  *     cpdef public object separators             # <<<<<<<<<<<<<<
+ *     cpdef public object item_separator
  *     cdef object default_
- * 
  */
 
 /* Python wrapper */
@@ -3577,7 +3586,102 @@ static int __pyx_pf_3src_9rapidjson_11JSONEncoder_10separators_4__del__(struct _
   return __pyx_r;
 }
 
-/* "src/rapidjson.pyx":125
+/* "src/rapidjson.pyx":40
+ *     cpdef public object indent
+ *     cpdef public object separators
+ *     cpdef public object item_separator             # <<<<<<<<<<<<<<
+ *     cdef object default_
+ * 
+ */
+
+/* Python wrapper */
+static PyObject *__pyx_pw_3src_9rapidjson_11JSONEncoder_14item_separator_1__get__(PyObject *__pyx_v_self); /*proto*/
+static PyObject *__pyx_pw_3src_9rapidjson_11JSONEncoder_14item_separator_1__get__(PyObject *__pyx_v_self) {
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("__get__ (wrapper)", 0);
+  __pyx_r = __pyx_pf_3src_9rapidjson_11JSONEncoder_14item_separator___get__(((struct __pyx_obj_3src_9rapidjson_JSONEncoder *)__pyx_v_self));
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_3src_9rapidjson_11JSONEncoder_14item_separator___get__(struct __pyx_obj_3src_9rapidjson_JSONEncoder *__pyx_v_self) {
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("__get__", 0);
+  __Pyx_XDECREF(__pyx_r);
+  __Pyx_INCREF(__pyx_v_self->item_separator);
+  __pyx_r = __pyx_v_self->item_separator;
+  goto __pyx_L0;
+
+  /* function exit code */
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* Python wrapper */
+static int __pyx_pw_3src_9rapidjson_11JSONEncoder_14item_separator_3__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_value); /*proto*/
+static int __pyx_pw_3src_9rapidjson_11JSONEncoder_14item_separator_3__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_value) {
+  int __pyx_r;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("__set__ (wrapper)", 0);
+  __pyx_r = __pyx_pf_3src_9rapidjson_11JSONEncoder_14item_separator_2__set__(((struct __pyx_obj_3src_9rapidjson_JSONEncoder *)__pyx_v_self), ((PyObject *)__pyx_v_value));
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static int __pyx_pf_3src_9rapidjson_11JSONEncoder_14item_separator_2__set__(struct __pyx_obj_3src_9rapidjson_JSONEncoder *__pyx_v_self, PyObject *__pyx_v_value) {
+  int __pyx_r;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("__set__", 0);
+  __Pyx_INCREF(__pyx_v_value);
+  __Pyx_GIVEREF(__pyx_v_value);
+  __Pyx_GOTREF(__pyx_v_self->item_separator);
+  __Pyx_DECREF(__pyx_v_self->item_separator);
+  __pyx_v_self->item_separator = __pyx_v_value;
+
+  /* function exit code */
+  __pyx_r = 0;
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* Python wrapper */
+static int __pyx_pw_3src_9rapidjson_11JSONEncoder_14item_separator_5__del__(PyObject *__pyx_v_self); /*proto*/
+static int __pyx_pw_3src_9rapidjson_11JSONEncoder_14item_separator_5__del__(PyObject *__pyx_v_self) {
+  int __pyx_r;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("__del__ (wrapper)", 0);
+  __pyx_r = __pyx_pf_3src_9rapidjson_11JSONEncoder_14item_separator_4__del__(((struct __pyx_obj_3src_9rapidjson_JSONEncoder *)__pyx_v_self));
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static int __pyx_pf_3src_9rapidjson_11JSONEncoder_14item_separator_4__del__(struct __pyx_obj_3src_9rapidjson_JSONEncoder *__pyx_v_self) {
+  int __pyx_r;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("__del__", 0);
+  __Pyx_INCREF(Py_None);
+  __Pyx_GIVEREF(Py_None);
+  __Pyx_GOTREF(__pyx_v_self->item_separator);
+  __Pyx_DECREF(__pyx_v_self->item_separator);
+  __pyx_v_self->item_separator = Py_None;
+
+  /* function exit code */
+  __pyx_r = 0;
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "src/rapidjson.pyx":126
  *     cdef public object object_pairs_hook
  * 
  *     def __init__(self, object_hook=None, parse_float=None,             # <<<<<<<<<<<<<<
@@ -3606,7 +3710,7 @@ static int __pyx_pw_3src_9rapidjson_11JSONDecoder_1__init__(PyObject *__pyx_v_se
     values[0] = ((PyObject *)Py_None);
     values[1] = ((PyObject *)Py_None);
 
-    /* "src/rapidjson.pyx":126
+    /* "src/rapidjson.pyx":127
  * 
  *     def __init__(self, object_hook=None, parse_float=None,
  *                 parse_int=None, parse_constant=None, libcpp.bool strict=True,             # <<<<<<<<<<<<<<
@@ -3616,7 +3720,7 @@ static int __pyx_pw_3src_9rapidjson_11JSONDecoder_1__init__(PyObject *__pyx_v_se
     values[2] = ((PyObject *)Py_None);
     values[3] = ((PyObject *)Py_None);
 
-    /* "src/rapidjson.pyx":127
+    /* "src/rapidjson.pyx":128
  *     def __init__(self, object_hook=None, parse_float=None,
  *                 parse_int=None, parse_constant=None, libcpp.bool strict=True,
  *                 object_pairs_hook=None):             # <<<<<<<<<<<<<<
@@ -3671,7 +3775,7 @@ static int __pyx_pw_3src_9rapidjson_11JSONDecoder_1__init__(PyObject *__pyx_v_se
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__init__") < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 125; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__init__") < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 126; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
       }
     } else {
       switch (PyTuple_GET_SIZE(__pyx_args)) {
@@ -3690,10 +3794,10 @@ static int __pyx_pw_3src_9rapidjson_11JSONDecoder_1__init__(PyObject *__pyx_v_se
     __pyx_v_parse_int = values[2];
     __pyx_v_parse_constant = values[3];
     if (values[4]) {
-      __pyx_v_strict = __Pyx_PyObject_IsTrue(values[4]); if (unlikely((__pyx_v_strict == (bool)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 126; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+      __pyx_v_strict = __Pyx_PyObject_IsTrue(values[4]); if (unlikely((__pyx_v_strict == (bool)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 127; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
     } else {
 
-      /* "src/rapidjson.pyx":126
+      /* "src/rapidjson.pyx":127
  * 
  *     def __init__(self, object_hook=None, parse_float=None,
  *                 parse_int=None, parse_constant=None, libcpp.bool strict=True,             # <<<<<<<<<<<<<<
@@ -3706,7 +3810,7 @@ static int __pyx_pw_3src_9rapidjson_11JSONDecoder_1__init__(PyObject *__pyx_v_se
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("__init__", 0, 0, 6, PyTuple_GET_SIZE(__pyx_args)); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 125; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+  __Pyx_RaiseArgtupleInvalid("__init__", 0, 0, 6, PyTuple_GET_SIZE(__pyx_args)); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 126; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
   __pyx_L3_error:;
   __Pyx_AddTraceback("src.rapidjson.JSONDecoder.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -3714,7 +3818,7 @@ static int __pyx_pw_3src_9rapidjson_11JSONDecoder_1__init__(PyObject *__pyx_v_se
   __pyx_L4_argument_unpacking_done:;
   __pyx_r = __pyx_pf_3src_9rapidjson_11JSONDecoder___init__(((struct __pyx_obj_3src_9rapidjson_JSONDecoder *)__pyx_v_self), __pyx_v_object_hook, __pyx_v_parse_float, __pyx_v_parse_int, __pyx_v_parse_constant, __pyx_v_strict, __pyx_v_object_pairs_hook);
 
-  /* "src/rapidjson.pyx":125
+  /* "src/rapidjson.pyx":126
  *     cdef public object object_pairs_hook
  * 
  *     def __init__(self, object_hook=None, parse_float=None,             # <<<<<<<<<<<<<<
@@ -3732,7 +3836,7 @@ static int __pyx_pf_3src_9rapidjson_11JSONDecoder___init__(struct __pyx_obj_3src
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__init__", 0);
 
-  /* "src/rapidjson.pyx":128
+  /* "src/rapidjson.pyx":129
  *                 parse_int=None, parse_constant=None, libcpp.bool strict=True,
  *                 object_pairs_hook=None):
  *         self.object_hook = object_hook             # <<<<<<<<<<<<<<
@@ -3745,7 +3849,7 @@ static int __pyx_pf_3src_9rapidjson_11JSONDecoder___init__(struct __pyx_obj_3src
   __Pyx_DECREF(__pyx_v_self->object_hook);
   __pyx_v_self->object_hook = __pyx_v_object_hook;
 
-  /* "src/rapidjson.pyx":129
+  /* "src/rapidjson.pyx":130
  *                 object_pairs_hook=None):
  *         self.object_hook = object_hook
  *         self.parse_float = parse_float             # <<<<<<<<<<<<<<
@@ -3758,7 +3862,7 @@ static int __pyx_pf_3src_9rapidjson_11JSONDecoder___init__(struct __pyx_obj_3src
   __Pyx_DECREF(__pyx_v_self->parse_float);
   __pyx_v_self->parse_float = __pyx_v_parse_float;
 
-  /* "src/rapidjson.pyx":130
+  /* "src/rapidjson.pyx":131
  *         self.object_hook = object_hook
  *         self.parse_float = parse_float
  *         self.parse_int = parse_int             # <<<<<<<<<<<<<<
@@ -3771,7 +3875,7 @@ static int __pyx_pf_3src_9rapidjson_11JSONDecoder___init__(struct __pyx_obj_3src
   __Pyx_DECREF(__pyx_v_self->parse_int);
   __pyx_v_self->parse_int = __pyx_v_parse_int;
 
-  /* "src/rapidjson.pyx":131
+  /* "src/rapidjson.pyx":132
  *         self.parse_float = parse_float
  *         self.parse_int = parse_int
  *         self.parse_constant = parse_constant             # <<<<<<<<<<<<<<
@@ -3784,7 +3888,7 @@ static int __pyx_pf_3src_9rapidjson_11JSONDecoder___init__(struct __pyx_obj_3src
   __Pyx_DECREF(__pyx_v_self->parse_constant);
   __pyx_v_self->parse_constant = __pyx_v_parse_constant;
 
-  /* "src/rapidjson.pyx":132
+  /* "src/rapidjson.pyx":133
  *         self.parse_int = parse_int
  *         self.parse_constant = parse_constant
  *         self.strict = strict             # <<<<<<<<<<<<<<
@@ -3793,7 +3897,7 @@ static int __pyx_pf_3src_9rapidjson_11JSONDecoder___init__(struct __pyx_obj_3src
  */
   __pyx_v_self->strict = __pyx_v_strict;
 
-  /* "src/rapidjson.pyx":133
+  /* "src/rapidjson.pyx":134
  *         self.parse_constant = parse_constant
  *         self.strict = strict
  *         self.object_pairs_hook = object_pairs_hook             # <<<<<<<<<<<<<<
@@ -3806,7 +3910,7 @@ static int __pyx_pf_3src_9rapidjson_11JSONDecoder___init__(struct __pyx_obj_3src
   __Pyx_DECREF(__pyx_v_self->object_pairs_hook);
   __pyx_v_self->object_pairs_hook = __pyx_v_object_pairs_hook;
 
-  /* "src/rapidjson.pyx":125
+  /* "src/rapidjson.pyx":126
  *     cdef public object object_pairs_hook
  * 
  *     def __init__(self, object_hook=None, parse_float=None,             # <<<<<<<<<<<<<<
@@ -3820,7 +3924,7 @@ static int __pyx_pf_3src_9rapidjson_11JSONDecoder___init__(struct __pyx_obj_3src
   return __pyx_r;
 }
 
-/* "src/rapidjson.pyx":135
+/* "src/rapidjson.pyx":136
  *         self.object_pairs_hook = object_pairs_hook
  * 
  *     cpdef decode(self, const char *s):             # <<<<<<<<<<<<<<
@@ -3849,11 +3953,11 @@ static PyObject *__pyx_f_3src_9rapidjson_11JSONDecoder_decode(struct __pyx_obj_3
   if (unlikely(__pyx_skip_dispatch)) ;
   /* Check if overridden in Python */
   else if (unlikely(Py_TYPE(((PyObject *)__pyx_v_self))->tp_dictoffset != 0)) {
-    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_decode); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 135; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_decode); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 136; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_1);
     if (!PyCFunction_Check(__pyx_t_1) || (PyCFunction_GET_FUNCTION(__pyx_t_1) != (PyCFunction)__pyx_pw_3src_9rapidjson_11JSONDecoder_3decode)) {
       __Pyx_XDECREF(__pyx_r);
-      __pyx_t_3 = __Pyx_PyBytes_FromString(__pyx_v_s); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 135; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_3 = __Pyx_PyBytes_FromString(__pyx_v_s); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 136; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_INCREF(__pyx_t_1);
       __pyx_t_4 = __pyx_t_1; __pyx_t_5 = NULL;
@@ -3867,17 +3971,17 @@ static PyObject *__pyx_f_3src_9rapidjson_11JSONDecoder_decode(struct __pyx_obj_3
         }
       }
       if (!__pyx_t_5) {
-        __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_4, __pyx_t_3); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 135; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_4, __pyx_t_3); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 136; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
         __Pyx_GOTREF(__pyx_t_2);
       } else {
-        __pyx_t_6 = PyTuple_New(1+1); if (unlikely(!__pyx_t_6)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 135; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_6 = PyTuple_New(1+1); if (unlikely(!__pyx_t_6)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 136; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __Pyx_GOTREF(__pyx_t_6);
         __Pyx_GIVEREF(__pyx_t_5); PyTuple_SET_ITEM(__pyx_t_6, 0, __pyx_t_5); __pyx_t_5 = NULL;
         __Pyx_GIVEREF(__pyx_t_3);
         PyTuple_SET_ITEM(__pyx_t_6, 0+1, __pyx_t_3);
         __pyx_t_3 = 0;
-        __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_t_6, NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 135; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_t_6, NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 136; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __Pyx_GOTREF(__pyx_t_2);
         __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
       }
@@ -3890,7 +3994,7 @@ static PyObject *__pyx_f_3src_9rapidjson_11JSONDecoder_decode(struct __pyx_obj_3
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   }
 
-  /* "src/rapidjson.pyx":136
+  /* "src/rapidjson.pyx":137
  * 
  *     cpdef decode(self, const char *s):
  *         self.doc.Parse(s)             # <<<<<<<<<<<<<<
@@ -3899,7 +4003,7 @@ static PyObject *__pyx_f_3src_9rapidjson_11JSONDecoder_decode(struct __pyx_obj_3
  */
   __pyx_v_self->doc.Parse(__pyx_v_s);
 
-  /* "src/rapidjson.pyx":138
+  /* "src/rapidjson.pyx":139
  *         self.doc.Parse(s)
  * 
  *         if self.doc.HasParseError():             # <<<<<<<<<<<<<<
@@ -3909,20 +4013,20 @@ static PyObject *__pyx_f_3src_9rapidjson_11JSONDecoder_decode(struct __pyx_obj_3
   __pyx_t_7 = (__pyx_v_self->doc.HasParseError() != 0);
   if (__pyx_t_7) {
 
-    /* "src/rapidjson.pyx":139
+    /* "src/rapidjson.pyx":140
  * 
  *         if self.doc.HasParseError():
  *             raise JSONDecodeError(GetParseError_En(self.doc.GetParseError()), s, self.doc.GetErrorOffset())             # <<<<<<<<<<<<<<
  * 
  *         return self.decode_inner(self.doc)
  */
-    __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_JSONDecodeError); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 139; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_JSONDecodeError); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 140; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_4 = __Pyx_PyBytes_FromString(rapidjson::GetParseError_En(__pyx_v_self->doc.GetParseError())); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 139; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_4 = __Pyx_PyBytes_FromString(rapidjson::GetParseError_En(__pyx_v_self->doc.GetParseError())); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 140; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_6 = __Pyx_PyBytes_FromString(__pyx_v_s); if (unlikely(!__pyx_t_6)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 139; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_6 = __Pyx_PyBytes_FromString(__pyx_v_s); if (unlikely(!__pyx_t_6)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 140; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_6);
-    __pyx_t_3 = __Pyx_PyInt_FromSize_t(__pyx_v_self->doc.GetErrorOffset()); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 139; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_3 = __Pyx_PyInt_FromSize_t(__pyx_v_self->doc.GetErrorOffset()); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 140; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_3);
     __pyx_t_5 = NULL;
     __pyx_t_8 = 0;
@@ -3936,7 +4040,7 @@ static PyObject *__pyx_f_3src_9rapidjson_11JSONDecoder_decode(struct __pyx_obj_3
         __pyx_t_8 = 1;
       }
     }
-    __pyx_t_9 = PyTuple_New(3+__pyx_t_8); if (unlikely(!__pyx_t_9)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 139; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_9 = PyTuple_New(3+__pyx_t_8); if (unlikely(!__pyx_t_9)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 140; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_9);
     if (__pyx_t_5) {
       __Pyx_GIVEREF(__pyx_t_5); PyTuple_SET_ITEM(__pyx_t_9, 0, __pyx_t_5); __pyx_t_5 = NULL;
@@ -3950,15 +4054,15 @@ static PyObject *__pyx_f_3src_9rapidjson_11JSONDecoder_decode(struct __pyx_obj_3
     __pyx_t_4 = 0;
     __pyx_t_6 = 0;
     __pyx_t_3 = 0;
-    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_9, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 139; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_9, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 140; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     __Pyx_Raise(__pyx_t_1, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 139; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 140; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-    /* "src/rapidjson.pyx":138
+    /* "src/rapidjson.pyx":139
  *         self.doc.Parse(s)
  * 
  *         if self.doc.HasParseError():             # <<<<<<<<<<<<<<
@@ -3967,7 +4071,7 @@ static PyObject *__pyx_f_3src_9rapidjson_11JSONDecoder_decode(struct __pyx_obj_3
  */
   }
 
-  /* "src/rapidjson.pyx":141
+  /* "src/rapidjson.pyx":142
  *             raise JSONDecodeError(GetParseError_En(self.doc.GetParseError()), s, self.doc.GetErrorOffset())
  * 
  *         return self.decode_inner(self.doc)             # <<<<<<<<<<<<<<
@@ -3975,13 +4079,13 @@ static PyObject *__pyx_f_3src_9rapidjson_11JSONDecoder_decode(struct __pyx_obj_3
  *     cdef decode_inner(self, const Value &doc):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = ((struct __pyx_vtabstruct_3src_9rapidjson_JSONDecoder *)__pyx_v_self->__pyx_vtab)->decode_inner(__pyx_v_self, __pyx_v_self->doc); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 141; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = ((struct __pyx_vtabstruct_3src_9rapidjson_JSONDecoder *)__pyx_v_self->__pyx_vtab)->decode_inner(__pyx_v_self, __pyx_v_self->doc); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 142; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "src/rapidjson.pyx":135
+  /* "src/rapidjson.pyx":136
  *         self.object_pairs_hook = object_pairs_hook
  * 
  *     cpdef decode(self, const char *s):             # <<<<<<<<<<<<<<
@@ -4017,7 +4121,7 @@ static PyObject *__pyx_pw_3src_9rapidjson_11JSONDecoder_3decode(PyObject *__pyx_
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("decode (wrapper)", 0);
   assert(__pyx_arg_s); {
-    __pyx_v_s = __Pyx_PyObject_AsString(__pyx_arg_s); if (unlikely((!__pyx_v_s) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 135; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+    __pyx_v_s = __Pyx_PyObject_AsString(__pyx_arg_s); if (unlikely((!__pyx_v_s) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 136; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -4041,7 +4145,7 @@ static PyObject *__pyx_pf_3src_9rapidjson_11JSONDecoder_2decode(struct __pyx_obj
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("decode", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_f_3src_9rapidjson_11JSONDecoder_decode(__pyx_v_self, __pyx_v_s, 1); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 135; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __pyx_f_3src_9rapidjson_11JSONDecoder_decode(__pyx_v_self, __pyx_v_s, 1); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 136; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -4058,7 +4162,7 @@ static PyObject *__pyx_pf_3src_9rapidjson_11JSONDecoder_2decode(struct __pyx_obj
   return __pyx_r;
 }
 
-/* "src/rapidjson.pyx":143
+/* "src/rapidjson.pyx":144
  *         return self.decode_inner(self.doc)
  * 
  *     cdef decode_inner(self, const Value &doc):             # <<<<<<<<<<<<<<
@@ -4083,7 +4187,7 @@ static PyObject *__pyx_f_3src_9rapidjson_11JSONDecoder_decode_inner(struct __pyx
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("decode_inner", 0);
 
-  /* "src/rapidjson.pyx":147
+  /* "src/rapidjson.pyx":148
  *         cdef GenericMemberIterator it2
  * 
  *         if doc.IsNull():             # <<<<<<<<<<<<<<
@@ -4093,7 +4197,7 @@ static PyObject *__pyx_f_3src_9rapidjson_11JSONDecoder_decode_inner(struct __pyx
   __pyx_t_1 = (__pyx_v_doc.IsNull() != 0);
   if (__pyx_t_1) {
 
-    /* "src/rapidjson.pyx":148
+    /* "src/rapidjson.pyx":149
  * 
  *         if doc.IsNull():
  *             return None             # <<<<<<<<<<<<<<
@@ -4105,7 +4209,7 @@ static PyObject *__pyx_f_3src_9rapidjson_11JSONDecoder_decode_inner(struct __pyx
     __pyx_r = Py_None;
     goto __pyx_L0;
 
-    /* "src/rapidjson.pyx":147
+    /* "src/rapidjson.pyx":148
  *         cdef GenericMemberIterator it2
  * 
  *         if doc.IsNull():             # <<<<<<<<<<<<<<
@@ -4114,7 +4218,7 @@ static PyObject *__pyx_f_3src_9rapidjson_11JSONDecoder_decode_inner(struct __pyx
  */
   }
 
-  /* "src/rapidjson.pyx":149
+  /* "src/rapidjson.pyx":150
  *         if doc.IsNull():
  *             return None
  *         elif doc.IsBool():             # <<<<<<<<<<<<<<
@@ -4124,7 +4228,7 @@ static PyObject *__pyx_f_3src_9rapidjson_11JSONDecoder_decode_inner(struct __pyx
   __pyx_t_1 = (__pyx_v_doc.IsBool() != 0);
   if (__pyx_t_1) {
 
-    /* "src/rapidjson.pyx":150
+    /* "src/rapidjson.pyx":151
  *             return None
  *         elif doc.IsBool():
  *             return doc.GetBool()             # <<<<<<<<<<<<<<
@@ -4132,13 +4236,13 @@ static PyObject *__pyx_f_3src_9rapidjson_11JSONDecoder_decode_inner(struct __pyx
  *             return doc.GetString().decode('UTF-8')
  */
     __Pyx_XDECREF(__pyx_r);
-    __pyx_t_2 = __Pyx_PyBool_FromLong(__pyx_v_doc.GetBool()); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 150; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_2 = __Pyx_PyBool_FromLong(__pyx_v_doc.GetBool()); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 151; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_2);
     __pyx_r = __pyx_t_2;
     __pyx_t_2 = 0;
     goto __pyx_L0;
 
-    /* "src/rapidjson.pyx":149
+    /* "src/rapidjson.pyx":150
  *         if doc.IsNull():
  *             return None
  *         elif doc.IsBool():             # <<<<<<<<<<<<<<
@@ -4147,7 +4251,7 @@ static PyObject *__pyx_f_3src_9rapidjson_11JSONDecoder_decode_inner(struct __pyx
  */
   }
 
-  /* "src/rapidjson.pyx":151
+  /* "src/rapidjson.pyx":152
  *         elif doc.IsBool():
  *             return doc.GetBool()
  *         elif doc.IsString():             # <<<<<<<<<<<<<<
@@ -4157,7 +4261,7 @@ static PyObject *__pyx_f_3src_9rapidjson_11JSONDecoder_decode_inner(struct __pyx
   __pyx_t_1 = (__pyx_v_doc.IsString() != 0);
   if (__pyx_t_1) {
 
-    /* "src/rapidjson.pyx":152
+    /* "src/rapidjson.pyx":153
  *             return doc.GetBool()
  *         elif doc.IsString():
  *             return doc.GetString().decode('UTF-8')             # <<<<<<<<<<<<<<
@@ -4166,14 +4270,14 @@ static PyObject *__pyx_f_3src_9rapidjson_11JSONDecoder_decode_inner(struct __pyx
  */
     __Pyx_XDECREF(__pyx_r);
     __pyx_t_3 = __pyx_v_doc.GetString();
-    __pyx_t_2 = __Pyx_decode_c_string(__pyx_t_3, 0, strlen(__pyx_t_3), NULL, NULL, PyUnicode_DecodeUTF8); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 152; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_2 = __Pyx_decode_c_string(__pyx_t_3, 0, strlen(__pyx_t_3), NULL, NULL, PyUnicode_DecodeUTF8); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 153; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_INCREF(__pyx_t_2);
     __pyx_r = __pyx_t_2;
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     goto __pyx_L0;
 
-    /* "src/rapidjson.pyx":151
+    /* "src/rapidjson.pyx":152
  *         elif doc.IsBool():
  *             return doc.GetBool()
  *         elif doc.IsString():             # <<<<<<<<<<<<<<
@@ -4182,7 +4286,7 @@ static PyObject *__pyx_f_3src_9rapidjson_11JSONDecoder_decode_inner(struct __pyx
  */
   }
 
-  /* "src/rapidjson.pyx":153
+  /* "src/rapidjson.pyx":154
  *         elif doc.IsString():
  *             return doc.GetString().decode('UTF-8')
  *         elif doc.IsNumber():             # <<<<<<<<<<<<<<
@@ -4192,7 +4296,7 @@ static PyObject *__pyx_f_3src_9rapidjson_11JSONDecoder_decode_inner(struct __pyx
   __pyx_t_1 = (__pyx_v_doc.IsNumber() != 0);
   if (__pyx_t_1) {
 
-    /* "src/rapidjson.pyx":154
+    /* "src/rapidjson.pyx":155
  *             return doc.GetString().decode('UTF-8')
  *         elif doc.IsNumber():
  *             if doc.IsInt():             # <<<<<<<<<<<<<<
@@ -4202,7 +4306,7 @@ static PyObject *__pyx_f_3src_9rapidjson_11JSONDecoder_decode_inner(struct __pyx
     __pyx_t_1 = (__pyx_v_doc.IsInt() != 0);
     if (__pyx_t_1) {
 
-      /* "src/rapidjson.pyx":155
+      /* "src/rapidjson.pyx":156
  *         elif doc.IsNumber():
  *             if doc.IsInt():
  *                 return doc.GetInt()             # <<<<<<<<<<<<<<
@@ -4210,13 +4314,13 @@ static PyObject *__pyx_f_3src_9rapidjson_11JSONDecoder_decode_inner(struct __pyx
  *                 return doc.GetUint()
  */
       __Pyx_XDECREF(__pyx_r);
-      __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v_doc.GetInt()); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 155; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v_doc.GetInt()); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 156; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_2);
       __pyx_r = __pyx_t_2;
       __pyx_t_2 = 0;
       goto __pyx_L0;
 
-      /* "src/rapidjson.pyx":154
+      /* "src/rapidjson.pyx":155
  *             return doc.GetString().decode('UTF-8')
  *         elif doc.IsNumber():
  *             if doc.IsInt():             # <<<<<<<<<<<<<<
@@ -4225,7 +4329,7 @@ static PyObject *__pyx_f_3src_9rapidjson_11JSONDecoder_decode_inner(struct __pyx
  */
     }
 
-    /* "src/rapidjson.pyx":156
+    /* "src/rapidjson.pyx":157
  *             if doc.IsInt():
  *                 return doc.GetInt()
  *             elif doc.IsUint():             # <<<<<<<<<<<<<<
@@ -4235,7 +4339,7 @@ static PyObject *__pyx_f_3src_9rapidjson_11JSONDecoder_decode_inner(struct __pyx
     __pyx_t_1 = (__pyx_v_doc.IsUint() != 0);
     if (__pyx_t_1) {
 
-      /* "src/rapidjson.pyx":157
+      /* "src/rapidjson.pyx":158
  *                 return doc.GetInt()
  *             elif doc.IsUint():
  *                 return doc.GetUint()             # <<<<<<<<<<<<<<
@@ -4243,13 +4347,13 @@ static PyObject *__pyx_f_3src_9rapidjson_11JSONDecoder_decode_inner(struct __pyx
  *                 return doc.GetInt64()
  */
       __Pyx_XDECREF(__pyx_r);
-      __pyx_t_2 = __Pyx_PyInt_From_unsigned_int(__pyx_v_doc.GetUint()); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 157; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_2 = __Pyx_PyInt_From_unsigned_int(__pyx_v_doc.GetUint()); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 158; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_2);
       __pyx_r = __pyx_t_2;
       __pyx_t_2 = 0;
       goto __pyx_L0;
 
-      /* "src/rapidjson.pyx":156
+      /* "src/rapidjson.pyx":157
  *             if doc.IsInt():
  *                 return doc.GetInt()
  *             elif doc.IsUint():             # <<<<<<<<<<<<<<
@@ -4258,7 +4362,7 @@ static PyObject *__pyx_f_3src_9rapidjson_11JSONDecoder_decode_inner(struct __pyx
  */
     }
 
-    /* "src/rapidjson.pyx":158
+    /* "src/rapidjson.pyx":159
  *             elif doc.IsUint():
  *                 return doc.GetUint()
  *             elif doc.IsInt64():             # <<<<<<<<<<<<<<
@@ -4268,7 +4372,7 @@ static PyObject *__pyx_f_3src_9rapidjson_11JSONDecoder_decode_inner(struct __pyx
     __pyx_t_1 = (__pyx_v_doc.IsInt64() != 0);
     if (__pyx_t_1) {
 
-      /* "src/rapidjson.pyx":159
+      /* "src/rapidjson.pyx":160
  *                 return doc.GetUint()
  *             elif doc.IsInt64():
  *                 return doc.GetInt64()             # <<<<<<<<<<<<<<
@@ -4276,13 +4380,13 @@ static PyObject *__pyx_f_3src_9rapidjson_11JSONDecoder_decode_inner(struct __pyx
  *                 return doc.GetUint64()
  */
       __Pyx_XDECREF(__pyx_r);
-      __pyx_t_2 = __Pyx_PyInt_From_long(__pyx_v_doc.GetInt64()); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 159; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_2 = __Pyx_PyInt_From_long(__pyx_v_doc.GetInt64()); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 160; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_2);
       __pyx_r = __pyx_t_2;
       __pyx_t_2 = 0;
       goto __pyx_L0;
 
-      /* "src/rapidjson.pyx":158
+      /* "src/rapidjson.pyx":159
  *             elif doc.IsUint():
  *                 return doc.GetUint()
  *             elif doc.IsInt64():             # <<<<<<<<<<<<<<
@@ -4291,7 +4395,7 @@ static PyObject *__pyx_f_3src_9rapidjson_11JSONDecoder_decode_inner(struct __pyx
  */
     }
 
-    /* "src/rapidjson.pyx":160
+    /* "src/rapidjson.pyx":161
  *             elif doc.IsInt64():
  *                 return doc.GetInt64()
  *             elif doc.IsUint64():             # <<<<<<<<<<<<<<
@@ -4301,7 +4405,7 @@ static PyObject *__pyx_f_3src_9rapidjson_11JSONDecoder_decode_inner(struct __pyx
     __pyx_t_1 = (__pyx_v_doc.IsUint64() != 0);
     if (__pyx_t_1) {
 
-      /* "src/rapidjson.pyx":161
+      /* "src/rapidjson.pyx":162
  *                 return doc.GetInt64()
  *             elif doc.IsUint64():
  *                 return doc.GetUint64()             # <<<<<<<<<<<<<<
@@ -4309,13 +4413,13 @@ static PyObject *__pyx_f_3src_9rapidjson_11JSONDecoder_decode_inner(struct __pyx
  *                 return doc.GetDouble()
  */
       __Pyx_XDECREF(__pyx_r);
-      __pyx_t_2 = __Pyx_PyInt_From_unsigned_PY_LONG_LONG(__pyx_v_doc.GetUint64()); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 161; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_2 = __Pyx_PyInt_From_unsigned_PY_LONG_LONG(__pyx_v_doc.GetUint64()); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 162; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_2);
       __pyx_r = __pyx_t_2;
       __pyx_t_2 = 0;
       goto __pyx_L0;
 
-      /* "src/rapidjson.pyx":160
+      /* "src/rapidjson.pyx":161
  *             elif doc.IsInt64():
  *                 return doc.GetInt64()
  *             elif doc.IsUint64():             # <<<<<<<<<<<<<<
@@ -4324,7 +4428,7 @@ static PyObject *__pyx_f_3src_9rapidjson_11JSONDecoder_decode_inner(struct __pyx
  */
     }
 
-    /* "src/rapidjson.pyx":162
+    /* "src/rapidjson.pyx":163
  *             elif doc.IsUint64():
  *                 return doc.GetUint64()
  *             elif doc.IsDouble():             # <<<<<<<<<<<<<<
@@ -4334,7 +4438,7 @@ static PyObject *__pyx_f_3src_9rapidjson_11JSONDecoder_decode_inner(struct __pyx
     __pyx_t_1 = (__pyx_v_doc.IsDouble() != 0);
     if (__pyx_t_1) {
 
-      /* "src/rapidjson.pyx":163
+      /* "src/rapidjson.pyx":164
  *                 return doc.GetUint64()
  *             elif doc.IsDouble():
  *                 return doc.GetDouble()             # <<<<<<<<<<<<<<
@@ -4342,13 +4446,13 @@ static PyObject *__pyx_f_3src_9rapidjson_11JSONDecoder_decode_inner(struct __pyx
  *             it = doc.Begin()
  */
       __Pyx_XDECREF(__pyx_r);
-      __pyx_t_2 = PyFloat_FromDouble(__pyx_v_doc.GetDouble()); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 163; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_2 = PyFloat_FromDouble(__pyx_v_doc.GetDouble()); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 164; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_2);
       __pyx_r = __pyx_t_2;
       __pyx_t_2 = 0;
       goto __pyx_L0;
 
-      /* "src/rapidjson.pyx":162
+      /* "src/rapidjson.pyx":163
  *             elif doc.IsUint64():
  *                 return doc.GetUint64()
  *             elif doc.IsDouble():             # <<<<<<<<<<<<<<
@@ -4357,7 +4461,7 @@ static PyObject *__pyx_f_3src_9rapidjson_11JSONDecoder_decode_inner(struct __pyx
  */
     }
 
-    /* "src/rapidjson.pyx":153
+    /* "src/rapidjson.pyx":154
  *         elif doc.IsString():
  *             return doc.GetString().decode('UTF-8')
  *         elif doc.IsNumber():             # <<<<<<<<<<<<<<
@@ -4367,7 +4471,7 @@ static PyObject *__pyx_f_3src_9rapidjson_11JSONDecoder_decode_inner(struct __pyx
     goto __pyx_L3;
   }
 
-  /* "src/rapidjson.pyx":164
+  /* "src/rapidjson.pyx":165
  *             elif doc.IsDouble():
  *                 return doc.GetDouble()
  *         elif doc.IsArray():             # <<<<<<<<<<<<<<
@@ -4377,7 +4481,7 @@ static PyObject *__pyx_f_3src_9rapidjson_11JSONDecoder_decode_inner(struct __pyx
   __pyx_t_1 = (__pyx_v_doc.IsArray() != 0);
   if (__pyx_t_1) {
 
-    /* "src/rapidjson.pyx":165
+    /* "src/rapidjson.pyx":166
  *                 return doc.GetDouble()
  *         elif doc.IsArray():
  *             it = doc.Begin()             # <<<<<<<<<<<<<<
@@ -4386,19 +4490,19 @@ static PyObject *__pyx_f_3src_9rapidjson_11JSONDecoder_decode_inner(struct __pyx
  */
     __pyx_v_it = __pyx_v_doc.Begin();
 
-    /* "src/rapidjson.pyx":166
+    /* "src/rapidjson.pyx":167
  *         elif doc.IsArray():
  *             it = doc.Begin()
  *             l = []             # <<<<<<<<<<<<<<
  *             while it != doc.End():
  *                 l.append(self.decode_inner(dereference(it)))
  */
-    __pyx_t_2 = PyList_New(0); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 166; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_2 = PyList_New(0); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 167; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_2);
     __pyx_v_l = ((PyObject*)__pyx_t_2);
     __pyx_t_2 = 0;
 
-    /* "src/rapidjson.pyx":167
+    /* "src/rapidjson.pyx":168
  *             it = doc.Begin()
  *             l = []
  *             while it != doc.End():             # <<<<<<<<<<<<<<
@@ -4409,19 +4513,19 @@ static PyObject *__pyx_f_3src_9rapidjson_11JSONDecoder_decode_inner(struct __pyx
       __pyx_t_1 = ((__pyx_v_it != __pyx_v_doc.End()) != 0);
       if (!__pyx_t_1) break;
 
-      /* "src/rapidjson.pyx":168
+      /* "src/rapidjson.pyx":169
  *             l = []
  *             while it != doc.End():
  *                 l.append(self.decode_inner(dereference(it)))             # <<<<<<<<<<<<<<
  *                 preincrement(it)
  *             return l
  */
-      __pyx_t_2 = ((struct __pyx_vtabstruct_3src_9rapidjson_JSONDecoder *)__pyx_v_self->__pyx_vtab)->decode_inner(__pyx_v_self, (*__pyx_v_it)); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 168; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_2 = ((struct __pyx_vtabstruct_3src_9rapidjson_JSONDecoder *)__pyx_v_self->__pyx_vtab)->decode_inner(__pyx_v_self, (*__pyx_v_it)); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 169; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_2);
-      __pyx_t_4 = __Pyx_PyList_Append(__pyx_v_l, __pyx_t_2); if (unlikely(__pyx_t_4 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 168; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_4 = __Pyx_PyList_Append(__pyx_v_l, __pyx_t_2); if (unlikely(__pyx_t_4 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 169; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-      /* "src/rapidjson.pyx":169
+      /* "src/rapidjson.pyx":170
  *             while it != doc.End():
  *                 l.append(self.decode_inner(dereference(it)))
  *                 preincrement(it)             # <<<<<<<<<<<<<<
@@ -4431,7 +4535,7 @@ static PyObject *__pyx_f_3src_9rapidjson_11JSONDecoder_decode_inner(struct __pyx
       (++__pyx_v_it);
     }
 
-    /* "src/rapidjson.pyx":170
+    /* "src/rapidjson.pyx":171
  *                 l.append(self.decode_inner(dereference(it)))
  *                 preincrement(it)
  *             return l             # <<<<<<<<<<<<<<
@@ -4443,7 +4547,7 @@ static PyObject *__pyx_f_3src_9rapidjson_11JSONDecoder_decode_inner(struct __pyx
     __pyx_r = __pyx_v_l;
     goto __pyx_L0;
 
-    /* "src/rapidjson.pyx":164
+    /* "src/rapidjson.pyx":165
  *             elif doc.IsDouble():
  *                 return doc.GetDouble()
  *         elif doc.IsArray():             # <<<<<<<<<<<<<<
@@ -4452,7 +4556,7 @@ static PyObject *__pyx_f_3src_9rapidjson_11JSONDecoder_decode_inner(struct __pyx
  */
   }
 
-  /* "src/rapidjson.pyx":171
+  /* "src/rapidjson.pyx":172
  *                 preincrement(it)
  *             return l
  *         elif doc.IsObject():             # <<<<<<<<<<<<<<
@@ -4462,7 +4566,7 @@ static PyObject *__pyx_f_3src_9rapidjson_11JSONDecoder_decode_inner(struct __pyx
   __pyx_t_1 = (__pyx_v_doc.IsObject() != 0);
   if (__pyx_t_1) {
 
-    /* "src/rapidjson.pyx":172
+    /* "src/rapidjson.pyx":173
  *             return l
  *         elif doc.IsObject():
  *             it2 = doc.MemberBegin()             # <<<<<<<<<<<<<<
@@ -4471,19 +4575,19 @@ static PyObject *__pyx_f_3src_9rapidjson_11JSONDecoder_decode_inner(struct __pyx
  */
     __pyx_v_it2 = __pyx_v_doc.MemberBegin();
 
-    /* "src/rapidjson.pyx":173
+    /* "src/rapidjson.pyx":174
  *         elif doc.IsObject():
  *             it2 = doc.MemberBegin()
  *             d = {}             # <<<<<<<<<<<<<<
  *             while it2 != doc.MemberEnd():
  *                 d[dereference(it2).name.GetString().decode('UTF-8')] = self.decode_inner(dereference(it2).value)
  */
-    __pyx_t_2 = PyDict_New(); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 173; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_2 = PyDict_New(); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 174; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_2);
     __pyx_v_d = ((PyObject*)__pyx_t_2);
     __pyx_t_2 = 0;
 
-    /* "src/rapidjson.pyx":174
+    /* "src/rapidjson.pyx":175
  *             it2 = doc.MemberBegin()
  *             d = {}
  *             while it2 != doc.MemberEnd():             # <<<<<<<<<<<<<<
@@ -4494,23 +4598,23 @@ static PyObject *__pyx_f_3src_9rapidjson_11JSONDecoder_decode_inner(struct __pyx
       __pyx_t_1 = ((__pyx_v_it2 != __pyx_v_doc.MemberEnd()) != 0);
       if (!__pyx_t_1) break;
 
-      /* "src/rapidjson.pyx":175
+      /* "src/rapidjson.pyx":176
  *             d = {}
  *             while it2 != doc.MemberEnd():
  *                 d[dereference(it2).name.GetString().decode('UTF-8')] = self.decode_inner(dereference(it2).value)             # <<<<<<<<<<<<<<
  *                 preincrement(it2)
  *             return d
  */
-      __pyx_t_2 = ((struct __pyx_vtabstruct_3src_9rapidjson_JSONDecoder *)__pyx_v_self->__pyx_vtab)->decode_inner(__pyx_v_self, (*__pyx_v_it2).value); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 175; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_2 = ((struct __pyx_vtabstruct_3src_9rapidjson_JSONDecoder *)__pyx_v_self->__pyx_vtab)->decode_inner(__pyx_v_self, (*__pyx_v_it2).value); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 176; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_2);
       __pyx_t_3 = (*__pyx_v_it2).name.GetString();
-      __pyx_t_5 = __Pyx_decode_c_string(__pyx_t_3, 0, strlen(__pyx_t_3), NULL, NULL, PyUnicode_DecodeUTF8); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 175; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_5 = __Pyx_decode_c_string(__pyx_t_3, 0, strlen(__pyx_t_3), NULL, NULL, PyUnicode_DecodeUTF8); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 176; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_5);
-      if (unlikely(PyDict_SetItem(__pyx_v_d, __pyx_t_5, __pyx_t_2) < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 175; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      if (unlikely(PyDict_SetItem(__pyx_v_d, __pyx_t_5, __pyx_t_2) < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 176; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-      /* "src/rapidjson.pyx":176
+      /* "src/rapidjson.pyx":177
  *             while it2 != doc.MemberEnd():
  *                 d[dereference(it2).name.GetString().decode('UTF-8')] = self.decode_inner(dereference(it2).value)
  *                 preincrement(it2)             # <<<<<<<<<<<<<<
@@ -4520,7 +4624,7 @@ static PyObject *__pyx_f_3src_9rapidjson_11JSONDecoder_decode_inner(struct __pyx
       (++__pyx_v_it2);
     }
 
-    /* "src/rapidjson.pyx":177
+    /* "src/rapidjson.pyx":178
  *                 d[dereference(it2).name.GetString().decode('UTF-8')] = self.decode_inner(dereference(it2).value)
  *                 preincrement(it2)
  *             return d             # <<<<<<<<<<<<<<
@@ -4532,7 +4636,7 @@ static PyObject *__pyx_f_3src_9rapidjson_11JSONDecoder_decode_inner(struct __pyx
     __pyx_r = __pyx_v_d;
     goto __pyx_L0;
 
-    /* "src/rapidjson.pyx":171
+    /* "src/rapidjson.pyx":172
  *                 preincrement(it)
  *             return l
  *         elif doc.IsObject():             # <<<<<<<<<<<<<<
@@ -4542,7 +4646,7 @@ static PyObject *__pyx_f_3src_9rapidjson_11JSONDecoder_decode_inner(struct __pyx
   }
   __pyx_L3:;
 
-  /* "src/rapidjson.pyx":143
+  /* "src/rapidjson.pyx":144
  *         return self.decode_inner(self.doc)
  * 
  *     cdef decode_inner(self, const Value &doc):             # <<<<<<<<<<<<<<
@@ -4566,7 +4670,7 @@ static PyObject *__pyx_f_3src_9rapidjson_11JSONDecoder_decode_inner(struct __pyx
   return __pyx_r;
 }
 
-/* "src/rapidjson.pyx":118
+/* "src/rapidjson.pyx":119
  *     cdef Document doc
  * 
  *     cdef public object object_hook             # <<<<<<<<<<<<<<
@@ -4661,7 +4765,7 @@ static int __pyx_pf_3src_9rapidjson_11JSONDecoder_11object_hook_4__del__(struct 
   return __pyx_r;
 }
 
-/* "src/rapidjson.pyx":119
+/* "src/rapidjson.pyx":120
  * 
  *     cdef public object object_hook
  *     cdef public object parse_float             # <<<<<<<<<<<<<<
@@ -4756,7 +4860,7 @@ static int __pyx_pf_3src_9rapidjson_11JSONDecoder_11parse_float_4__del__(struct 
   return __pyx_r;
 }
 
-/* "src/rapidjson.pyx":120
+/* "src/rapidjson.pyx":121
  *     cdef public object object_hook
  *     cdef public object parse_float
  *     cdef public object parse_int             # <<<<<<<<<<<<<<
@@ -4851,7 +4955,7 @@ static int __pyx_pf_3src_9rapidjson_11JSONDecoder_9parse_int_4__del__(struct __p
   return __pyx_r;
 }
 
-/* "src/rapidjson.pyx":121
+/* "src/rapidjson.pyx":122
  *     cdef public object parse_float
  *     cdef public object parse_int
  *     cdef public object parse_constant             # <<<<<<<<<<<<<<
@@ -4946,7 +5050,7 @@ static int __pyx_pf_3src_9rapidjson_11JSONDecoder_14parse_constant_4__del__(stru
   return __pyx_r;
 }
 
-/* "src/rapidjson.pyx":122
+/* "src/rapidjson.pyx":123
  *     cdef public object parse_int
  *     cdef public object parse_constant
  *     cdef public libcpp.bool strict             # <<<<<<<<<<<<<<
@@ -4976,7 +5080,7 @@ static PyObject *__pyx_pf_3src_9rapidjson_11JSONDecoder_6strict___get__(struct _
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__get__", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyBool_FromLong(__pyx_v_self->strict); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 122; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __Pyx_PyBool_FromLong(__pyx_v_self->strict); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 123; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -5014,7 +5118,7 @@ static int __pyx_pf_3src_9rapidjson_11JSONDecoder_6strict_2__set__(struct __pyx_
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__set__", 0);
-  __pyx_t_1 = __Pyx_PyObject_IsTrue(__pyx_v_value); if (unlikely((__pyx_t_1 == (bool)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 122; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __Pyx_PyObject_IsTrue(__pyx_v_value); if (unlikely((__pyx_t_1 == (bool)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 123; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_v_self->strict = __pyx_t_1;
 
   /* function exit code */
@@ -5028,7 +5132,7 @@ static int __pyx_pf_3src_9rapidjson_11JSONDecoder_6strict_2__set__(struct __pyx_
   return __pyx_r;
 }
 
-/* "src/rapidjson.pyx":123
+/* "src/rapidjson.pyx":124
  *     cdef public object parse_constant
  *     cdef public libcpp.bool strict
  *     cdef public object object_pairs_hook             # <<<<<<<<<<<<<<
@@ -5123,7 +5227,7 @@ static int __pyx_pf_3src_9rapidjson_11JSONDecoder_17object_pairs_hook_4__del__(s
   return __pyx_r;
 }
 
-/* "src/rapidjson.pyx":183
+/* "src/rapidjson.pyx":184
  * cdef JSONDecoder _default_decoder = JSONDecoder()
  * 
  * cpdef dump(obj, fp, skipkeys=False, ensure_ascii=True, check_circular=True,             # <<<<<<<<<<<<<<
@@ -5137,7 +5241,7 @@ static PyObject *__pyx_f_3src_9rapidjson_dump(PyObject *__pyx_v_obj, PyObject *_
   PyObject *__pyx_v_ensure_ascii = ((PyObject *)Py_True);
   PyObject *__pyx_v_check_circular = ((PyObject *)Py_True);
 
-  /* "src/rapidjson.pyx":184
+  /* "src/rapidjson.pyx":185
  * 
  * cpdef dump(obj, fp, skipkeys=False, ensure_ascii=True, check_circular=True,
  *            allow_nan=True, cls=None, indent=None, separators=None,             # <<<<<<<<<<<<<<
@@ -5148,7 +5252,7 @@ static PyObject *__pyx_f_3src_9rapidjson_dump(PyObject *__pyx_v_obj, PyObject *_
   PyObject *__pyx_v_indent = ((PyObject *)Py_None);
   PyObject *__pyx_v_separators = ((PyObject *)Py_None);
 
-  /* "src/rapidjson.pyx":185
+  /* "src/rapidjson.pyx":186
  * cpdef dump(obj, fp, skipkeys=False, ensure_ascii=True, check_circular=True,
  *            allow_nan=True, cls=None, indent=None, separators=None,
  *            default=None, sort_keys=False):             # <<<<<<<<<<<<<<
@@ -5195,55 +5299,55 @@ static PyObject *__pyx_f_3src_9rapidjson_dump(PyObject *__pyx_v_obj, PyObject *_
     }
   }
 
-  /* "src/rapidjson.pyx":186
+  /* "src/rapidjson.pyx":187
  *            allow_nan=True, cls=None, indent=None, separators=None,
  *            default=None, sort_keys=False):
  *     json_string = dumps(obj, skipkeys=skipkeys, ensure_ascii=ensure_ascii,             # <<<<<<<<<<<<<<
  *                         check_circular=check_circular, allow_nan=allow_nan, indent=indent,
  *                         separators=separators, default=default, sort_keys=sort_keys)
  */
-  __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_dumps); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 186; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_dumps); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 187; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = PyTuple_New(1); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 186; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = PyTuple_New(1); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 187; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_INCREF(__pyx_v_obj);
   __Pyx_GIVEREF(__pyx_v_obj);
   PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_v_obj);
-  __pyx_t_3 = PyDict_New(); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 186; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_3 = PyDict_New(); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 187; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_3);
-  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_skipkeys, __pyx_v_skipkeys) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 186; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_ensure_ascii, __pyx_v_ensure_ascii) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 186; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_skipkeys, __pyx_v_skipkeys) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 187; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_ensure_ascii, __pyx_v_ensure_ascii) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 187; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-  /* "src/rapidjson.pyx":187
+  /* "src/rapidjson.pyx":188
  *            default=None, sort_keys=False):
  *     json_string = dumps(obj, skipkeys=skipkeys, ensure_ascii=ensure_ascii,
  *                         check_circular=check_circular, allow_nan=allow_nan, indent=indent,             # <<<<<<<<<<<<<<
  *                         separators=separators, default=default, sort_keys=sort_keys)
  *     fp.write(json_string)
  */
-  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_check_circular, __pyx_v_check_circular) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 186; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_allow_nan, __pyx_v_allow_nan) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 186; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_indent, __pyx_v_indent) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 186; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_check_circular, __pyx_v_check_circular) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 187; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_allow_nan, __pyx_v_allow_nan) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 187; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_indent, __pyx_v_indent) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 187; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-  /* "src/rapidjson.pyx":188
+  /* "src/rapidjson.pyx":189
  *     json_string = dumps(obj, skipkeys=skipkeys, ensure_ascii=ensure_ascii,
  *                         check_circular=check_circular, allow_nan=allow_nan, indent=indent,
  *                         separators=separators, default=default, sort_keys=sort_keys)             # <<<<<<<<<<<<<<
  *     fp.write(json_string)
  * 
  */
-  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_separators, __pyx_v_separators) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 186; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_default, __pyx_v_default) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 186; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_sort_keys, __pyx_v_sort_keys) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 186; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_separators, __pyx_v_separators) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 187; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_default, __pyx_v_default) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 187; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_sort_keys, __pyx_v_sort_keys) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 187; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-  /* "src/rapidjson.pyx":186
+  /* "src/rapidjson.pyx":187
  *            allow_nan=True, cls=None, indent=None, separators=None,
  *            default=None, sort_keys=False):
  *     json_string = dumps(obj, skipkeys=skipkeys, ensure_ascii=ensure_ascii,             # <<<<<<<<<<<<<<
  *                         check_circular=check_circular, allow_nan=allow_nan, indent=indent,
  *                         separators=separators, default=default, sort_keys=sort_keys)
  */
-  __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 186; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 187; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
@@ -5251,14 +5355,14 @@ static PyObject *__pyx_f_3src_9rapidjson_dump(PyObject *__pyx_v_obj, PyObject *_
   __pyx_v_json_string = __pyx_t_4;
   __pyx_t_4 = 0;
 
-  /* "src/rapidjson.pyx":189
+  /* "src/rapidjson.pyx":190
  *                         check_circular=check_circular, allow_nan=allow_nan, indent=indent,
  *                         separators=separators, default=default, sort_keys=sort_keys)
  *     fp.write(json_string)             # <<<<<<<<<<<<<<
  * 
  * cpdef dumps(obj, skipkeys=False, ensure_ascii=True, check_circular=True,
  */
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_fp, __pyx_n_s_write); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 189; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_fp, __pyx_n_s_write); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 190; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_3);
   __pyx_t_2 = NULL;
   if (CYTHON_COMPILING_IN_CPYTHON && likely(PyMethod_Check(__pyx_t_3))) {
@@ -5271,23 +5375,23 @@ static PyObject *__pyx_f_3src_9rapidjson_dump(PyObject *__pyx_v_obj, PyObject *_
     }
   }
   if (!__pyx_t_2) {
-    __pyx_t_4 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_v_json_string); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 189; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_4 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_v_json_string); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 190; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_4);
   } else {
-    __pyx_t_1 = PyTuple_New(1+1); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 189; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = PyTuple_New(1+1); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 190; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_GIVEREF(__pyx_t_2); PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_t_2); __pyx_t_2 = NULL;
     __Pyx_INCREF(__pyx_v_json_string);
     __Pyx_GIVEREF(__pyx_v_json_string);
     PyTuple_SET_ITEM(__pyx_t_1, 0+1, __pyx_v_json_string);
-    __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_1, NULL); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 189; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_1, NULL); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 190; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   }
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-  /* "src/rapidjson.pyx":183
+  /* "src/rapidjson.pyx":184
  * cdef JSONDecoder _default_decoder = JSONDecoder()
  * 
  * cpdef dump(obj, fp, skipkeys=False, ensure_ascii=True, check_circular=True,             # <<<<<<<<<<<<<<
@@ -5339,7 +5443,7 @@ static PyObject *__pyx_pw_3src_9rapidjson_1dump(PyObject *__pyx_self, PyObject *
     values[3] = ((PyObject *)Py_True);
     values[4] = ((PyObject *)Py_True);
 
-    /* "src/rapidjson.pyx":184
+    /* "src/rapidjson.pyx":185
  * 
  * cpdef dump(obj, fp, skipkeys=False, ensure_ascii=True, check_circular=True,
  *            allow_nan=True, cls=None, indent=None, separators=None,             # <<<<<<<<<<<<<<
@@ -5351,7 +5455,7 @@ static PyObject *__pyx_pw_3src_9rapidjson_1dump(PyObject *__pyx_self, PyObject *
     values[7] = ((PyObject *)Py_None);
     values[8] = ((PyObject *)Py_None);
 
-    /* "src/rapidjson.pyx":185
+    /* "src/rapidjson.pyx":186
  * cpdef dump(obj, fp, skipkeys=False, ensure_ascii=True, check_circular=True,
  *            allow_nan=True, cls=None, indent=None, separators=None,
  *            default=None, sort_keys=False):             # <<<<<<<<<<<<<<
@@ -5386,7 +5490,7 @@ static PyObject *__pyx_pw_3src_9rapidjson_1dump(PyObject *__pyx_self, PyObject *
         case  1:
         if (likely((values[1] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_fp)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("dump", 0, 2, 11, 1); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 183; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+          __Pyx_RaiseArgtupleInvalid("dump", 0, 2, 11, 1); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 184; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
         }
         case  2:
         if (kw_args > 0) {
@@ -5435,7 +5539,7 @@ static PyObject *__pyx_pw_3src_9rapidjson_1dump(PyObject *__pyx_self, PyObject *
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "dump") < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 183; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "dump") < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 184; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
       }
     } else {
       switch (PyTuple_GET_SIZE(__pyx_args)) {
@@ -5468,7 +5572,7 @@ static PyObject *__pyx_pw_3src_9rapidjson_1dump(PyObject *__pyx_self, PyObject *
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("dump", 0, 2, 11, PyTuple_GET_SIZE(__pyx_args)); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 183; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+  __Pyx_RaiseArgtupleInvalid("dump", 0, 2, 11, PyTuple_GET_SIZE(__pyx_args)); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 184; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
   __pyx_L3_error:;
   __Pyx_AddTraceback("src.rapidjson.dump", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -5476,7 +5580,7 @@ static PyObject *__pyx_pw_3src_9rapidjson_1dump(PyObject *__pyx_self, PyObject *
   __pyx_L4_argument_unpacking_done:;
   __pyx_r = __pyx_pf_3src_9rapidjson_dump(__pyx_self, __pyx_v_obj, __pyx_v_fp, __pyx_v_skipkeys, __pyx_v_ensure_ascii, __pyx_v_check_circular, __pyx_v_allow_nan, __pyx_v_cls, __pyx_v_indent, __pyx_v_separators, __pyx_v_default, __pyx_v_sort_keys);
 
-  /* "src/rapidjson.pyx":183
+  /* "src/rapidjson.pyx":184
  * cdef JSONDecoder _default_decoder = JSONDecoder()
  * 
  * cpdef dump(obj, fp, skipkeys=False, ensure_ascii=True, check_circular=True,             # <<<<<<<<<<<<<<
@@ -5509,7 +5613,7 @@ static PyObject *__pyx_pf_3src_9rapidjson_dump(CYTHON_UNUSED PyObject *__pyx_sel
   __pyx_t_2.separators = __pyx_v_separators;
   __pyx_t_2.__pyx_default = __pyx_v_default;
   __pyx_t_2.sort_keys = __pyx_v_sort_keys;
-  __pyx_t_1 = __pyx_f_3src_9rapidjson_dump(__pyx_v_obj, __pyx_v_fp, 0, &__pyx_t_2); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 183; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __pyx_f_3src_9rapidjson_dump(__pyx_v_obj, __pyx_v_fp, 0, &__pyx_t_2); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 184; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -5526,7 +5630,7 @@ static PyObject *__pyx_pf_3src_9rapidjson_dump(CYTHON_UNUSED PyObject *__pyx_sel
   return __pyx_r;
 }
 
-/* "src/rapidjson.pyx":191
+/* "src/rapidjson.pyx":192
  *     fp.write(json_string)
  * 
  * cpdef dumps(obj, skipkeys=False, ensure_ascii=True, check_circular=True,             # <<<<<<<<<<<<<<
@@ -5540,7 +5644,7 @@ static PyObject *__pyx_f_3src_9rapidjson_dumps(PyObject *__pyx_v_obj, CYTHON_UNU
   PyObject *__pyx_v_ensure_ascii = ((PyObject *)Py_True);
   PyObject *__pyx_v_check_circular = ((PyObject *)Py_True);
 
-  /* "src/rapidjson.pyx":192
+  /* "src/rapidjson.pyx":193
  * 
  * cpdef dumps(obj, skipkeys=False, ensure_ascii=True, check_circular=True,
  *             allow_nan=True, cls=None, indent=None, separators=None,             # <<<<<<<<<<<<<<
@@ -5552,7 +5656,7 @@ static PyObject *__pyx_f_3src_9rapidjson_dumps(PyObject *__pyx_v_obj, CYTHON_UNU
   PyObject *__pyx_v_indent = ((PyObject *)Py_None);
   PyObject *__pyx_v_separators = ((PyObject *)Py_None);
 
-  /* "src/rapidjson.pyx":193
+  /* "src/rapidjson.pyx":194
  * cpdef dumps(obj, skipkeys=False, ensure_ascii=True, check_circular=True,
  *             allow_nan=True, cls=None, indent=None, separators=None,
  *             default=None, sort_keys=False):             # <<<<<<<<<<<<<<
@@ -5604,41 +5708,21 @@ static PyObject *__pyx_f_3src_9rapidjson_dumps(PyObject *__pyx_v_obj, CYTHON_UNU
     }
   }
 
-  /* "src/rapidjson.pyx":194
+  /* "src/rapidjson.pyx":195
  *             allow_nan=True, cls=None, indent=None, separators=None,
  *             default=None, sort_keys=False):
  *     if (not skipkeys and ensure_ascii and             # <<<<<<<<<<<<<<
  *             check_circular and allow_nan and
  *             cls is None and indent is None and separators is None and
  */
-  __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_v_skipkeys); if (unlikely(__pyx_t_2 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 194; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_v_skipkeys); if (unlikely(__pyx_t_2 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 195; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_t_3 = ((!__pyx_t_2) != 0);
   if (__pyx_t_3) {
   } else {
     __pyx_t_1 = __pyx_t_3;
     goto __pyx_L4_bool_binop_done;
   }
-  __pyx_t_3 = __Pyx_PyObject_IsTrue(__pyx_v_ensure_ascii); if (unlikely(__pyx_t_3 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 194; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  if (__pyx_t_3) {
-  } else {
-    __pyx_t_1 = __pyx_t_3;
-    goto __pyx_L4_bool_binop_done;
-  }
-
-  /* "src/rapidjson.pyx":195
- *             default=None, sort_keys=False):
- *     if (not skipkeys and ensure_ascii and
- *             check_circular and allow_nan and             # <<<<<<<<<<<<<<
- *             cls is None and indent is None and separators is None and
- *             default is None and not sort_keys):
- */
-  __pyx_t_3 = __Pyx_PyObject_IsTrue(__pyx_v_check_circular); if (unlikely(__pyx_t_3 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 195; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  if (__pyx_t_3) {
-  } else {
-    __pyx_t_1 = __pyx_t_3;
-    goto __pyx_L4_bool_binop_done;
-  }
-  __pyx_t_3 = __Pyx_PyObject_IsTrue(__pyx_v_allow_nan); if (unlikely(__pyx_t_3 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 195; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_3 = __Pyx_PyObject_IsTrue(__pyx_v_ensure_ascii); if (unlikely(__pyx_t_3 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 195; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   if (__pyx_t_3) {
   } else {
     __pyx_t_1 = __pyx_t_3;
@@ -5646,6 +5730,26 @@ static PyObject *__pyx_f_3src_9rapidjson_dumps(PyObject *__pyx_v_obj, CYTHON_UNU
   }
 
   /* "src/rapidjson.pyx":196
+ *             default=None, sort_keys=False):
+ *     if (not skipkeys and ensure_ascii and
+ *             check_circular and allow_nan and             # <<<<<<<<<<<<<<
+ *             cls is None and indent is None and separators is None and
+ *             default is None and not sort_keys):
+ */
+  __pyx_t_3 = __Pyx_PyObject_IsTrue(__pyx_v_check_circular); if (unlikely(__pyx_t_3 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 196; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (__pyx_t_3) {
+  } else {
+    __pyx_t_1 = __pyx_t_3;
+    goto __pyx_L4_bool_binop_done;
+  }
+  __pyx_t_3 = __Pyx_PyObject_IsTrue(__pyx_v_allow_nan); if (unlikely(__pyx_t_3 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 196; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (__pyx_t_3) {
+  } else {
+    __pyx_t_1 = __pyx_t_3;
+    goto __pyx_L4_bool_binop_done;
+  }
+
+  /* "src/rapidjson.pyx":197
  *     if (not skipkeys and ensure_ascii and
  *             check_circular and allow_nan and
  *             cls is None and indent is None and separators is None and             # <<<<<<<<<<<<<<
@@ -5674,7 +5778,7 @@ static PyObject *__pyx_f_3src_9rapidjson_dumps(PyObject *__pyx_v_obj, CYTHON_UNU
     goto __pyx_L4_bool_binop_done;
   }
 
-  /* "src/rapidjson.pyx":197
+  /* "src/rapidjson.pyx":198
  *             check_circular and allow_nan and
  *             cls is None and indent is None and separators is None and
  *             default is None and not sort_keys):             # <<<<<<<<<<<<<<
@@ -5688,12 +5792,12 @@ static PyObject *__pyx_f_3src_9rapidjson_dumps(PyObject *__pyx_v_obj, CYTHON_UNU
     __pyx_t_1 = __pyx_t_3;
     goto __pyx_L4_bool_binop_done;
   }
-  __pyx_t_3 = __Pyx_PyObject_IsTrue(__pyx_v_sort_keys); if (unlikely(__pyx_t_3 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 197; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_3 = __Pyx_PyObject_IsTrue(__pyx_v_sort_keys); if (unlikely(__pyx_t_3 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 198; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_t_2 = ((!__pyx_t_3) != 0);
   __pyx_t_1 = __pyx_t_2;
   __pyx_L4_bool_binop_done:;
 
-  /* "src/rapidjson.pyx":194
+  /* "src/rapidjson.pyx":195
  *             allow_nan=True, cls=None, indent=None, separators=None,
  *             default=None, sort_keys=False):
  *     if (not skipkeys and ensure_ascii and             # <<<<<<<<<<<<<<
@@ -5702,7 +5806,7 @@ static PyObject *__pyx_f_3src_9rapidjson_dumps(PyObject *__pyx_v_obj, CYTHON_UNU
  */
   if (__pyx_t_1) {
 
-    /* "src/rapidjson.pyx":198
+    /* "src/rapidjson.pyx":199
  *             cls is None and indent is None and separators is None and
  *             default is None and not sort_keys):
  *         return _default_encoder.encode(obj)             # <<<<<<<<<<<<<<
@@ -5710,13 +5814,13 @@ static PyObject *__pyx_f_3src_9rapidjson_dumps(PyObject *__pyx_v_obj, CYTHON_UNU
  *         return JSONEncoder(
  */
     __Pyx_XDECREF(__pyx_r);
-    __pyx_t_4 = ((struct __pyx_vtabstruct_3src_9rapidjson_JSONEncoder *)__pyx_v_3src_9rapidjson__default_encoder->__pyx_vtab)->encode(__pyx_v_3src_9rapidjson__default_encoder, __pyx_v_obj, 0); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 198; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_4 = ((struct __pyx_vtabstruct_3src_9rapidjson_JSONEncoder *)__pyx_v_3src_9rapidjson__default_encoder->__pyx_vtab)->encode(__pyx_v_3src_9rapidjson__default_encoder, __pyx_v_obj, 0); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 199; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_4);
     __pyx_r = __pyx_t_4;
     __pyx_t_4 = 0;
     goto __pyx_L0;
 
-    /* "src/rapidjson.pyx":194
+    /* "src/rapidjson.pyx":195
  *             allow_nan=True, cls=None, indent=None, separators=None,
  *             default=None, sort_keys=False):
  *     if (not skipkeys and ensure_ascii and             # <<<<<<<<<<<<<<
@@ -5725,7 +5829,7 @@ static PyObject *__pyx_f_3src_9rapidjson_dumps(PyObject *__pyx_v_obj, CYTHON_UNU
  */
   }
 
-  /* "src/rapidjson.pyx":199
+  /* "src/rapidjson.pyx":200
  *             default is None and not sort_keys):
  *         return _default_encoder.encode(obj)
  *     elif cls is None:             # <<<<<<<<<<<<<<
@@ -5736,7 +5840,7 @@ static PyObject *__pyx_f_3src_9rapidjson_dumps(PyObject *__pyx_v_obj, CYTHON_UNU
   __pyx_t_2 = (__pyx_t_1 != 0);
   if (__pyx_t_2) {
 
-    /* "src/rapidjson.pyx":200
+    /* "src/rapidjson.pyx":201
  *         return _default_encoder.encode(obj)
  *     elif cls is None:
  *         return JSONEncoder(             # <<<<<<<<<<<<<<
@@ -5745,66 +5849,66 @@ static PyObject *__pyx_f_3src_9rapidjson_dumps(PyObject *__pyx_v_obj, CYTHON_UNU
  */
     __Pyx_XDECREF(__pyx_r);
 
-    /* "src/rapidjson.pyx":201
+    /* "src/rapidjson.pyx":202
  *     elif cls is None:
  *         return JSONEncoder(
  *             skipkeys=skipkeys, ensure_ascii=ensure_ascii,             # <<<<<<<<<<<<<<
  *             check_circular=check_circular, allow_nan=allow_nan, indent=indent,
  *             separators=separators, default=default, sort_keys=sort_keys).encode(obj)
  */
-    __pyx_t_4 = PyDict_New(); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 201; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_4 = PyDict_New(); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 202; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_4);
-    if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_skipkeys, __pyx_v_skipkeys) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 201; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-    if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_ensure_ascii, __pyx_v_ensure_ascii) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 201; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_skipkeys, __pyx_v_skipkeys) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 202; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_ensure_ascii, __pyx_v_ensure_ascii) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 202; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-    /* "src/rapidjson.pyx":202
+    /* "src/rapidjson.pyx":203
  *         return JSONEncoder(
  *             skipkeys=skipkeys, ensure_ascii=ensure_ascii,
  *             check_circular=check_circular, allow_nan=allow_nan, indent=indent,             # <<<<<<<<<<<<<<
  *             separators=separators, default=default, sort_keys=sort_keys).encode(obj)
  *     elif not issubclass(cls, JSONEncoder):
  */
-    if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_check_circular, __pyx_v_check_circular) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 201; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-    if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_allow_nan, __pyx_v_allow_nan) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 201; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-    if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_indent, __pyx_v_indent) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 201; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_check_circular, __pyx_v_check_circular) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 202; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_allow_nan, __pyx_v_allow_nan) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 202; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_indent, __pyx_v_indent) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 202; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-    /* "src/rapidjson.pyx":203
+    /* "src/rapidjson.pyx":204
  *             skipkeys=skipkeys, ensure_ascii=ensure_ascii,
  *             check_circular=check_circular, allow_nan=allow_nan, indent=indent,
  *             separators=separators, default=default, sort_keys=sort_keys).encode(obj)             # <<<<<<<<<<<<<<
  *     elif not issubclass(cls, JSONEncoder):
  *         raise TypeError("cls is not a subclass or an instance of rapidjson.JSONEncoder.\nUse the stdlib json module instead.")
  */
-    if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_separators, __pyx_v_separators) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 201; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-    if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_default, __pyx_v_default) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 201; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-    if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_sort_keys, __pyx_v_sort_keys) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 201; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_separators, __pyx_v_separators) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 202; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_default, __pyx_v_default) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 202; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_sort_keys, __pyx_v_sort_keys) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 202; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-    /* "src/rapidjson.pyx":200
+    /* "src/rapidjson.pyx":201
  *         return _default_encoder.encode(obj)
  *     elif cls is None:
  *         return JSONEncoder(             # <<<<<<<<<<<<<<
  *             skipkeys=skipkeys, ensure_ascii=ensure_ascii,
  *             check_circular=check_circular, allow_nan=allow_nan, indent=indent,
  */
-    __pyx_t_5 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_3src_9rapidjson_JSONEncoder), __pyx_empty_tuple, __pyx_t_4); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 200; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_5 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_3src_9rapidjson_JSONEncoder), __pyx_empty_tuple, __pyx_t_4); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 201; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-    /* "src/rapidjson.pyx":203
+    /* "src/rapidjson.pyx":204
  *             skipkeys=skipkeys, ensure_ascii=ensure_ascii,
  *             check_circular=check_circular, allow_nan=allow_nan, indent=indent,
  *             separators=separators, default=default, sort_keys=sort_keys).encode(obj)             # <<<<<<<<<<<<<<
  *     elif not issubclass(cls, JSONEncoder):
  *         raise TypeError("cls is not a subclass or an instance of rapidjson.JSONEncoder.\nUse the stdlib json module instead.")
  */
-    __pyx_t_4 = ((struct __pyx_vtabstruct_3src_9rapidjson_JSONEncoder *)((struct __pyx_obj_3src_9rapidjson_JSONEncoder *)__pyx_t_5)->__pyx_vtab)->encode(((struct __pyx_obj_3src_9rapidjson_JSONEncoder *)__pyx_t_5), __pyx_v_obj, 0); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 203; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_4 = ((struct __pyx_vtabstruct_3src_9rapidjson_JSONEncoder *)((struct __pyx_obj_3src_9rapidjson_JSONEncoder *)__pyx_t_5)->__pyx_vtab)->encode(((struct __pyx_obj_3src_9rapidjson_JSONEncoder *)__pyx_t_5), __pyx_v_obj, 0); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 204; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
     __pyx_r = __pyx_t_4;
     __pyx_t_4 = 0;
     goto __pyx_L0;
 
-    /* "src/rapidjson.pyx":199
+    /* "src/rapidjson.pyx":200
  *             default is None and not sort_keys):
  *         return _default_encoder.encode(obj)
  *     elif cls is None:             # <<<<<<<<<<<<<<
@@ -5813,31 +5917,31 @@ static PyObject *__pyx_f_3src_9rapidjson_dumps(PyObject *__pyx_v_obj, CYTHON_UNU
  */
   }
 
-  /* "src/rapidjson.pyx":204
+  /* "src/rapidjson.pyx":205
  *             check_circular=check_circular, allow_nan=allow_nan, indent=indent,
  *             separators=separators, default=default, sort_keys=sort_keys).encode(obj)
  *     elif not issubclass(cls, JSONEncoder):             # <<<<<<<<<<<<<<
  *         raise TypeError("cls is not a subclass or an instance of rapidjson.JSONEncoder.\nUse the stdlib json module instead.")
  *     else:
  */
-  __pyx_t_2 = PyObject_IsSubclass(__pyx_v_cls, ((PyObject *)__pyx_ptype_3src_9rapidjson_JSONEncoder)); if (unlikely(__pyx_t_2 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 204; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = PyObject_IsSubclass(__pyx_v_cls, ((PyObject *)__pyx_ptype_3src_9rapidjson_JSONEncoder)); if (unlikely(__pyx_t_2 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 205; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_t_1 = ((!(__pyx_t_2 != 0)) != 0);
   if (__pyx_t_1) {
 
-    /* "src/rapidjson.pyx":205
+    /* "src/rapidjson.pyx":206
  *             separators=separators, default=default, sort_keys=sort_keys).encode(obj)
  *     elif not issubclass(cls, JSONEncoder):
  *         raise TypeError("cls is not a subclass or an instance of rapidjson.JSONEncoder.\nUse the stdlib json module instead.")             # <<<<<<<<<<<<<<
  *     else:
  *         return cls(
  */
-    __pyx_t_4 = __Pyx_PyObject_Call(__pyx_builtin_TypeError, __pyx_tuple__3, NULL); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 205; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_4 = __Pyx_PyObject_Call(__pyx_builtin_TypeError, __pyx_tuple__3, NULL); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 206; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_Raise(__pyx_t_4, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 205; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 206; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-    /* "src/rapidjson.pyx":204
+    /* "src/rapidjson.pyx":205
  *             check_circular=check_circular, allow_nan=allow_nan, indent=indent,
  *             separators=separators, default=default, sort_keys=sort_keys).encode(obj)
  *     elif not issubclass(cls, JSONEncoder):             # <<<<<<<<<<<<<<
@@ -5846,7 +5950,7 @@ static PyObject *__pyx_f_3src_9rapidjson_dumps(PyObject *__pyx_v_obj, CYTHON_UNU
  */
   }
 
-  /* "src/rapidjson.pyx":207
+  /* "src/rapidjson.pyx":208
  *         raise TypeError("cls is not a subclass or an instance of rapidjson.JSONEncoder.\nUse the stdlib json module instead.")
  *     else:
  *         return cls(             # <<<<<<<<<<<<<<
@@ -5856,59 +5960,59 @@ static PyObject *__pyx_f_3src_9rapidjson_dumps(PyObject *__pyx_v_obj, CYTHON_UNU
   /*else*/ {
     __Pyx_XDECREF(__pyx_r);
 
-    /* "src/rapidjson.pyx":208
+    /* "src/rapidjson.pyx":209
  *     else:
  *         return cls(
  *             skipkeys=skipkeys, ensure_ascii=ensure_ascii,             # <<<<<<<<<<<<<<
  *             check_circular=check_circular, allow_nan=allow_nan, indent=indent,
  *             separators=separators, default=default, sort_keys=sort_keys).encode(obj)
  */
-    __pyx_t_5 = PyDict_New(); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 208; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_5 = PyDict_New(); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 209; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_5);
-    if (PyDict_SetItem(__pyx_t_5, __pyx_n_s_skipkeys, __pyx_v_skipkeys) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 208; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-    if (PyDict_SetItem(__pyx_t_5, __pyx_n_s_ensure_ascii, __pyx_v_ensure_ascii) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 208; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    if (PyDict_SetItem(__pyx_t_5, __pyx_n_s_skipkeys, __pyx_v_skipkeys) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 209; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    if (PyDict_SetItem(__pyx_t_5, __pyx_n_s_ensure_ascii, __pyx_v_ensure_ascii) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 209; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-    /* "src/rapidjson.pyx":209
+    /* "src/rapidjson.pyx":210
  *         return cls(
  *             skipkeys=skipkeys, ensure_ascii=ensure_ascii,
  *             check_circular=check_circular, allow_nan=allow_nan, indent=indent,             # <<<<<<<<<<<<<<
  *             separators=separators, default=default, sort_keys=sort_keys).encode(obj)
  * 
  */
-    if (PyDict_SetItem(__pyx_t_5, __pyx_n_s_check_circular, __pyx_v_check_circular) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 208; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-    if (PyDict_SetItem(__pyx_t_5, __pyx_n_s_allow_nan, __pyx_v_allow_nan) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 208; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-    if (PyDict_SetItem(__pyx_t_5, __pyx_n_s_indent, __pyx_v_indent) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 208; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    if (PyDict_SetItem(__pyx_t_5, __pyx_n_s_check_circular, __pyx_v_check_circular) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 209; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    if (PyDict_SetItem(__pyx_t_5, __pyx_n_s_allow_nan, __pyx_v_allow_nan) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 209; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    if (PyDict_SetItem(__pyx_t_5, __pyx_n_s_indent, __pyx_v_indent) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 209; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-    /* "src/rapidjson.pyx":210
+    /* "src/rapidjson.pyx":211
  *             skipkeys=skipkeys, ensure_ascii=ensure_ascii,
  *             check_circular=check_circular, allow_nan=allow_nan, indent=indent,
  *             separators=separators, default=default, sort_keys=sort_keys).encode(obj)             # <<<<<<<<<<<<<<
  * 
  * cpdef load(fp, cls=None, object_hook=None, parse_float=None,
  */
-    if (PyDict_SetItem(__pyx_t_5, __pyx_n_s_separators, __pyx_v_separators) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 208; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-    if (PyDict_SetItem(__pyx_t_5, __pyx_n_s_default, __pyx_v_default) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 208; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-    if (PyDict_SetItem(__pyx_t_5, __pyx_n_s_sort_keys, __pyx_v_sort_keys) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 208; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    if (PyDict_SetItem(__pyx_t_5, __pyx_n_s_separators, __pyx_v_separators) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 209; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    if (PyDict_SetItem(__pyx_t_5, __pyx_n_s_default, __pyx_v_default) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 209; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    if (PyDict_SetItem(__pyx_t_5, __pyx_n_s_sort_keys, __pyx_v_sort_keys) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 209; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-    /* "src/rapidjson.pyx":207
+    /* "src/rapidjson.pyx":208
  *         raise TypeError("cls is not a subclass or an instance of rapidjson.JSONEncoder.\nUse the stdlib json module instead.")
  *     else:
  *         return cls(             # <<<<<<<<<<<<<<
  *             skipkeys=skipkeys, ensure_ascii=ensure_ascii,
  *             check_circular=check_circular, allow_nan=allow_nan, indent=indent,
  */
-    __pyx_t_6 = __Pyx_PyObject_Call(__pyx_v_cls, __pyx_empty_tuple, __pyx_t_5); if (unlikely(!__pyx_t_6)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 207; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_6 = __Pyx_PyObject_Call(__pyx_v_cls, __pyx_empty_tuple, __pyx_t_5); if (unlikely(!__pyx_t_6)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 208; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_6);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
 
-    /* "src/rapidjson.pyx":210
+    /* "src/rapidjson.pyx":211
  *             skipkeys=skipkeys, ensure_ascii=ensure_ascii,
  *             check_circular=check_circular, allow_nan=allow_nan, indent=indent,
  *             separators=separators, default=default, sort_keys=sort_keys).encode(obj)             # <<<<<<<<<<<<<<
  * 
  * cpdef load(fp, cls=None, object_hook=None, parse_float=None,
  */
-    __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_6, __pyx_n_s_encode); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 210; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_6, __pyx_n_s_encode); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 211; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
     __pyx_t_6 = NULL;
@@ -5922,16 +6026,16 @@ static PyObject *__pyx_f_3src_9rapidjson_dumps(PyObject *__pyx_v_obj, CYTHON_UNU
       }
     }
     if (!__pyx_t_6) {
-      __pyx_t_4 = __Pyx_PyObject_CallOneArg(__pyx_t_5, __pyx_v_obj); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 210; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_4 = __Pyx_PyObject_CallOneArg(__pyx_t_5, __pyx_v_obj); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 211; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_4);
     } else {
-      __pyx_t_7 = PyTuple_New(1+1); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 210; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_7 = PyTuple_New(1+1); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 211; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_7);
       __Pyx_GIVEREF(__pyx_t_6); PyTuple_SET_ITEM(__pyx_t_7, 0, __pyx_t_6); __pyx_t_6 = NULL;
       __Pyx_INCREF(__pyx_v_obj);
       __Pyx_GIVEREF(__pyx_v_obj);
       PyTuple_SET_ITEM(__pyx_t_7, 0+1, __pyx_v_obj);
-      __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_5, __pyx_t_7, NULL); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 210; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_5, __pyx_t_7, NULL); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 211; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_4);
       __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
     }
@@ -5941,7 +6045,7 @@ static PyObject *__pyx_f_3src_9rapidjson_dumps(PyObject *__pyx_v_obj, CYTHON_UNU
     goto __pyx_L0;
   }
 
-  /* "src/rapidjson.pyx":191
+  /* "src/rapidjson.pyx":192
  *     fp.write(json_string)
  * 
  * cpdef dumps(obj, skipkeys=False, ensure_ascii=True, check_circular=True,             # <<<<<<<<<<<<<<
@@ -5989,7 +6093,7 @@ static PyObject *__pyx_pw_3src_9rapidjson_3dumps(PyObject *__pyx_self, PyObject 
     values[2] = ((PyObject *)Py_True);
     values[3] = ((PyObject *)Py_True);
 
-    /* "src/rapidjson.pyx":192
+    /* "src/rapidjson.pyx":193
  * 
  * cpdef dumps(obj, skipkeys=False, ensure_ascii=True, check_circular=True,
  *             allow_nan=True, cls=None, indent=None, separators=None,             # <<<<<<<<<<<<<<
@@ -6001,7 +6105,7 @@ static PyObject *__pyx_pw_3src_9rapidjson_3dumps(PyObject *__pyx_self, PyObject 
     values[6] = ((PyObject *)Py_None);
     values[7] = ((PyObject *)Py_None);
 
-    /* "src/rapidjson.pyx":193
+    /* "src/rapidjson.pyx":194
  * cpdef dumps(obj, skipkeys=False, ensure_ascii=True, check_circular=True,
  *             allow_nan=True, cls=None, indent=None, separators=None,
  *             default=None, sort_keys=False):             # <<<<<<<<<<<<<<
@@ -6079,7 +6183,7 @@ static PyObject *__pyx_pw_3src_9rapidjson_3dumps(PyObject *__pyx_self, PyObject 
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "dumps") < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 191; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "dumps") < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 192; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
       }
     } else {
       switch (PyTuple_GET_SIZE(__pyx_args)) {
@@ -6110,7 +6214,7 @@ static PyObject *__pyx_pw_3src_9rapidjson_3dumps(PyObject *__pyx_self, PyObject 
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("dumps", 0, 1, 10, PyTuple_GET_SIZE(__pyx_args)); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 191; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+  __Pyx_RaiseArgtupleInvalid("dumps", 0, 1, 10, PyTuple_GET_SIZE(__pyx_args)); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 192; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
   __pyx_L3_error:;
   __Pyx_AddTraceback("src.rapidjson.dumps", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -6118,7 +6222,7 @@ static PyObject *__pyx_pw_3src_9rapidjson_3dumps(PyObject *__pyx_self, PyObject 
   __pyx_L4_argument_unpacking_done:;
   __pyx_r = __pyx_pf_3src_9rapidjson_2dumps(__pyx_self, __pyx_v_obj, __pyx_v_skipkeys, __pyx_v_ensure_ascii, __pyx_v_check_circular, __pyx_v_allow_nan, __pyx_v_cls, __pyx_v_indent, __pyx_v_separators, __pyx_v_default, __pyx_v_sort_keys);
 
-  /* "src/rapidjson.pyx":191
+  /* "src/rapidjson.pyx":192
  *     fp.write(json_string)
  * 
  * cpdef dumps(obj, skipkeys=False, ensure_ascii=True, check_circular=True,             # <<<<<<<<<<<<<<
@@ -6151,7 +6255,7 @@ static PyObject *__pyx_pf_3src_9rapidjson_2dumps(CYTHON_UNUSED PyObject *__pyx_s
   __pyx_t_2.separators = __pyx_v_separators;
   __pyx_t_2.__pyx_default = __pyx_v_default;
   __pyx_t_2.sort_keys = __pyx_v_sort_keys;
-  __pyx_t_1 = __pyx_f_3src_9rapidjson_dumps(__pyx_v_obj, 0, &__pyx_t_2); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 191; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __pyx_f_3src_9rapidjson_dumps(__pyx_v_obj, 0, &__pyx_t_2); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 192; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -6168,7 +6272,7 @@ static PyObject *__pyx_pf_3src_9rapidjson_2dumps(CYTHON_UNUSED PyObject *__pyx_s
   return __pyx_r;
 }
 
-/* "src/rapidjson.pyx":212
+/* "src/rapidjson.pyx":213
  *             separators=separators, default=default, sort_keys=sort_keys).encode(obj)
  * 
  * cpdef load(fp, cls=None, object_hook=None, parse_float=None,             # <<<<<<<<<<<<<<
@@ -6182,7 +6286,7 @@ static PyObject *__pyx_f_3src_9rapidjson_load(PyObject *__pyx_v_fp, CYTHON_UNUSE
   PyObject *__pyx_v_object_hook = ((PyObject *)Py_None);
   PyObject *__pyx_v_parse_float = ((PyObject *)Py_None);
 
-  /* "src/rapidjson.pyx":213
+  /* "src/rapidjson.pyx":214
  * 
  * cpdef load(fp, cls=None, object_hook=None, parse_float=None,
  *            parse_int=None, parse_constant=None, object_pairs_hook=None):             # <<<<<<<<<<<<<<
@@ -6223,7 +6327,7 @@ static PyObject *__pyx_f_3src_9rapidjson_load(PyObject *__pyx_v_fp, CYTHON_UNUSE
     }
   }
 
-  /* "src/rapidjson.pyx":214
+  /* "src/rapidjson.pyx":215
  * cpdef load(fp, cls=None, object_hook=None, parse_float=None,
  *            parse_int=None, parse_constant=None, object_pairs_hook=None):
  *     return loads(fp.read(), cls=cls, object_hook=object_hook, parse_float=parse_float, parse_int=parse_int,             # <<<<<<<<<<<<<<
@@ -6231,9 +6335,9 @@ static PyObject *__pyx_f_3src_9rapidjson_load(PyObject *__pyx_v_fp, CYTHON_UNUSE
  * 
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_loads); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 214; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_loads); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 215; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_fp, __pyx_n_s_read); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 214; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_fp, __pyx_n_s_read); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 215; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_3);
   __pyx_t_4 = NULL;
   if (CYTHON_COMPILING_IN_CPYTHON && likely(PyMethod_Check(__pyx_t_3))) {
@@ -6246,43 +6350,43 @@ static PyObject *__pyx_f_3src_9rapidjson_load(PyObject *__pyx_v_fp, CYTHON_UNUSE
     }
   }
   if (__pyx_t_4) {
-    __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_4); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 214; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_4); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 215; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   } else {
-    __pyx_t_2 = __Pyx_PyObject_CallNoArg(__pyx_t_3); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 214; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_2 = __Pyx_PyObject_CallNoArg(__pyx_t_3); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 215; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   }
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 214; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 215; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_GIVEREF(__pyx_t_2);
   PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_2);
   __pyx_t_2 = 0;
-  __pyx_t_2 = PyDict_New(); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 214; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = PyDict_New(); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 215; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
-  if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_cls, __pyx_v_cls) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 214; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_object_hook, __pyx_v_object_hook) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 214; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_parse_float, __pyx_v_parse_float) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 214; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_parse_int, __pyx_v_parse_int) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 214; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_cls, __pyx_v_cls) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 215; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_object_hook, __pyx_v_object_hook) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 215; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_parse_float, __pyx_v_parse_float) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 215; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_parse_int, __pyx_v_parse_int) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 215; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-  /* "src/rapidjson.pyx":215
+  /* "src/rapidjson.pyx":216
  *            parse_int=None, parse_constant=None, object_pairs_hook=None):
  *     return loads(fp.read(), cls=cls, object_hook=object_hook, parse_float=parse_float, parse_int=parse_int,
  *                  parse_constant=parse_constant, object_pairs_hook=object_pairs_hook)             # <<<<<<<<<<<<<<
  * 
  * cpdef loads(s, encoding=None, cls=None, object_hook=None, parse_float=None,
  */
-  if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_parse_constant, __pyx_v_parse_constant) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 214; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_object_pairs_hook, __pyx_v_object_pairs_hook) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 214; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_parse_constant, __pyx_v_parse_constant) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 215; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_object_pairs_hook, __pyx_v_object_pairs_hook) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 215; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-  /* "src/rapidjson.pyx":214
+  /* "src/rapidjson.pyx":215
  * cpdef load(fp, cls=None, object_hook=None, parse_float=None,
  *            parse_int=None, parse_constant=None, object_pairs_hook=None):
  *     return loads(fp.read(), cls=cls, object_hook=object_hook, parse_float=parse_float, parse_int=parse_int,             # <<<<<<<<<<<<<<
  *                  parse_constant=parse_constant, object_pairs_hook=object_pairs_hook)
  * 
  */
-  __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_3, __pyx_t_2); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 214; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_3, __pyx_t_2); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 215; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
@@ -6291,7 +6395,7 @@ static PyObject *__pyx_f_3src_9rapidjson_load(PyObject *__pyx_v_fp, CYTHON_UNUSE
   __pyx_t_4 = 0;
   goto __pyx_L0;
 
-  /* "src/rapidjson.pyx":212
+  /* "src/rapidjson.pyx":213
  *             separators=separators, default=default, sort_keys=sort_keys).encode(obj)
  * 
  * cpdef load(fp, cls=None, object_hook=None, parse_float=None,             # <<<<<<<<<<<<<<
@@ -6336,7 +6440,7 @@ static PyObject *__pyx_pw_3src_9rapidjson_5load(PyObject *__pyx_self, PyObject *
     values[2] = ((PyObject *)Py_None);
     values[3] = ((PyObject *)Py_None);
 
-    /* "src/rapidjson.pyx":213
+    /* "src/rapidjson.pyx":214
  * 
  * cpdef load(fp, cls=None, object_hook=None, parse_float=None,
  *            parse_int=None, parse_constant=None, object_pairs_hook=None):             # <<<<<<<<<<<<<<
@@ -6397,7 +6501,7 @@ static PyObject *__pyx_pw_3src_9rapidjson_5load(PyObject *__pyx_self, PyObject *
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "load") < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 212; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "load") < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 213; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
       }
     } else {
       switch (PyTuple_GET_SIZE(__pyx_args)) {
@@ -6422,7 +6526,7 @@ static PyObject *__pyx_pw_3src_9rapidjson_5load(PyObject *__pyx_self, PyObject *
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("load", 0, 1, 7, PyTuple_GET_SIZE(__pyx_args)); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 212; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+  __Pyx_RaiseArgtupleInvalid("load", 0, 1, 7, PyTuple_GET_SIZE(__pyx_args)); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 213; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
   __pyx_L3_error:;
   __Pyx_AddTraceback("src.rapidjson.load", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -6430,7 +6534,7 @@ static PyObject *__pyx_pw_3src_9rapidjson_5load(PyObject *__pyx_self, PyObject *
   __pyx_L4_argument_unpacking_done:;
   __pyx_r = __pyx_pf_3src_9rapidjson_4load(__pyx_self, __pyx_v_fp, __pyx_v_cls, __pyx_v_object_hook, __pyx_v_parse_float, __pyx_v_parse_int, __pyx_v_parse_constant, __pyx_v_object_pairs_hook);
 
-  /* "src/rapidjson.pyx":212
+  /* "src/rapidjson.pyx":213
  *             separators=separators, default=default, sort_keys=sort_keys).encode(obj)
  * 
  * cpdef load(fp, cls=None, object_hook=None, parse_float=None,             # <<<<<<<<<<<<<<
@@ -6460,7 +6564,7 @@ static PyObject *__pyx_pf_3src_9rapidjson_4load(CYTHON_UNUSED PyObject *__pyx_se
   __pyx_t_2.parse_int = __pyx_v_parse_int;
   __pyx_t_2.parse_constant = __pyx_v_parse_constant;
   __pyx_t_2.object_pairs_hook = __pyx_v_object_pairs_hook;
-  __pyx_t_1 = __pyx_f_3src_9rapidjson_load(__pyx_v_fp, 0, &__pyx_t_2); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 212; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __pyx_f_3src_9rapidjson_load(__pyx_v_fp, 0, &__pyx_t_2); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 213; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -6477,7 +6581,7 @@ static PyObject *__pyx_pf_3src_9rapidjson_4load(CYTHON_UNUSED PyObject *__pyx_se
   return __pyx_r;
 }
 
-/* "src/rapidjson.pyx":217
+/* "src/rapidjson.pyx":218
  *                  parse_constant=parse_constant, object_pairs_hook=object_pairs_hook)
  * 
  * cpdef loads(s, encoding=None, cls=None, object_hook=None, parse_float=None,             # <<<<<<<<<<<<<<
@@ -6491,7 +6595,7 @@ static PyObject *__pyx_f_3src_9rapidjson_loads(PyObject *__pyx_v_s, CYTHON_UNUSE
   PyObject *__pyx_v_object_hook = ((PyObject *)Py_None);
   PyObject *__pyx_v_parse_float = ((PyObject *)Py_None);
 
-  /* "src/rapidjson.pyx":218
+  /* "src/rapidjson.pyx":219
  * 
  * cpdef loads(s, encoding=None, cls=None, object_hook=None, parse_float=None,
  *             parse_int=None, parse_constant=None, object_pairs_hook=None):             # <<<<<<<<<<<<<<
@@ -6536,7 +6640,7 @@ static PyObject *__pyx_f_3src_9rapidjson_loads(PyObject *__pyx_v_s, CYTHON_UNUSE
     }
   }
 
-  /* "src/rapidjson.pyx":219
+  /* "src/rapidjson.pyx":220
  * cpdef loads(s, encoding=None, cls=None, object_hook=None, parse_float=None,
  *             parse_int=None, parse_constant=None, object_pairs_hook=None):
  *     if (cls is None and object_hook is None and             # <<<<<<<<<<<<<<
@@ -6558,7 +6662,7 @@ static PyObject *__pyx_f_3src_9rapidjson_loads(PyObject *__pyx_v_s, CYTHON_UNUSE
     goto __pyx_L4_bool_binop_done;
   }
 
-  /* "src/rapidjson.pyx":220
+  /* "src/rapidjson.pyx":221
  *             parse_int=None, parse_constant=None, object_pairs_hook=None):
  *     if (cls is None and object_hook is None and
  *             parse_int is None and parse_float is None and             # <<<<<<<<<<<<<<
@@ -6580,7 +6684,7 @@ static PyObject *__pyx_f_3src_9rapidjson_loads(PyObject *__pyx_v_s, CYTHON_UNUSE
     goto __pyx_L4_bool_binop_done;
   }
 
-  /* "src/rapidjson.pyx":221
+  /* "src/rapidjson.pyx":222
  *     if (cls is None and object_hook is None and
  *             parse_int is None and parse_float is None and
  *             parse_constant is None and object_pairs_hook is None):             # <<<<<<<<<<<<<<
@@ -6599,7 +6703,7 @@ static PyObject *__pyx_f_3src_9rapidjson_loads(PyObject *__pyx_v_s, CYTHON_UNUSE
   __pyx_t_1 = __pyx_t_2;
   __pyx_L4_bool_binop_done:;
 
-  /* "src/rapidjson.pyx":219
+  /* "src/rapidjson.pyx":220
  * cpdef loads(s, encoding=None, cls=None, object_hook=None, parse_float=None,
  *             parse_int=None, parse_constant=None, object_pairs_hook=None):
  *     if (cls is None and object_hook is None and             # <<<<<<<<<<<<<<
@@ -6608,7 +6712,7 @@ static PyObject *__pyx_f_3src_9rapidjson_loads(PyObject *__pyx_v_s, CYTHON_UNUSE
  */
   if (__pyx_t_1) {
 
-    /* "src/rapidjson.pyx":222
+    /* "src/rapidjson.pyx":223
  *             parse_int is None and parse_float is None and
  *             parse_constant is None and object_pairs_hook is None):
  *         return _default_decoder.decode(s)             # <<<<<<<<<<<<<<
@@ -6616,14 +6720,14 @@ static PyObject *__pyx_f_3src_9rapidjson_loads(PyObject *__pyx_v_s, CYTHON_UNUSE
  *         return JSONDecoder(object_hook=object_hook, parse_float=parse_float, parse_int=parse_int,
  */
     __Pyx_XDECREF(__pyx_r);
-    __pyx_t_4 = __Pyx_PyObject_AsString(__pyx_v_s); if (unlikely((!__pyx_t_4) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 222; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-    __pyx_t_5 = ((struct __pyx_vtabstruct_3src_9rapidjson_JSONDecoder *)__pyx_v_3src_9rapidjson__default_decoder->__pyx_vtab)->decode(__pyx_v_3src_9rapidjson__default_decoder, __pyx_t_4, 0); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 222; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_4 = __Pyx_PyObject_AsString(__pyx_v_s); if (unlikely((!__pyx_t_4) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 223; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_5 = ((struct __pyx_vtabstruct_3src_9rapidjson_JSONDecoder *)__pyx_v_3src_9rapidjson__default_decoder->__pyx_vtab)->decode(__pyx_v_3src_9rapidjson__default_decoder, __pyx_t_4, 0); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 223; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_5);
     __pyx_r = __pyx_t_5;
     __pyx_t_5 = 0;
     goto __pyx_L0;
 
-    /* "src/rapidjson.pyx":219
+    /* "src/rapidjson.pyx":220
  * cpdef loads(s, encoding=None, cls=None, object_hook=None, parse_float=None,
  *             parse_int=None, parse_constant=None, object_pairs_hook=None):
  *     if (cls is None and object_hook is None and             # <<<<<<<<<<<<<<
@@ -6632,7 +6736,7 @@ static PyObject *__pyx_f_3src_9rapidjson_loads(PyObject *__pyx_v_s, CYTHON_UNUSE
  */
   }
 
-  /* "src/rapidjson.pyx":223
+  /* "src/rapidjson.pyx":224
  *             parse_constant is None and object_pairs_hook is None):
  *         return _default_decoder.decode(s)
  *     elif cls is None:             # <<<<<<<<<<<<<<
@@ -6643,7 +6747,7 @@ static PyObject *__pyx_f_3src_9rapidjson_loads(PyObject *__pyx_v_s, CYTHON_UNUSE
   __pyx_t_2 = (__pyx_t_1 != 0);
   if (__pyx_t_2) {
 
-    /* "src/rapidjson.pyx":224
+    /* "src/rapidjson.pyx":225
  *         return _default_decoder.decode(s)
  *     elif cls is None:
  *         return JSONDecoder(object_hook=object_hook, parse_float=parse_float, parse_int=parse_int,             # <<<<<<<<<<<<<<
@@ -6651,49 +6755,49 @@ static PyObject *__pyx_f_3src_9rapidjson_loads(PyObject *__pyx_v_s, CYTHON_UNUSE
  *     elif not issubclass(cls, JSONDecoder):
  */
     __Pyx_XDECREF(__pyx_r);
-    __pyx_t_5 = PyDict_New(); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 224; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_5 = PyDict_New(); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 225; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_5);
-    if (PyDict_SetItem(__pyx_t_5, __pyx_n_s_object_hook, __pyx_v_object_hook) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 224; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-    if (PyDict_SetItem(__pyx_t_5, __pyx_n_s_parse_float, __pyx_v_parse_float) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 224; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-    if (PyDict_SetItem(__pyx_t_5, __pyx_n_s_parse_int, __pyx_v_parse_int) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 224; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    if (PyDict_SetItem(__pyx_t_5, __pyx_n_s_object_hook, __pyx_v_object_hook) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 225; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    if (PyDict_SetItem(__pyx_t_5, __pyx_n_s_parse_float, __pyx_v_parse_float) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 225; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    if (PyDict_SetItem(__pyx_t_5, __pyx_n_s_parse_int, __pyx_v_parse_int) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 225; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-    /* "src/rapidjson.pyx":225
+    /* "src/rapidjson.pyx":226
  *     elif cls is None:
  *         return JSONDecoder(object_hook=object_hook, parse_float=parse_float, parse_int=parse_int,
  *                            parse_constant=parse_constant, object_pairs_hook=object_pairs_hook).decode(s)             # <<<<<<<<<<<<<<
  *     elif not issubclass(cls, JSONDecoder):
  *         raise TypeError("cls is not a subclass or an instance of rapidjson.JSONDecoder.\nUse the stdlib json module instead.")
  */
-    if (PyDict_SetItem(__pyx_t_5, __pyx_n_s_parse_constant, __pyx_v_parse_constant) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 224; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-    if (PyDict_SetItem(__pyx_t_5, __pyx_n_s_object_pairs_hook, __pyx_v_object_pairs_hook) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 224; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    if (PyDict_SetItem(__pyx_t_5, __pyx_n_s_parse_constant, __pyx_v_parse_constant) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 225; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    if (PyDict_SetItem(__pyx_t_5, __pyx_n_s_object_pairs_hook, __pyx_v_object_pairs_hook) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 225; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-    /* "src/rapidjson.pyx":224
+    /* "src/rapidjson.pyx":225
  *         return _default_decoder.decode(s)
  *     elif cls is None:
  *         return JSONDecoder(object_hook=object_hook, parse_float=parse_float, parse_int=parse_int,             # <<<<<<<<<<<<<<
  *                            parse_constant=parse_constant, object_pairs_hook=object_pairs_hook).decode(s)
  *     elif not issubclass(cls, JSONDecoder):
  */
-    __pyx_t_6 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_3src_9rapidjson_JSONDecoder), __pyx_empty_tuple, __pyx_t_5); if (unlikely(!__pyx_t_6)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 224; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_6 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_3src_9rapidjson_JSONDecoder), __pyx_empty_tuple, __pyx_t_5); if (unlikely(!__pyx_t_6)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 225; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_6);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
 
-    /* "src/rapidjson.pyx":225
+    /* "src/rapidjson.pyx":226
  *     elif cls is None:
  *         return JSONDecoder(object_hook=object_hook, parse_float=parse_float, parse_int=parse_int,
  *                            parse_constant=parse_constant, object_pairs_hook=object_pairs_hook).decode(s)             # <<<<<<<<<<<<<<
  *     elif not issubclass(cls, JSONDecoder):
  *         raise TypeError("cls is not a subclass or an instance of rapidjson.JSONDecoder.\nUse the stdlib json module instead.")
  */
-    __pyx_t_4 = __Pyx_PyObject_AsString(__pyx_v_s); if (unlikely((!__pyx_t_4) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 225; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-    __pyx_t_5 = ((struct __pyx_vtabstruct_3src_9rapidjson_JSONDecoder *)((struct __pyx_obj_3src_9rapidjson_JSONDecoder *)__pyx_t_6)->__pyx_vtab)->decode(((struct __pyx_obj_3src_9rapidjson_JSONDecoder *)__pyx_t_6), __pyx_t_4, 0); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 225; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_4 = __Pyx_PyObject_AsString(__pyx_v_s); if (unlikely((!__pyx_t_4) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 226; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_5 = ((struct __pyx_vtabstruct_3src_9rapidjson_JSONDecoder *)((struct __pyx_obj_3src_9rapidjson_JSONDecoder *)__pyx_t_6)->__pyx_vtab)->decode(((struct __pyx_obj_3src_9rapidjson_JSONDecoder *)__pyx_t_6), __pyx_t_4, 0); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 226; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
     __pyx_r = __pyx_t_5;
     __pyx_t_5 = 0;
     goto __pyx_L0;
 
-    /* "src/rapidjson.pyx":223
+    /* "src/rapidjson.pyx":224
  *             parse_constant is None and object_pairs_hook is None):
  *         return _default_decoder.decode(s)
  *     elif cls is None:             # <<<<<<<<<<<<<<
@@ -6702,31 +6806,31 @@ static PyObject *__pyx_f_3src_9rapidjson_loads(PyObject *__pyx_v_s, CYTHON_UNUSE
  */
   }
 
-  /* "src/rapidjson.pyx":226
+  /* "src/rapidjson.pyx":227
  *         return JSONDecoder(object_hook=object_hook, parse_float=parse_float, parse_int=parse_int,
  *                            parse_constant=parse_constant, object_pairs_hook=object_pairs_hook).decode(s)
  *     elif not issubclass(cls, JSONDecoder):             # <<<<<<<<<<<<<<
  *         raise TypeError("cls is not a subclass or an instance of rapidjson.JSONDecoder.\nUse the stdlib json module instead.")
  *     else:
  */
-  __pyx_t_2 = PyObject_IsSubclass(__pyx_v_cls, ((PyObject *)__pyx_ptype_3src_9rapidjson_JSONDecoder)); if (unlikely(__pyx_t_2 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 226; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = PyObject_IsSubclass(__pyx_v_cls, ((PyObject *)__pyx_ptype_3src_9rapidjson_JSONDecoder)); if (unlikely(__pyx_t_2 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 227; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_t_1 = ((!(__pyx_t_2 != 0)) != 0);
   if (__pyx_t_1) {
 
-    /* "src/rapidjson.pyx":227
+    /* "src/rapidjson.pyx":228
  *                            parse_constant=parse_constant, object_pairs_hook=object_pairs_hook).decode(s)
  *     elif not issubclass(cls, JSONDecoder):
  *         raise TypeError("cls is not a subclass or an instance of rapidjson.JSONDecoder.\nUse the stdlib json module instead.")             # <<<<<<<<<<<<<<
  *     else:
  *         return cls(object_hook=object_hook, parse_float=parse_float, parse_int=parse_int,
  */
-    __pyx_t_5 = __Pyx_PyObject_Call(__pyx_builtin_TypeError, __pyx_tuple__4, NULL); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 227; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_5 = __Pyx_PyObject_Call(__pyx_builtin_TypeError, __pyx_tuple__4, NULL); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 228; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_Raise(__pyx_t_5, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 227; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 228; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-    /* "src/rapidjson.pyx":226
+    /* "src/rapidjson.pyx":227
  *         return JSONDecoder(object_hook=object_hook, parse_float=parse_float, parse_int=parse_int,
  *                            parse_constant=parse_constant, object_pairs_hook=object_pairs_hook).decode(s)
  *     elif not issubclass(cls, JSONDecoder):             # <<<<<<<<<<<<<<
@@ -6735,7 +6839,7 @@ static PyObject *__pyx_f_3src_9rapidjson_loads(PyObject *__pyx_v_s, CYTHON_UNUSE
  */
   }
 
-  /* "src/rapidjson.pyx":229
+  /* "src/rapidjson.pyx":230
  *         raise TypeError("cls is not a subclass or an instance of rapidjson.JSONDecoder.\nUse the stdlib json module instead.")
  *     else:
  *         return cls(object_hook=object_hook, parse_float=parse_float, parse_int=parse_int,             # <<<<<<<<<<<<<<
@@ -6745,56 +6849,56 @@ static PyObject *__pyx_f_3src_9rapidjson_loads(PyObject *__pyx_v_s, CYTHON_UNUSE
   /*else*/ {
     __Pyx_XDECREF(__pyx_r);
 
-    /* "src/rapidjson.pyx":230
+    /* "src/rapidjson.pyx":231
  *     else:
  *         return cls(object_hook=object_hook, parse_float=parse_float, parse_int=parse_int,
  *                            parse_constant=parse_constant, object_pairs_hook=object_pairs_hook).decode(s)             # <<<<<<<<<<<<<<
  * 
  * 
  */
-    __pyx_t_6 = PyDict_New(); if (unlikely(!__pyx_t_6)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 229; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_6 = PyDict_New(); if (unlikely(!__pyx_t_6)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 230; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_6);
 
-    /* "src/rapidjson.pyx":229
+    /* "src/rapidjson.pyx":230
  *         raise TypeError("cls is not a subclass or an instance of rapidjson.JSONDecoder.\nUse the stdlib json module instead.")
  *     else:
  *         return cls(object_hook=object_hook, parse_float=parse_float, parse_int=parse_int,             # <<<<<<<<<<<<<<
  *                            parse_constant=parse_constant, object_pairs_hook=object_pairs_hook).decode(s)
  * 
  */
-    if (PyDict_SetItem(__pyx_t_6, __pyx_n_s_object_hook, __pyx_v_object_hook) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 229; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-    if (PyDict_SetItem(__pyx_t_6, __pyx_n_s_parse_float, __pyx_v_parse_float) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 229; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-    if (PyDict_SetItem(__pyx_t_6, __pyx_n_s_parse_int, __pyx_v_parse_int) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 229; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    if (PyDict_SetItem(__pyx_t_6, __pyx_n_s_object_hook, __pyx_v_object_hook) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 230; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    if (PyDict_SetItem(__pyx_t_6, __pyx_n_s_parse_float, __pyx_v_parse_float) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 230; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    if (PyDict_SetItem(__pyx_t_6, __pyx_n_s_parse_int, __pyx_v_parse_int) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 230; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-    /* "src/rapidjson.pyx":230
+    /* "src/rapidjson.pyx":231
  *     else:
  *         return cls(object_hook=object_hook, parse_float=parse_float, parse_int=parse_int,
  *                            parse_constant=parse_constant, object_pairs_hook=object_pairs_hook).decode(s)             # <<<<<<<<<<<<<<
  * 
  * 
  */
-    if (PyDict_SetItem(__pyx_t_6, __pyx_n_s_parse_constant, __pyx_v_parse_constant) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 229; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-    if (PyDict_SetItem(__pyx_t_6, __pyx_n_s_object_pairs_hook, __pyx_v_object_pairs_hook) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 229; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    if (PyDict_SetItem(__pyx_t_6, __pyx_n_s_parse_constant, __pyx_v_parse_constant) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 230; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    if (PyDict_SetItem(__pyx_t_6, __pyx_n_s_object_pairs_hook, __pyx_v_object_pairs_hook) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 230; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-    /* "src/rapidjson.pyx":229
+    /* "src/rapidjson.pyx":230
  *         raise TypeError("cls is not a subclass or an instance of rapidjson.JSONDecoder.\nUse the stdlib json module instead.")
  *     else:
  *         return cls(object_hook=object_hook, parse_float=parse_float, parse_int=parse_int,             # <<<<<<<<<<<<<<
  *                            parse_constant=parse_constant, object_pairs_hook=object_pairs_hook).decode(s)
  * 
  */
-    __pyx_t_7 = __Pyx_PyObject_Call(__pyx_v_cls, __pyx_empty_tuple, __pyx_t_6); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 229; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_7 = __Pyx_PyObject_Call(__pyx_v_cls, __pyx_empty_tuple, __pyx_t_6); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 230; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_7);
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
 
-    /* "src/rapidjson.pyx":230
+    /* "src/rapidjson.pyx":231
  *     else:
  *         return cls(object_hook=object_hook, parse_float=parse_float, parse_int=parse_int,
  *                            parse_constant=parse_constant, object_pairs_hook=object_pairs_hook).decode(s)             # <<<<<<<<<<<<<<
  * 
  * 
  */
-    __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_7, __pyx_n_s_decode); if (unlikely(!__pyx_t_6)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 230; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_7, __pyx_n_s_decode); if (unlikely(!__pyx_t_6)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 231; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_6);
     __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
     __pyx_t_7 = NULL;
@@ -6808,16 +6912,16 @@ static PyObject *__pyx_f_3src_9rapidjson_loads(PyObject *__pyx_v_s, CYTHON_UNUSE
       }
     }
     if (!__pyx_t_7) {
-      __pyx_t_5 = __Pyx_PyObject_CallOneArg(__pyx_t_6, __pyx_v_s); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 230; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_5 = __Pyx_PyObject_CallOneArg(__pyx_t_6, __pyx_v_s); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 231; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_5);
     } else {
-      __pyx_t_8 = PyTuple_New(1+1); if (unlikely(!__pyx_t_8)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 230; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_8 = PyTuple_New(1+1); if (unlikely(!__pyx_t_8)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 231; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_8);
       __Pyx_GIVEREF(__pyx_t_7); PyTuple_SET_ITEM(__pyx_t_8, 0, __pyx_t_7); __pyx_t_7 = NULL;
       __Pyx_INCREF(__pyx_v_s);
       __Pyx_GIVEREF(__pyx_v_s);
       PyTuple_SET_ITEM(__pyx_t_8, 0+1, __pyx_v_s);
-      __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_6, __pyx_t_8, NULL); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 230; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_6, __pyx_t_8, NULL); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 231; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_5);
       __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
     }
@@ -6827,7 +6931,7 @@ static PyObject *__pyx_f_3src_9rapidjson_loads(PyObject *__pyx_v_s, CYTHON_UNUSE
     goto __pyx_L0;
   }
 
-  /* "src/rapidjson.pyx":217
+  /* "src/rapidjson.pyx":218
  *                  parse_constant=parse_constant, object_pairs_hook=object_pairs_hook)
  * 
  * cpdef loads(s, encoding=None, cls=None, object_hook=None, parse_float=None,             # <<<<<<<<<<<<<<
@@ -6874,7 +6978,7 @@ static PyObject *__pyx_pw_3src_9rapidjson_7loads(PyObject *__pyx_self, PyObject 
     values[3] = ((PyObject *)Py_None);
     values[4] = ((PyObject *)Py_None);
 
-    /* "src/rapidjson.pyx":218
+    /* "src/rapidjson.pyx":219
  * 
  * cpdef loads(s, encoding=None, cls=None, object_hook=None, parse_float=None,
  *             parse_int=None, parse_constant=None, object_pairs_hook=None):             # <<<<<<<<<<<<<<
@@ -6941,7 +7045,7 @@ static PyObject *__pyx_pw_3src_9rapidjson_7loads(PyObject *__pyx_self, PyObject 
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "loads") < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 217; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "loads") < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 218; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
       }
     } else {
       switch (PyTuple_GET_SIZE(__pyx_args)) {
@@ -6968,7 +7072,7 @@ static PyObject *__pyx_pw_3src_9rapidjson_7loads(PyObject *__pyx_self, PyObject 
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("loads", 0, 1, 8, PyTuple_GET_SIZE(__pyx_args)); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 217; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+  __Pyx_RaiseArgtupleInvalid("loads", 0, 1, 8, PyTuple_GET_SIZE(__pyx_args)); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 218; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
   __pyx_L3_error:;
   __Pyx_AddTraceback("src.rapidjson.loads", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -6976,7 +7080,7 @@ static PyObject *__pyx_pw_3src_9rapidjson_7loads(PyObject *__pyx_self, PyObject 
   __pyx_L4_argument_unpacking_done:;
   __pyx_r = __pyx_pf_3src_9rapidjson_6loads(__pyx_self, __pyx_v_s, __pyx_v_encoding, __pyx_v_cls, __pyx_v_object_hook, __pyx_v_parse_float, __pyx_v_parse_int, __pyx_v_parse_constant, __pyx_v_object_pairs_hook);
 
-  /* "src/rapidjson.pyx":217
+  /* "src/rapidjson.pyx":218
  *                  parse_constant=parse_constant, object_pairs_hook=object_pairs_hook)
  * 
  * cpdef loads(s, encoding=None, cls=None, object_hook=None, parse_float=None,             # <<<<<<<<<<<<<<
@@ -7007,7 +7111,7 @@ static PyObject *__pyx_pf_3src_9rapidjson_6loads(CYTHON_UNUSED PyObject *__pyx_s
   __pyx_t_2.parse_int = __pyx_v_parse_int;
   __pyx_t_2.parse_constant = __pyx_v_parse_constant;
   __pyx_t_2.object_pairs_hook = __pyx_v_object_pairs_hook;
-  __pyx_t_1 = __pyx_f_3src_9rapidjson_loads(__pyx_v_s, 0, &__pyx_t_2); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 217; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __pyx_f_3src_9rapidjson_loads(__pyx_v_s, 0, &__pyx_t_2); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 218; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -7094,6 +7198,7 @@ static PyObject *__pyx_tp_new_3src_9rapidjson_JSONEncoder(PyTypeObject *t, CYTHO
   new((void*)&(p->doc)) rapidjson::Document();
   p->indent = Py_None; Py_INCREF(Py_None);
   p->separators = Py_None; Py_INCREF(Py_None);
+  p->item_separator = Py_None; Py_INCREF(Py_None);
   p->default_ = Py_None; Py_INCREF(Py_None);
   if (unlikely(__pyx_pw_3src_9rapidjson_11JSONEncoder_1__cinit__(o, __pyx_empty_tuple, NULL) < 0)) {
     Py_DECREF(o); o = 0;
@@ -7112,6 +7217,7 @@ static void __pyx_tp_dealloc_3src_9rapidjson_JSONEncoder(PyObject *o) {
   __Pyx_call_destructor(p->doc);
   Py_CLEAR(p->indent);
   Py_CLEAR(p->separators);
+  Py_CLEAR(p->item_separator);
   Py_CLEAR(p->default_);
   (*Py_TYPE(o)->tp_free)(o);
 }
@@ -7124,6 +7230,9 @@ static int __pyx_tp_traverse_3src_9rapidjson_JSONEncoder(PyObject *o, visitproc 
   }
   if (p->separators) {
     e = (*v)(p->separators, a); if (e) return e;
+  }
+  if (p->item_separator) {
+    e = (*v)(p->item_separator, a); if (e) return e;
   }
   if (p->default_) {
     e = (*v)(p->default_, a); if (e) return e;
@@ -7139,6 +7248,9 @@ static int __pyx_tp_clear_3src_9rapidjson_JSONEncoder(PyObject *o) {
   Py_XDECREF(tmp);
   tmp = ((PyObject*)p->separators);
   p->separators = Py_None; Py_INCREF(Py_None);
+  Py_XDECREF(tmp);
+  tmp = ((PyObject*)p->item_separator);
+  p->item_separator = Py_None; Py_INCREF(Py_None);
   Py_XDECREF(tmp);
   tmp = ((PyObject*)p->default_);
   p->default_ = Py_None; Py_INCREF(Py_None);
@@ -7242,6 +7354,19 @@ static int __pyx_setprop_3src_9rapidjson_11JSONEncoder_separators(PyObject *o, P
   }
 }
 
+static PyObject *__pyx_getprop_3src_9rapidjson_11JSONEncoder_item_separator(PyObject *o, CYTHON_UNUSED void *x) {
+  return __pyx_pw_3src_9rapidjson_11JSONEncoder_14item_separator_1__get__(o);
+}
+
+static int __pyx_setprop_3src_9rapidjson_11JSONEncoder_item_separator(PyObject *o, PyObject *v, CYTHON_UNUSED void *x) {
+  if (v) {
+    return __pyx_pw_3src_9rapidjson_11JSONEncoder_14item_separator_3__set__(o, v);
+  }
+  else {
+    return __pyx_pw_3src_9rapidjson_11JSONEncoder_14item_separator_5__del__(o);
+  }
+}
+
 static PyMethodDef __pyx_methods_3src_9rapidjson_JSONEncoder[] = {
   {"default", (PyCFunction)__pyx_pw_3src_9rapidjson_11JSONEncoder_5default, METH_O, 0},
   {"encode", (PyCFunction)__pyx_pw_3src_9rapidjson_11JSONEncoder_7encode, METH_O, 0},
@@ -7256,6 +7381,7 @@ static struct PyGetSetDef __pyx_getsets_3src_9rapidjson_JSONEncoder[] = {
   {(char *)"sort_keys", __pyx_getprop_3src_9rapidjson_11JSONEncoder_sort_keys, __pyx_setprop_3src_9rapidjson_11JSONEncoder_sort_keys, 0, 0},
   {(char *)"indent", __pyx_getprop_3src_9rapidjson_11JSONEncoder_indent, __pyx_setprop_3src_9rapidjson_11JSONEncoder_indent, 0, 0},
   {(char *)"separators", __pyx_getprop_3src_9rapidjson_11JSONEncoder_separators, __pyx_setprop_3src_9rapidjson_11JSONEncoder_separators, 0, 0},
+  {(char *)"item_separator", __pyx_getprop_3src_9rapidjson_11JSONEncoder_item_separator, __pyx_setprop_3src_9rapidjson_11JSONEncoder_item_separator, 0, 0},
   {0, 0, 0, 0, 0}
 };
 
@@ -7611,7 +7737,6 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_indent, __pyx_k_indent, sizeof(__pyx_k_indent), 0, 0, 1, 1},
   {&__pyx_n_s_init, __pyx_k_init, sizeof(__pyx_k_init), 0, 0, 1, 1},
   {&__pyx_kp_s_is_not_JSON_serializable, __pyx_k_is_not_JSON_serializable, sizeof(__pyx_k_is_not_JSON_serializable), 0, 0, 1, 0},
-  {&__pyx_n_s_item_separator, __pyx_k_item_separator, sizeof(__pyx_k_item_separator), 0, 0, 1, 1},
   {&__pyx_n_s_items, __pyx_k_items, sizeof(__pyx_k_items), 0, 0, 1, 1},
   {&__pyx_n_s_json_decoder, __pyx_k_json_decoder, sizeof(__pyx_k_json_decoder), 0, 0, 1, 1},
   {&__pyx_n_s_key_separator, __pyx_k_key_separator, sizeof(__pyx_k_key_separator), 0, 0, 1, 1},
@@ -7650,7 +7775,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
 static int __Pyx_InitCachedBuiltins(void) {
   __pyx_builtin_ImportError = __Pyx_GetBuiltinName(__pyx_n_s_ImportError); if (!__pyx_builtin_ImportError) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 16; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_builtin_ValueError = __Pyx_GetBuiltinName(__pyx_n_s_ValueError); if (!__pyx_builtin_ValueError) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 17; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __pyx_builtin_TypeError = __Pyx_GetBuiltinName(__pyx_n_s_TypeError); if (!__pyx_builtin_TypeError) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 67; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_builtin_TypeError = __Pyx_GetBuiltinName(__pyx_n_s_TypeError); if (!__pyx_builtin_TypeError) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 68; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   return 0;
   __pyx_L1_error:;
   return -1;
@@ -7660,25 +7785,25 @@ static int __Pyx_InitCachedConstants(void) {
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__Pyx_InitCachedConstants", 0);
 
-  /* "src/rapidjson.pyx":205
+  /* "src/rapidjson.pyx":206
  *             separators=separators, default=default, sort_keys=sort_keys).encode(obj)
  *     elif not issubclass(cls, JSONEncoder):
  *         raise TypeError("cls is not a subclass or an instance of rapidjson.JSONEncoder.\nUse the stdlib json module instead.")             # <<<<<<<<<<<<<<
  *     else:
  *         return cls(
  */
-  __pyx_tuple__3 = PyTuple_Pack(1, __pyx_kp_s_cls_is_not_a_subclass_or_an_inst); if (unlikely(!__pyx_tuple__3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 205; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_tuple__3 = PyTuple_Pack(1, __pyx_kp_s_cls_is_not_a_subclass_or_an_inst); if (unlikely(!__pyx_tuple__3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 206; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_tuple__3);
   __Pyx_GIVEREF(__pyx_tuple__3);
 
-  /* "src/rapidjson.pyx":227
+  /* "src/rapidjson.pyx":228
  *                            parse_constant=parse_constant, object_pairs_hook=object_pairs_hook).decode(s)
  *     elif not issubclass(cls, JSONDecoder):
  *         raise TypeError("cls is not a subclass or an instance of rapidjson.JSONDecoder.\nUse the stdlib json module instead.")             # <<<<<<<<<<<<<<
  *     else:
  *         return cls(object_hook=object_hook, parse_float=parse_float, parse_int=parse_int,
  */
-  __pyx_tuple__4 = PyTuple_Pack(1, __pyx_kp_s_cls_is_not_a_subclass_or_an_inst_2); if (unlikely(!__pyx_tuple__4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 227; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_tuple__4 = PyTuple_Pack(1, __pyx_kp_s_cls_is_not_a_subclass_or_an_inst_2); if (unlikely(!__pyx_tuple__4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 228; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_tuple__4);
   __Pyx_GIVEREF(__pyx_tuple__4);
 
@@ -7830,10 +7955,10 @@ PyMODINIT_FUNC PyInit_rapidjson(void)
   __pyx_vtabptr_3src_9rapidjson_JSONDecoder = &__pyx_vtable_3src_9rapidjson_JSONDecoder;
   __pyx_vtable_3src_9rapidjson_JSONDecoder.decode = (PyObject *(*)(struct __pyx_obj_3src_9rapidjson_JSONDecoder *, char const *, int __pyx_skip_dispatch))__pyx_f_3src_9rapidjson_11JSONDecoder_decode;
   __pyx_vtable_3src_9rapidjson_JSONDecoder.decode_inner = (PyObject *(*)(struct __pyx_obj_3src_9rapidjson_JSONDecoder *, rapidjson::Value const &))__pyx_f_3src_9rapidjson_11JSONDecoder_decode_inner;
-  if (PyType_Ready(&__pyx_type_3src_9rapidjson_JSONDecoder) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 115; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (PyType_Ready(&__pyx_type_3src_9rapidjson_JSONDecoder) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 116; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_type_3src_9rapidjson_JSONDecoder.tp_print = 0;
-  if (__Pyx_SetVtable(__pyx_type_3src_9rapidjson_JSONDecoder.tp_dict, __pyx_vtabptr_3src_9rapidjson_JSONDecoder) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 115; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  if (PyObject_SetAttrString(__pyx_m, "JSONDecoder", (PyObject *)&__pyx_type_3src_9rapidjson_JSONDecoder) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 115; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (__Pyx_SetVtable(__pyx_type_3src_9rapidjson_JSONDecoder.tp_dict, __pyx_vtabptr_3src_9rapidjson_JSONDecoder) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 116; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (PyObject_SetAttrString(__pyx_m, "JSONDecoder", (PyObject *)&__pyx_type_3src_9rapidjson_JSONDecoder) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 116; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_ptype_3src_9rapidjson_JSONDecoder = &__pyx_type_3src_9rapidjson_JSONDecoder;
   /*--- Type import code ---*/
   /*--- Variable import code ---*/
@@ -7992,40 +8117,40 @@ PyMODINIT_FUNC PyInit_rapidjson(void)
     __pyx_L9_try_end:;
   }
 
-  /* "src/rapidjson.pyx":180
+  /* "src/rapidjson.pyx":181
  * 
  * 
  * cdef JSONEncoder _default_encoder = JSONEncoder()             # <<<<<<<<<<<<<<
  * cdef JSONDecoder _default_decoder = JSONDecoder()
  * 
  */
-  __pyx_t_7 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_3src_9rapidjson_JSONEncoder), __pyx_empty_tuple, NULL); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 180; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_7 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_3src_9rapidjson_JSONEncoder), __pyx_empty_tuple, NULL); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 181; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_7);
   __Pyx_XGOTREF(((PyObject *)__pyx_v_3src_9rapidjson__default_encoder));
   __Pyx_DECREF_SET(__pyx_v_3src_9rapidjson__default_encoder, ((struct __pyx_obj_3src_9rapidjson_JSONEncoder *)__pyx_t_7));
   __Pyx_GIVEREF(__pyx_t_7);
   __pyx_t_7 = 0;
 
-  /* "src/rapidjson.pyx":181
+  /* "src/rapidjson.pyx":182
  * 
  * cdef JSONEncoder _default_encoder = JSONEncoder()
  * cdef JSONDecoder _default_decoder = JSONDecoder()             # <<<<<<<<<<<<<<
  * 
  * cpdef dump(obj, fp, skipkeys=False, ensure_ascii=True, check_circular=True,
  */
-  __pyx_t_7 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_3src_9rapidjson_JSONDecoder), __pyx_empty_tuple, NULL); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 181; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_7 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_3src_9rapidjson_JSONDecoder), __pyx_empty_tuple, NULL); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 182; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_7);
   __Pyx_XGOTREF(((PyObject *)__pyx_v_3src_9rapidjson__default_decoder));
   __Pyx_DECREF_SET(__pyx_v_3src_9rapidjson__default_decoder, ((struct __pyx_obj_3src_9rapidjson_JSONDecoder *)__pyx_t_7));
   __Pyx_GIVEREF(__pyx_t_7);
   __pyx_t_7 = 0;
 
-  /* "src/rapidjson.pyx":233
+  /* "src/rapidjson.pyx":234
  * 
  * 
  * __all__ = ['dump', 'dumps', 'load', 'loads', 'JSONEncoder', 'JSONDecoder', 'JSONDecodeError']             # <<<<<<<<<<<<<<
  */
-  __pyx_t_7 = PyList_New(7); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 233; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_7 = PyList_New(7); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 234; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_7);
   __Pyx_INCREF(__pyx_n_s_dump);
   __Pyx_GIVEREF(__pyx_n_s_dump);
@@ -8048,7 +8173,7 @@ PyMODINIT_FUNC PyInit_rapidjson(void)
   __Pyx_INCREF(__pyx_n_s_JSONDecodeError);
   __Pyx_GIVEREF(__pyx_n_s_JSONDecodeError);
   PyList_SET_ITEM(__pyx_t_7, 6, __pyx_n_s_JSONDecodeError);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_all, __pyx_t_7) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 233; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_all, __pyx_t_7) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 234; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
 
   /* "src/rapidjson.pyx":1

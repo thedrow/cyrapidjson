@@ -37,6 +37,7 @@ cdef class JSONEncoder(object):
     cpdef public libcpp.bool sort_keys
     cpdef public object indent
     cpdef public object separators
+    cpdef public object item_separator
     cdef object default_
 
     cdef Document doc
