@@ -65,13 +65,15 @@ cdef class JSONEncoder(object):
 
     cpdef encode(self, obj):
         cdef StringBuffer buffer
-        cdef StringWriter *writer = new StringWriter(buffer)
+        cdef StringWriter *writer
         cdef Document doc
         cdef const char* json_string
 
         self.encode_inner(obj, doc, doc.GetAllocator())
 
         with nogil:
+            writer = new StringWriter(buffer)
+
             doc.Accept(dereference(writer))
 
             del writer
@@ -146,7 +148,7 @@ cdef class JSONDecoder(object):
             has_error = doc.HasParseError()
 
         if has_error:
-            raise JSONDecodeError(GetParseError_En(doc.GetParseError()), s, self.doc.GetErrorOffset())
+            raise JSONDecodeError(GetParseError_En(doc.GetParseError()), s, doc.GetErrorOffset())
 
         return self.decode_inner(doc)
 
