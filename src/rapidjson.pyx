@@ -35,9 +35,10 @@ cdef class JSONEncoder(object):
     cpdef public libcpp.bool check_circular
     cpdef public libcpp.bool allow_nan
     cpdef public libcpp.bool sort_keys
-    cpdef public object indent
+    cpdef public int64_t indent
     cpdef public object separators
-    cpdef public object item_separator
+    cpdef public char* item_separator
+    cpdef public char* key_separator
     cdef object default_
 
     cdef Document doc
@@ -50,7 +51,7 @@ cdef class JSONEncoder(object):
 
     def __init__(self, libcpp.bool skipkeys=False, libcpp.bool ensure_ascii=True,
                  libcpp.bool check_circular=True, libcpp.bool allow_nan=True, libcpp.bool sort_keys=False,
-                 indent=None, separators=None, default=None):
+                 int64_t indent=-1, separators=None, default=None):
         self.skipkeys = skipkeys
         self.ensure_ascii = ensure_ascii
         self.check_circular = check_circular
@@ -181,20 +182,20 @@ cdef class JSONDecoder(object):
 cdef JSONEncoder _default_encoder = JSONEncoder()
 cdef JSONDecoder _default_decoder = JSONDecoder()
 
-cpdef dump(obj, fp, skipkeys=False, ensure_ascii=True, check_circular=True,
-           allow_nan=True, cls=None, indent=None, separators=None,
-           default=None, sort_keys=False):
+cpdef dump(obj, fp, libcpp.bool skipkeys=False, libcpp.bool ensure_ascii=True, libcpp.bool check_circular=True,
+           libcpp.bool allow_nan=True, cls=None, int64_t indent=-1, separators=None,
+           default=None, libcpp.bool sort_keys=False):
     json_string = dumps(obj, skipkeys=skipkeys, ensure_ascii=ensure_ascii,
                         check_circular=check_circular, allow_nan=allow_nan, indent=indent,
                         separators=separators, default=default, sort_keys=sort_keys)
     fp.write(json_string)
 
-cpdef dumps(obj, skipkeys=False, ensure_ascii=True, check_circular=True,
-            allow_nan=True, cls=None, indent=None, separators=None,
-            default=None, sort_keys=False):
+cpdef dumps(obj, libcpp.bool skipkeys=False, libcpp.bool ensure_ascii=True, libcpp.bool check_circular=True,
+            libcpp.bool allow_nan=True, cls=None, int64_t indent=-1, separators=None,
+            default=None, libcpp.bool sort_keys=False):
     if (not skipkeys and ensure_ascii and
             check_circular and allow_nan and
-            cls is None and indent is None and separators is None and
+            cls is None and indent == -1 and separators is None and
             default is None and not sort_keys):
         return _default_encoder.encode(obj)
     elif cls is None:
