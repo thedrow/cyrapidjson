@@ -90,42 +90,32 @@ cdef class JSONEncoder(object):
 
         if isinstance(obj, bool):
             b = obj
-            with nogil:
-                doc.SetBool(b)
+            doc.SetBool(b)
         elif obj is None:
-            with nogil:
-                doc.SetNull()
+            doc.SetNull()
         elif isinstance(obj, float):
             d = obj
-            with nogil:
-                doc.SetDouble(d)
+            doc.SetDouble(d)
         elif isinstance(obj, (int, long)):
             i = obj
-            with nogil:
-                doc.SetInt64(i)
+            doc.SetInt64(i)
         elif isinstance(obj, (str, unicode, bytes)):
             s = obj
-            with nogil:
-                doc.SetString(s, allocator)
+            doc.SetString(s, allocator)
         elif isinstance(obj, (list, tuple)):
-            with nogil:
-                doc.SetArray()
+            doc.SetArray()
 
             for item in obj:
                 self.encode_inner(item, value, allocator)
-                with nogil:
-                    doc.PushBack(value, allocator)
+                doc.PushBack(value, allocator)
         elif isinstance(obj, dict):
-            with nogil:
-                doc.SetObject()
+            doc.SetObject()
 
             for k, v in obj.items():
                 s = <string> unicode(k)
-                with nogil:
-                    key.SetString(s, allocator)
+                key.SetString(s, allocator)
                 self.encode_inner(v, value, allocator)
-                with nogil:
-                    doc.AddMember(key, value, allocator)
+                doc.AddMember(key, value, allocator)
         else:
             obj = self.default_(obj)
             self.encode_inner(obj, doc, allocator)
