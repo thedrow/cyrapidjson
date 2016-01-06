@@ -24,8 +24,7 @@ def test_circular_list():
 
 @pytest.mark.unit
 def test_circular_composite():
-    dct2 = {}
-    dct2['a'] = []
+    dct2 = {'a': []}
     dct2['a'].append(dct2)
 
     with pytest.raises(OverflowError):
