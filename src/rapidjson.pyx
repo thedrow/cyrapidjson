@@ -216,7 +216,7 @@ cpdef load(fp, cls=None, object_hook=None, parse_float=None,
     return loads(fp.read(), cls=cls, object_hook=object_hook, parse_float=parse_float, parse_int=parse_int,
                  parse_constant=parse_constant, object_pairs_hook=object_pairs_hook)
 
-cpdef loads(s, encoding=None, cls=None, object_hook=None, parse_float=None,
+cpdef loads(const char *s, encoding=None, cls=None, object_hook=None, parse_float=None,
             parse_int=None, parse_constant=None, object_pairs_hook=None):
     if (cls is None and object_hook is None and
             parse_int is None and parse_float is None and
