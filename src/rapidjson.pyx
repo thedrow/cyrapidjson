@@ -67,6 +67,7 @@ cdef class JSONEncoder(object):
         cdef StringBuffer buffer
         cdef StringWriter *writer = new StringWriter(buffer)
         cdef Document doc
+        cdef const char* json_string
 
         self.encode_inner(obj, doc, doc.GetAllocator())
 
@@ -74,8 +75,9 @@ cdef class JSONEncoder(object):
             doc.Accept(dereference(writer))
 
             del writer
+            json_string = buffer.GetString()
 
-        return <str>buffer.GetString().decode('UTF-8')
+        return <str>json_string.decode('UTF-8')
 
 
     cdef encode_inner(self, obj, Value &doc, MemoryPoolAllocator[CrtAllocator] &allocator):
