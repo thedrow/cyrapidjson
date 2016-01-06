@@ -8,7 +8,7 @@ import rapidjson
 
 @pytest.mark.unit
 def test_skipkeys():
-    o = {True: False, 1: 1, 1.1: 1.1, (1,2): "foo", b"asdf": 1, None: None}
+    o = {True: False, 1: 1, 1.1: 1.1, (1, 2): "foo", b"asdf": 1, None: None}
 
     with pytest.raises(TypeError):
         rapidjson.dumps(o)
@@ -134,76 +134,10 @@ def test_use_decimal():
     assert rapidjson.dumps({"foo": d}, use_decimal=True) == '{"foo":%s}' % dstr
 
     assert rapidjson.loads(
-        rapidjson.dumps(d, use_decimal=True),
-        use_decimal=True) == d
+            rapidjson.dumps(d, use_decimal=True),
+            use_decimal=True) == d
 
     assert rapidjson.loads(rapidjson.dumps(d, use_decimal=True)) == float(dstr)
-
-
-@pytest.mark.unit
-def test_max_recursion_depth():
-    a = {'a': {'b': {'c': 1}}}
-
-    assert rapidjson.dumps(a) == '{"a":{"b":{"c":1}}}'
-
-    with pytest.raises(OverflowError):
-        rapidjson.dumps(a, max_recursion_depth=2)
-
-
-@pytest.mark.unit
-def test_datetime_mode():
-    from datetime import datetime
-    import pytz
-
-    assert rapidjson.DATETIME_MODE_NONE == 0
-    assert rapidjson.DATETIME_MODE_ISO8601 == 1
-    assert rapidjson.DATETIME_MODE_ISO8601_IGNORE_TZ == 2
-
-    d = datetime.utcnow()
-    dstr = d.isoformat()
-
-    with pytest.raises(TypeError):
-        rapidjson.dumps(d)
-
-    with pytest.raises(TypeError):
-        rapidjson.dumps(d, datetime_mode=rapidjson.DATETIME_MODE_NONE)
-
-    assert rapidjson.dumps(d, datetime_mode=rapidjson.DATETIME_MODE_ISO8601) == '"%s"' % dstr
-    assert rapidjson.dumps(d, datetime_mode=rapidjson.DATETIME_MODE_ISO8601_IGNORE_TZ) == '"%s"' % dstr
-
-    d = d.replace(tzinfo=pytz.utc)
-    dstr = d.isoformat()
-
-    assert rapidjson.dumps(d, datetime_mode=rapidjson.DATETIME_MODE_ISO8601) == '"%s"' % dstr
-    assert rapidjson.dumps(d, datetime_mode=rapidjson.DATETIME_MODE_ISO8601_IGNORE_TZ) == '"%s"' % dstr[:-6]
-
-    d = d.astimezone(pytz.timezone('Pacific/Chatham'))
-    dstr = d.isoformat()
-
-    assert rapidjson.dumps(d, datetime_mode=rapidjson.DATETIME_MODE_ISO8601) == '"%s"' % dstr
-    assert rapidjson.dumps(d, datetime_mode=rapidjson.DATETIME_MODE_ISO8601_IGNORE_TZ) == '"%s"' % dstr[:-6]
-
-    d = d.astimezone(pytz.timezone('Asia/Kathmandu'))
-    dstr = d.isoformat()
-
-    assert rapidjson.dumps(d, datetime_mode=rapidjson.DATETIME_MODE_ISO8601) == '"%s"' % dstr
-    assert rapidjson.dumps(d, datetime_mode=rapidjson.DATETIME_MODE_ISO8601_IGNORE_TZ) == '"%s"' % dstr[:-6]
-
-    d = d.astimezone(pytz.timezone('America/New_York'))
-    dstr = d.isoformat()
-
-    assert rapidjson.dumps(d, datetime_mode=rapidjson.DATETIME_MODE_ISO8601) == '"%s"' % dstr
-    assert rapidjson.dumps(d, datetime_mode=rapidjson.DATETIME_MODE_ISO8601_IGNORE_TZ) == '"%s"' % dstr[:-6]
-
-
-@pytest.mark.unit
-def test_precise_float():
-    f = "1.234567890E+34"
-    f1 = "1.2345678900000002e+34"
-
-    assert rapidjson.loads(f) == float(f)
-    assert rapidjson.loads(f, precise_float=True) == float(f)
-    assert rapidjson.loads(f, precise_float=False) == float(f1)
 
 
 @pytest.mark.unit
@@ -226,8 +160,8 @@ def test_object_hook():
     assert res.foo == 1
 
     assert rapidjson.dumps(rapidjson.loads('{"foo": 1}', object_hook=hook),
-            default=default) == '{"foo":1}'
+                           default=default) == '{"foo":1}'
     res = rapidjson.loads(rapidjson.dumps(Foo(foo="bar"), default=default),
-            object_hook=hook)
+                          object_hook=hook)
     assert isinstance(res, Foo)
     assert res.foo == "bar"
