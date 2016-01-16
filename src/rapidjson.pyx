@@ -67,50 +67,44 @@ cdef class JSONEncoder(object):
     cpdef str encode(self, obj):
         cdef StringBuffer buffer
         cdef StringWriter *writer = new StringWriter(buffer)
-        cdef Document doc
 
-        self.encode_inner(obj, doc, doc.GetAllocator())
-
-        doc.Accept(dereference(writer))
+        self.encode_inner(obj, writer)
 
         del writer
 
         return <str>buffer.GetString().decode('UTF-8')
 
 
-    cdef void encode_inner(self, obj, Value &doc, MemoryPoolAllocator[CrtAllocator] &allocator):
-        cdef Value key
-        cdef Value value
-
+    cdef void encode_inner(self, obj, StringWriter *writer):
         if isinstance(obj, bool):
-            doc.SetBool(<libcpp.bool> obj)
+            writer.Bool(obj)
         elif obj is None:
-            doc.SetNull()
+            writer.Null()
         elif isinstance(obj, float):
-            doc.SetDouble(<double> obj)
+            writer.Double(obj)
         elif isinstance(obj, (int, long)):
-            doc.SetInt64(<int64_t> obj)
+            writer.Int64(obj)
         elif isinstance(obj, (str, unicode, bytes)):
-            doc.SetString(<const char *>obj, len(obj))
+            writer.String(obj, len(obj), False)
         elif isinstance(obj, (list, tuple)):
-            doc.SetArray()
+            writer.StartArray()
 
             for item in obj:
-                self.encode_inner(item, value, allocator)
+                self.encode_inner(item, writer)
 
-                doc.PushBack(value, allocator)
+            writer.EndArray()
         elif isinstance(obj, dict):
-            doc.SetObject()
+            writer.StartObject()
 
             for k, v in obj.items():
                 k = bytes(k)
-                key.SetString(<const char *>k, len(k))
-                self.encode_inner(v, value, allocator)
+                writer.Key(k, len(k), False)
+                self.encode_inner(v, writer)
 
-                doc.AddMember(key, value, allocator)
+            writer.EndObject()
         else:
             obj = self.default_(obj)
-            self.encode_inner(obj, doc, allocator)
+            self.encode_inner(obj, writer)
 
 cdef class JSONDecoder(object):
     cdef public object object_hook
