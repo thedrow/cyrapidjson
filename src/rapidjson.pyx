@@ -10,6 +10,7 @@ from encodings cimport UTF8
 from allocators cimport MemoryPoolAllocator, CrtAllocator
 from error cimport GetParseError_En
 from libc.stdint cimport int64_t, uint64_t
+cimport cython
 
 try:
     # Starting from Python 3.5 we can expose the same error as the one thrown by the json module
@@ -74,10 +75,11 @@ cdef class JSONEncoder(object):
 
         return <str>buffer.GetString().decode('UTF-8')
 
-
+    @cython.boundscheck(False)
+    @cython.wraparound(False)
     cdef void encode_inner(self, obj, StringWriter *writer):
         if isinstance(obj, bool):
-            writer.Bool(obj)
+            writer.Bool(<libcpp.bool>obj)
         elif obj is None:
             writer.Null()
         elif isinstance(obj, float):
@@ -97,7 +99,6 @@ cdef class JSONEncoder(object):
             writer.StartObject()
 
             for k, v in obj.items():
-                k = bytes(k)
                 writer.Key(k, len(k), False)
                 self.encode_inner(v, writer)
 
