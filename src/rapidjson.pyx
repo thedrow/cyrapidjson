@@ -78,6 +78,8 @@ cdef class JSONEncoder(object):
     @cython.boundscheck(False)
     @cython.wraparound(False)
     cdef void encode_inner(self, obj, StringWriter *writer):
+        cdef size_t l
+
         if isinstance(obj, bool):
             writer.Bool(<libcpp.bool>obj)
         elif obj is None:
@@ -86,7 +88,7 @@ cdef class JSONEncoder(object):
             writer.Double(obj)
         elif isinstance(obj, (int, long)):
             writer.Int64(obj)
-        elif isinstance(obj, (str, unicode, bytes)):
+        elif isinstance(obj, basestring):
             writer.String(obj, len(obj), False)
         elif isinstance(obj, (list, tuple)):
             writer.StartArray()
@@ -99,7 +101,14 @@ cdef class JSONEncoder(object):
             writer.StartObject()
 
             for k, v in obj.items():
-                writer.Key(k, len(k), False)
+                if isinstance(obj, basestring):
+                    l = len(k)
+                else:
+                    k = str(k)
+                    l = len(k)
+
+                writer.Key(k, l, False)
+
                 self.encode_inner(v, writer)
 
             writer.EndObject()
