@@ -12,24 +12,24 @@ from error cimport GetParseError_En
 from libc.stdint cimport int64_t, uint64_t
 cimport cython
 
-try:
-    # Starting from Python 3.5 we can expose the same error as the one thrown by the json module
-    from json.decoder import JSONDecodeError
-except ImportError:
-    class JSONDecodeError(ValueError):
-        def __init__(self, msg, doc, pos):
-            lineno = doc.count('\n', 0, pos) + 1
-            colno = pos - doc.rfind('\n', 0, pos)
-            errmsg = '%s: line %d column %d (char %d)' % (msg, lineno, colno, pos)
-            ValueError.__init__(self, errmsg)
-            self.msg = msg
-            self.doc = doc
-            self.pos = pos
-            self.lineno = lineno
-            self.colno = colno
+# try:
+#     # Starting from Python 3.5 we can expose the same error as the one thrown by the json module
+#     from json.decoder import JSONDecodeError
+# except ImportError:
+class JSONDecodeError(ValueError):
+    def __init__(self, msg, doc, pos):
+        lineno = doc.count('\n', 0, pos) + 1
+        colno = pos - doc.rfind('\n', 0, pos)
+        errmsg = '%s: line %d column %d (char %d)' % (msg, lineno, colno, pos)
+        ValueError.__init__(self, errmsg)
+        self.msg = msg
+        self.doc = doc
+        self.pos = pos
+        self.lineno = lineno
+        self.colno = colno
 
-        def __reduce__(self):
-            return self.__class__, (self.msg, self.doc, self.pos)
+    def __reduce__(self):
+        return self.__class__, (self.msg, self.doc, self.pos)
 
 cdef class JSONEncoder(object):
     cpdef public libcpp.bool skipkeys
@@ -88,8 +88,10 @@ cdef class JSONEncoder(object):
             writer.Double(obj)
         elif isinstance(obj, (int, long)):
             writer.Int64(obj)
-        elif isinstance(obj, basestring):
+        elif isinstance(obj, bytes):
             writer.String(obj, len(obj), False)
+        elif isinstance(obj, basestring):
+            writer.String(bytes(obj.encode('utf-8')), len(obj), False)
         elif isinstance(obj, (list, tuple)):
             writer.StartArray()
 
@@ -101,10 +103,10 @@ cdef class JSONEncoder(object):
             writer.StartObject()
 
             for k, v in obj.items():
-                if isinstance(obj, basestring):
+                if isinstance(obj, bytes):
                     l = len(k)
                 else:
-                    k = str(k)
+                    k = bytes(k)
                     l = len(k)
 
                 writer.Key(k, l, False)
