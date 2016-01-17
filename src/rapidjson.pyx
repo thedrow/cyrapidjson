@@ -77,7 +77,7 @@ cdef class JSONEncoder(object):
 
     @cython.boundscheck(False)
     @cython.wraparound(False)
-    cdef void encode_inner(self, obj, StringWriter *writer):
+    cdef inline void encode_inner(self, obj, StringWriter *writer):
         cdef size_t l
 
         if isinstance(obj, bool):
@@ -146,7 +146,7 @@ cdef class JSONDecoder(object):
 
         return self.decode_inner(doc)
 
-    cdef decode_inner(self, const Value &doc):
+    cdef inline decode_inner(self, const Value &doc):
         cdef const Value* it
         cdef GenericMemberIterator it2
 
