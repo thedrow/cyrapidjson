@@ -1,7 +1,8 @@
 # distutils: language = c++
-from cpython cimport PyList_New
+from cpython cimport PyList_New, PyString_AsStringAndSize, PyObject
 cimport libcpp
 from libcpp.string cimport string
+from libcpp.vector cimport vector
 from cython.operator cimport dereference, preincrement
 from document cimport Document, Value, GenericMember, GenericMemberIterator
 from stringbuffer cimport StringBuffer
@@ -11,11 +12,14 @@ from allocators cimport MemoryPoolAllocator, CrtAllocator
 from error cimport GetParseError_En
 from libc.stdint cimport int64_t, uint64_t
 cimport cython
+from writercontext cimport WriterContext
 
 # try:
 #     # Starting from Python 3.5 we can expose the same error as the one thrown by the json module
 #     from json.decoder import JSONDecodeError
 # except ImportError:
+
+
 class JSONDecodeError(ValueError):
     def __init__(self, msg, doc, pos):
         lineno = doc.count('\n', 0, pos) + 1
@@ -78,45 +82,65 @@ cdef class JSONEncoder(object):
     @cython.boundscheck(False)
     @cython.wraparound(False)
     cdef inline void encode_inner(self, obj, StringWriter *writer):
-        cdef size_t l
+        cdef vector[WriterContext] stack
+        cdef Py_ssize_t buf_len
+        cdef size_t list_len
+        cdef char *buf
 
-        if isinstance(obj, bool):
-            writer.Bool(<libcpp.bool>obj)
-        elif obj is None:
-            writer.Null()
-        elif isinstance(obj, float):
-            writer.Double(obj)
-        elif isinstance(obj, (int, long)):
-            writer.Int64(obj)
-        elif isinstance(obj, bytes):
-            writer.String(obj, len(obj), False)
-        elif isinstance(obj, basestring):
-            writer.String(bytes(obj.encode('utf-8')), len(obj), False)
-        elif isinstance(obj, (list, tuple)):
-            writer.StartArray()
+        stack.reserve(1024)
+        stack.push_back(WriterContext(<PyObject*>obj, False, False))
 
-            for item in obj:
-                self.encode_inner(item, writer)
+        while not stack.empty():
+            current = &stack.back()
+            stack.pop_back()
 
-            writer.EndArray()
-        elif isinstance(obj, dict):
-            writer.StartObject()
+            if current.is_list:
+                writer.EndArray()
+            elif current.is_object:
+                writer.EndObject()
+            else:
+                if current.buffer:
+                    writer.Key(current.buffer, current.length, False)
 
-            for k, v in obj.items():
-                if isinstance(obj, bytes):
-                    l = len(k)
+                o = <object>current.object
+                if isinstance(o, bool):
+                    writer.Bool(<libcpp.bool>o)
+                elif o is None:
+                    writer.Null()
+                elif isinstance(o, float):
+                    writer.Double(o)
+                elif isinstance(o, (int, long)):
+                    writer.Int64(o)
+                elif isinstance(o, basestring):
+                    PyString_AsStringAndSize(o, &buf, &buf_len)
+                    writer.String(buf, buf_len, False)
+                elif isinstance(o, (list, tuple)):
+                    writer.StartArray()
+
+                    stack.push_back(WriterContext(NULL, False, True))
+                    list_len = len(o)
+
+                    while list_len != 0:
+                        list_len -= 1
+                        stack.push_back(WriterContext(<PyObject*>o[list_len], False, False))
+
+                elif isinstance(o, dict):
+                    writer.StartObject()
+
+                    stack.push_back(WriterContext(NULL, True, False))
+
+                    for k, v in o.items():
+                        if isinstance(k, basestring):
+                            PyString_AsStringAndSize(k, &buf, &buf_len)
+                        else:
+                            k = str(k)
+                            buf = k
+                            buf_len = len(k)
+                        stack.push_back(WriterContext(buf, buf_len, <PyObject*>v, False, False))
                 else:
-                    k = bytes(k)
-                    l = len(k)
+                    o = self.default_(o)
+                    stack.push_back(WriterContext(<PyObject*>o, False, False))
 
-                writer.Key(k, l, False)
-
-                self.encode_inner(v, writer)
-
-            writer.EndObject()
-        else:
-            obj = self.default_(obj)
-            self.encode_inner(obj, writer)
 
 cdef class JSONDecoder(object):
     cdef public object object_hook
