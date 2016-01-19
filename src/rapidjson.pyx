@@ -81,7 +81,7 @@ cdef class JSONEncoder(object):
 
     @cython.boundscheck(False)
     @cython.wraparound(False)
-    cdef inline void encode_inner(self, obj, StringWriter *writer):
+    cdef inline void encode_inner(self, obj, StringWriter *writer) except *:
         cdef vector[WriterContext] stack
         cdef Py_ssize_t buf_len
         cdef size_t list_len

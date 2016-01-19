@@ -842,10 +842,6 @@ static CYTHON_INLINE PyObject* __Pyx_PyObject_CallNoArg(PyObject *func);
 #define __Pyx_PyObject_CallNoArg(func) __Pyx_PyObject_Call(func, __pyx_empty_tuple, NULL)
 #endif
 
-static void __Pyx_WriteUnraisable(const char *name, int clineno,
-                                  int lineno, const char *filename,
-                                  int full_traceback, int nogil);
-
 static CYTHON_INLINE PyObject *__Pyx_GetModuleGlobalName(PyObject *name);
 
 #if CYTHON_COMPILING_IN_CPYTHON
@@ -863,6 +859,10 @@ static CYTHON_INLINE int __Pyx_PyList_Append(PyObject* list, PyObject* x) {
 #else
 #define __Pyx_PyList_Append(L,x) PyList_Append(L,x)
 #endif
+
+static void __Pyx_WriteUnraisable(const char *name, int clineno,
+                                  int lineno, const char *filename,
+                                  int full_traceback, int nogil);
 
 static int __Pyx_SetVtable(PyObject *dict, void *vtable);
 
@@ -2408,7 +2408,7 @@ static PyObject *__pyx_f_3src_9rapidjson_11JSONEncoder_encode(struct __pyx_obj_3
  * 
  *         del writer
  */
-  __pyx_f_3src_9rapidjson_11JSONEncoder_encode_inner(__pyx_v_self, __pyx_v_obj, __pyx_v_writer);
+  __pyx_f_3src_9rapidjson_11JSONEncoder_encode_inner(__pyx_v_self, __pyx_v_obj, __pyx_v_writer); if (unlikely(PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 76; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
   /* "src/rapidjson.pyx":78
  *         self.encode_inner(obj, writer)
@@ -2500,7 +2500,7 @@ static PyObject *__pyx_pf_3src_9rapidjson_11JSONEncoder_6encode(struct __pyx_obj
 /* "src/rapidjson.pyx":84
  *     @cython.boundscheck(False)
  *     @cython.wraparound(False)
- *     cdef inline void encode_inner(self, obj, StringWriter *writer):             # <<<<<<<<<<<<<<
+ *     cdef inline void encode_inner(self, obj, StringWriter *writer) except *:             # <<<<<<<<<<<<<<
  *         cdef vector[WriterContext] stack
  *         cdef Py_ssize_t buf_len
  */
@@ -3285,7 +3285,7 @@ static CYTHON_INLINE void __pyx_f_3src_9rapidjson_11JSONEncoder_encode_inner(str
   /* "src/rapidjson.pyx":84
  *     @cython.boundscheck(False)
  *     @cython.wraparound(False)
- *     cdef inline void encode_inner(self, obj, StringWriter *writer):             # <<<<<<<<<<<<<<
+ *     cdef inline void encode_inner(self, obj, StringWriter *writer) except *:             # <<<<<<<<<<<<<<
  *         cdef vector[WriterContext] stack
  *         cdef Py_ssize_t buf_len
  */
@@ -3298,7 +3298,7 @@ static CYTHON_INLINE void __pyx_f_3src_9rapidjson_11JSONEncoder_encode_inner(str
   __Pyx_XDECREF(__pyx_t_11);
   __Pyx_XDECREF(__pyx_t_13);
   __Pyx_XDECREF(__pyx_t_14);
-  __Pyx_WriteUnraisable("src.rapidjson.JSONEncoder.encode_inner", __pyx_clineno, __pyx_lineno, __pyx_filename, 0, 0);
+  __Pyx_AddTraceback("src.rapidjson.JSONEncoder.encode_inner", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_v_o);
   __Pyx_XDECREF(__pyx_v_k);
@@ -9328,6 +9328,23 @@ static CYTHON_INLINE PyObject* __Pyx_PyObject_CallNoArg(PyObject *func) {
 }
 #endif
 
+static CYTHON_INLINE PyObject *__Pyx_GetModuleGlobalName(PyObject *name) {
+    PyObject *result;
+#if CYTHON_COMPILING_IN_CPYTHON
+    result = PyDict_GetItem(__pyx_d, name);
+    if (likely(result)) {
+        Py_INCREF(result);
+    } else {
+#else
+    result = PyObject_GetItem(__pyx_d, name);
+    if (!result) {
+        PyErr_Clear();
+#endif
+        result = __Pyx_GetBuiltinName(name);
+    }
+    return result;
+}
+
 static void __Pyx_WriteUnraisable(const char *name, CYTHON_UNUSED int clineno,
                                   CYTHON_UNUSED int lineno, CYTHON_UNUSED const char *filename,
                                   int full_traceback, CYTHON_UNUSED int nogil) {
@@ -9362,23 +9379,6 @@ static void __Pyx_WriteUnraisable(const char *name, CYTHON_UNUSED int clineno,
     if (nogil)
         PyGILState_Release(state);
 #endif
-}
-
-static CYTHON_INLINE PyObject *__Pyx_GetModuleGlobalName(PyObject *name) {
-    PyObject *result;
-#if CYTHON_COMPILING_IN_CPYTHON
-    result = PyDict_GetItem(__pyx_d, name);
-    if (likely(result)) {
-        Py_INCREF(result);
-    } else {
-#else
-    result = PyObject_GetItem(__pyx_d, name);
-    if (!result) {
-        PyErr_Clear();
-#endif
-        result = __Pyx_GetBuiltinName(name);
-    }
-    return result;
 }
 
 static int __Pyx_SetVtable(PyObject *dict, void *vtable) {
