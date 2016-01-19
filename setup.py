@@ -12,7 +12,8 @@ extensions = [
         define_macros=[
             ('RAPIDJSON_HAS_STDSTRING', '1')
         ],
-        include_dirs=[os.path.join(BASE_PATH, 'rapidjson/include/rapidjson')],
+        include_dirs=[os.path.join(BASE_PATH, 'rapidjson/include/rapidjson'),
+                      os.path.join(BASE_PATH, 'helpers')],
         language="c++"
     )
 ]
